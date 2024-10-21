@@ -12,24 +12,43 @@ use Illuminate\Validation\ValidationException;
 class authenticationController extends Controller
 {
     public function login (Request $request){
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $auth = Auth::user();
+            $success['token'] = $auth->createToken('auth_token')->plainTextToken;
+            $success['username'] = $auth->username;
+            $success['email'] = $auth->email;
 
-        $user = User::where('email', $request->email)->first();
-        
-        if (! $user || $request->password !== $user->password) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+            return response()->json([
+                'success' => true,
+                'message' => 'login berhasil',
+                'data' => $success
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'cek kembali',
+                'data' => null,
             ]);
         }
 
-        $token = $user->createToken('API Token')->plainTextToken;
+        // $request->validate([
+        //     'email' => 'required|email',
+        //     'password' => 'required',
+        // ]);
 
-        return response()->json([
-            'token' => $token,
-        ]);
+        // $user = User::where('email', $request->email)->first();
+        
+        // if (! $user || $request->password !== $user->password) {
+        //     throw ValidationException::withMessages([
+        //         'email' => ['The provided credentials are incorrect.'],
+        //     ]);
+        // }
+
+        // $token = $user->createToken('API Token')->plainTextToken;
+
+        // return response()->json([
+        //     'token' => $token,
+        // ]);
         
     }
 

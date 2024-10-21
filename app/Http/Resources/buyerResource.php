@@ -15,6 +15,8 @@ class buyerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+        'firstname' => $this->firstname,
+        'lastname' => $this->lastname,
         'alamat' => $this->alamat,
         'telepon' => $this->telepon,
         'kota' => $this->kota,
@@ -25,6 +27,12 @@ class buyerResource extends JsonResource
                 'id' => $this->userGet->id,
                 'username' => $this->userGet->username,
             ],
+        'ulasan' => $this->ulasanGet->map(function ($ulasan) {
+                return [
+                    'produk_id' => $ulasan->produk_id,
+                    'ulasan' => $ulasan->ulasan,
+                ];
+            }),
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class userResource extends JsonResource
+class supplierResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,10 +14,6 @@ class userResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'email' => $this->email,
-            'username' => $this->username,
-            'created_at' => date_format($this->created_at, "Y/m/d H:i:s")
-        ];
+        return parent::toArray($request);
     }
 }
