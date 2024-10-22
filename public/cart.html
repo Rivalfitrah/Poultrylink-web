@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/@heroicons/react/outline"></script>
+    <title>PoultryLink</title>
+    <link rel="icon" href="/img/Group 55.svg">
+</head>
+<body>
+    <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+          <!-- Logo dan Nama PoultryLink -->
+          <div class="flex items-center space-x-2 ml-7">
+            <img src="/img/Group 55.svg" alt="PoultryLink Logo" class="h-8 w-8">
+            <span class="text-xl font-bold text-primary">PoultryLink</span>
+          </div>
+      
+          <!-- Link Navigasi -->
+          <div class="hidden md:flex space-x-6">
+            <a href="#" class="text-primary hover:text-blue-500">About poultryLink</a>
+            <a href="#" class="text-primary hover:text-blue-500">Shop</a>
+          </div>
+      
+          <!-- Fitur Search, Wishlist, Cart, dan Akun -->
+          <div class="flex items-center space-x-4 mr-8">
+            <!-- Search Bar -->
+            <div class="relative">
+              <input type="text" class="border rounded-full py-2 px-4 text-gray-600" placeholder="Search...">
+              <span class="absolute right-3 top-2 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+            </div>
+      
+            <!-- Wishlist Icon -->
+            <a href="#" class="relative text-primary hover:text-blue-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 000-7.78z"></path>
+              </svg>
+            </a>
+      
+            <!-- Cart Icon -->
+            <a href="cart.html" class="relative text-primary hover:text-blue-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-8.28H5.73"></path>
+              </svg>
+            </a>
+      
+            <!-- Account Icon with Dropdown -->
+            <div class="relative">
+              <a href="#" class="relative text-primary hover:text-blue-500" id="account-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
+                  <path d="M4 21v-2a4 4 0 013-3.87"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </a>
+      
+              <!-- Dropdown -->
+              <div id="account-dropdown" class="absolute right-0 mt-2 w-48 bg-gradient-to-r bg-white text-primary rounded-lg shadow-lg py-2 transition-transform transform scale-95 hidden">
+                <a href="admin/login.html" id="login-btn" class="block px-4 py-2 hover:bg-blue-600 transition-colors duration-200">Login</a>
+                <a href="admin/register.html" id="register-btn" class="block px-4 py-2 hover:bg-blue-600 transition-colors duration-200">Register</a>
+                <a href="#" id="manage-account-btn" class="block px-4 py-2 hover:bg-blue-600 transition-colors duration-200">Manage Account</a>
+            </div>
+            
+  
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container mx-auto p-6 mt-16">
+        <nav class="flex mb-6 text-gray-700" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+              <li>
+                <a href="index.html" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-500">
+                    <ion-icon name="home-outline"></ion-icon>
+                  Home
+                </a>
+              </li>
+              <li aria-current="page">
+                <div class="flex items-center">
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                  <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Cart</span>
+                </div>
+              </li>
+            </ol>
+          </nav>
+        <h1 class="text-3xl font-bold mb-6 text-center">Shopping Cart</h1>
+    
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Cart Items Section -->
+          <div class="lg:col-span-2 bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Items in Your Cart</h2>
+    
+            <!-- Cart Item 1 -->
+            <div class="flex items-center border-b pb-4 mb-4">
+              <img src="https://via.placeholder.com/80" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
+              <div class="ml-4 flex-1">
+                <h2 class="font-semibold text-lg">Ayam Broiler</h2>
+                <p class="text-sm text-gray-600">Rp 25.000 / Ekor</p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button class="bg-gray-200 px-3 py-1 rounded-md">-</button>
+                <span class="w-5 text-center">2</span>
+                <button class="bg-gray-200 px-3 py-1 rounded-md">+</button>
+                <!-- Icon Trash -->
+                <button class="text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                    </svg>  
+                </button>
+              </div>
+              <p class="ml-6 font-semibold">Rp 50.000</p>
+            </div>
+    
+            <!-- Cart Item 2 -->
+            <div class="flex items-center border-b pb-4 mb-4">
+              <img src="https://via.placeholder.com/80" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
+              <div class="ml-4 flex-1">
+                <h2 class="font-semibold text-lg">Telur Ayam Kampung</h2>
+                <p class="text-sm text-gray-600">Rp 2.500 / Butir</p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button class="bg-gray-200 px-3 py-1 rounded-md">-</button>
+                <span class="w-5">10</span>
+                <button class="bg-gray-200 px-3 py-1 rounded-md">+</button>
+                <!-- Icon Trash -->
+                <button class="text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                      </svg>
+                </button>
+              </div>
+              <p class="ml-6 font-semibold">Rp 25.000</p>
+            </div>
+          </div>
+    
+          <!-- Order Summary Section -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+    
+            <div class="flex justify-between mb-2">
+              <span>Subtotal</span>
+              <span>Rp 75.000</span>
+            </div>
+    
+            <div class="flex justify-between mb-2">
+              <span>Shipping</span>
+              <span>Rp 10.000</span>
+            </div>
+    
+            <div class="flex justify-between font-semibold text-lg mt-4">
+              <span>Total</span>
+              <span>Rp 85.000</span>
+            </div>
+    
+            <button class="w-full bg-primary text-white hover:bg-white hover:text-primary py-3 rounded-md mt-6">
+              Proceed to Checkout
+            </button>
+    
+            <p class="text-sm text-gray-500 mt-4">
+              By placing your order, you agree to our <a href="#" class="text-blue-500 underline">Terms & Conditions</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+      <script src="/src/js/tes.js"></script>
+</body>
+</html>
