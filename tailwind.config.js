@@ -3,7 +3,9 @@ module.exports = {
   content: [
     "./src/**/*.{html,js,jsx,ts,tsx}",   // File di folder src
     "./public/**/*.html",                 // File HTML di public
-    "./public/admin/**/*.html",           // File HTML di folder admin
+    "./public/sign/**/*.html",
+    "./public/dashboard/**/*.html",
+    "/public/akun/**/*.html "          
   ],
   theme: {
     extend: {

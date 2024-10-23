@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="/src/output.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/src/css/style.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+        <script src="https://unpkg.com/@heroicons/react/outline"></script>
+        <title>PoultryLink</title>
+        <link rel="icon" href="/img/Group 55.svg">
+      </head>
+<body>
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo dan Nama PoultryLink -->
+      <a href="index.html" class="flex items-center space-x-2 ml-7">
+        <img src="/img/Group 55.svg" alt="PoultryLink Logo" class="h-16 w-16">
+        <span class="text-3xl font-bold text-primary">PoultryLink</span>
+      </a>
+
+      <!-- Link Navigasi -->
+      <div class="hidden md:flex space-x-6">
+        <a href="#"
+          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">
+          Tentang poultryLink
+        </a>
+        <a href="#"
+          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">
+          Produk
+        </a>
+      </div>
+
+
+      <!-- Fitur Search, Wishlist, Cart, dan Akun -->
+      <div class="flex items-center space-x-4 mr-12">
+        <!-- Search Bar -->
+        <div class="relative">
+          <input type="text" class="border rounded-full py-2 px-4 text-gray-800 border-primary" placeholder="Search...">
+          <span class="absolute right-3 top-2 text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+        </div>
+
+        <!-- Wishlist Icon -->
+        <a href="akun/whislist.html" class="relative text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 000-7.78z">
+            </path>
+          </svg>
+        </a>
+
+        <!-- Cart Icon -->
+        <a href="cart.html" class="relative text-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-8.28H5.73"></path>
+          </svg>
+        </a>
+
+        <!-- Account Icon with Dropdown -->
+        <div class="relative group">
+          <a href="#" class="relative text-primary" id="account-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
+              <path d="M4 21v-2a4 4 0 013-3.87"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+
+          <!-- Dropdown -->
+          <div id="account-dropdown"
+            class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-95 group-hover:scale-100">
+            <!-- Login and Register buttons -->
+            <div class="flex justify-between px-4 py-2">
+              <a href="/public/sign/login.html" id="login-btn"
+                class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary hover:border-primary hover:border-2 transition-colors duration-200">Login</a>
+              <a href="/public/sign/register.html" id="register-btn"
+                class="bg-white text-primary px-4 py-2 rounded-lg hover:bg-primary hover:text-white border-2 border-primary transition-colors duration-200">Register</a>
+            </div>
+
+            <!-- Manage Account -->
+            <a href="profil.html" id="manage-account-btn"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-person-vcard mx-2" viewBox="0 0 16 16">
+                <path
+                  d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5" />
+                <path
+                  d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z" />
+              </svg>
+              Manage Account
+            </a>
+            <a href="#" id="manage-account-btn"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+              <i class="fa-solid fa-shop mx-2"></i>
+              Buka toko
+            </a>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+    </div>
+  </nav>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto p-6 mt-20">
+
+        <!-- Account Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Sidebar -->
+          <aside class="bg-gradient-to-br from-white to-gray-50 p-6 rounded-xl shadow-lg">
+            <!-- Profil Pengguna -->
+            <div class="flex items-center space-x-4 mb-8">
+              <div class="relative">
+                <img class="h-20 w-20 rounded-full object-cover shadow-md border-4 border-white" src="https://via.placeholder.com/64" alt="User profile picture">
+                <span class="absolute bottom-0 right-0 h-4 w-4 bg-green-400 border-2 border-white rounded-full"></span> <!-- Status online -->
+              </div>
+              <div>
+                <p class="text-xl font-bold text-gray-900">Russell Ahmed</p>
+                <p class="text-gray-500">Hello, Russell!</p>
+              </div>
+            </div>
+            
+            <!-- Navigasi Sidebar -->
+            <nav class="space-y-4">
+              <a href="profil.html" class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
+                <i class="fas fa-user mr-3 text-primary"></i> <span class="font-medium">Informasi Profil</span>
+              </a>
+              <a href="adress.html" 
+                class="group flex items-center px-4 py-3 rounded-lg bg-primary text-white hover:bg-white hover:text-primary hover:shadow-md transition-all duration-700 hover:border hover:border-primary">
+                <i class="fa-solid fa-location-dot mr-3 text-white group-hover:text-primary transition-all duration-700"></i> 
+                <span class="font-medium">Kelola Alamat</span>
+              </a>
+              
+              <hr class="border-gray-200 my-4">
+          
+              <a href="history.html" class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
+                <i class="fas fa-history mr-3 text-primary"></i> <span class="font-medium">Riwayat Pembelian</span>
+              </a>
+              <a href="payment.html" class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
+                <i class="fas fa-credit-card mr-3 text-primary"></i> <span class="font-medium">Metode Pembayaran</span>
+              </a>
+              <a href="whislist.html" class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
+                <i class="fas fa-heart mr-3 text-primary"></i> <span class="font-medium">Whislist</span>
+              </a>
+              <a href="#" class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
+                <i class="fas fa-sign-out-alt mr-3 text-primary"></i> <span class="font-medium">Keluar</span>
+              </a>
+            </nav>
+          </aside>
+          
+          <!-- Manage Address Form -->
+          <main class="col-span-2 bg-white p-8 rounded-lg shadow">
+            <h2 class="text-2xl font-semibold mb-4">Kelola Alamat</h2>
+            <form action="#" method="POST">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-gray-700">Nama Lengkap</label>
+                  <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="nama lengkap" value="">
+                </div>
+    
+                <div>
+                  <label class="block text-gray-700">No telepon</label>
+                  <input type="tel" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="masukan no telepon">
+                </div>
+    
+                <div>
+                  <label class="block text-gray-700">Negara</label>
+                  <input type="tel" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="negara">
+                </div>
+    
+                <div>
+                  <label class="block text-gray-700">Provinsi</label>
+                  <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="provinsi">
+                </div>
+    
+                <div>
+                  <label class="block text-gray-700">kota</label>
+                  <input type="tel" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="kota">
+                </div>
+    
+                <div>
+                  <label class="block text-gray-700">Kode pos</label>
+                  <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="kode pos">
+                </div>
+    
+                <div class="col-span-2">
+                  <label class="block text-gray-700">Alamat</label>
+                  <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="masukan alamat">
+                </div>
+              </div>
+    
+              <div class="mt-6">
+                <button class="px-6 py-3 bg-primary text-white rounded-lg shadow hover:bg-white hover:text-primary hover:border hover:border-primary transition ease-in-out duration-700">
+                  SAVE CHANGES
+                </button>
+              </div>
+            </form>
+          </main>
+        </div>
+      </div>
+</body>
+</html>
