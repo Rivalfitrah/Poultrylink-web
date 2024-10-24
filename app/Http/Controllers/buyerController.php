@@ -18,48 +18,68 @@ class buyerController extends Controller
     }
 
     //masukin data pertama kali bukan update
-    public function postprofile (Request $request){
-
+    public function postprofile(Request $request){
+        
         $validate = $request->validate([
             'firstname' => 'required',
-            'lastname',
+            'lastname' => 'nullable',
             'alamat' => 'required',
-            'telepon' => 'required|unique:buyer',  // Validasi di tabel buyer, bukan users
+            'telepon' => 'required|unique:buyer',  // Validasi di tabel buyer
             'kota' => 'required',
             'kodepos' => 'required',
             'provinsi' => 'required',
             'negara' => 'required',
+            'image' => 'nullable|file|max:2048',  // Validasi untuk gambar
         ]);
+
+        // Upload gambar jika ada
+        $image = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image')->store('buyer', 'public'); // Simpan di folder 'buyer'
+        }
 
         $request['user_id'] = Auth::user()->id;
-        $buyer = Buyer::create($request->all());
-        return new buyerResource ($buyer->loadMissing('userGet'));
-        // return response()->json('bisa cuy');
+        $buyerData = $request->all();
+        
+        if ($image) {
+            $buyerData['image'] = $image; 
+        }
 
+        $buyer = Buyer::create($buyerData);
+        return new buyerResource($buyer->loadMissing('userGet'));
     }
+
     //update profile aja 
-    public function updateprofile(Request $request, $id){
+    public function updateprofile(Request $request, $id) {
+        // Validasi data input
         $validate = $request->validate([
-            'firstname' => 'required',
-            'lastname',
-            'alamat' => 'required',
-            'telepon' => 'required',  // Validasi di tabel buyer, bukan users
-            'kota' => 'required',
-            'kodepos' => 'required',
-            'provinsi' => 'required',
-            'negara' => 'required',
+            'firstname' => 'nullable',
+            'lastname' => 'nullable',
+            'alamat' => 'nullable',
+            'telepon' => 'nullable',
+            'kota' => 'nullable',
+            'kodepos' => 'nullable',
+            'provinsi' => 'nullable',
+            'negara' => 'nullable',
+            'image' => 'nullable|file|max:2048',  // Validasi untuk gambar
         ]);
 
         $buyer = Buyer::findOrFail($id);
-        $buyer->update($request->all());
-        return new buyerResource ($buyer->loadMissing('userGet'));
-    }
 
-    //delete ulasan
-    public function destroy($id){
-        $buyer = Buyer::findOrFail($id);
-        $buyer->delete();
-        return response()->json('deleted success');
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($buyer->image) {
+                Storage::delete('public/' . $buyer->image);  // Hapus gambar lama dari storage
+            }
+
+            // Simpan gambar baru
+            $image = $request->file('image')->store('buyer', 'public');
+            $buyer->image = $image; // Update path gambar di database
+        }
+
+        $buyer->update(array_filter($request->all()));
+
+        return new buyerResource($buyer->loadMissing('userGet'));
     }
 
     //post ulasan

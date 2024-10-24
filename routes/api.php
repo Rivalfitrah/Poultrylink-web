@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\supplierController;
+use App\Http\Controllers\cartController;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use App\Http\Middleware\owner;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\supplierOwner;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\buyerController;
+use App\Http\Controllers\supplierController;
 use App\Http\Controllers\authenticationController;
 
 // Route::get('/user', function (Request $request) {
@@ -18,7 +20,7 @@ Route::get('/users', [userController::class, 'index']);
 Route::post('/login', [authenticationController::class, 'login']);
 Route::post('/register', [userController::class, 'register']);
 Route::get('/getSupplier',[supplierController::class, 'supplierindex']);
-Route::get('/getproduk',[supplierController::class, 'getproduk']);
+
 
 
 Route::middleware(['auth:sanctum'])->group(function(){
@@ -29,11 +31,11 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     //id buyer
     Route::patch('/updateprofile/{id}', [buyerController::class, 'updateprofile'])
-    ->middleware('Owner');
+    ->middleware('owner');
 
     //id buyer
     Route::delete('/deleteprofile/{id}', [buyerController::class, 'destroy'])
-    ->middleware('Owner');
+    ->middleware('owner');
 
     Route::post('/ulasan', [buyerController::class, 'ulasan']);
 
@@ -45,11 +47,22 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::delete('/deleteulasan/{id}', [buyerController::class, 'deleteUlasan'])
     ->Middleware('ulasanOwner');
 
+    Route::get('/getproduk',[supplierController::class, 'getproduk'])
+    ->Middleware('supplierOwner');
+
     //postproduk
     Route::post('/postproduk', [supplierController::class, 'postproduk']);
+    // ->Middleware(['atuh', 'supplierOwner']);
 
-    //produk id
-    Route::patch('/updateproduk/{id}', [supplierController::class, 'updateProduk']);
+    //update
+    Route::post('/updateproduk/{id}', [supplierController::class, 'updateProduk']);
+    // ->Middleware(['atuh', 'supplierOwner']);
 
     Route::delete('/deleteproduk/{id}', [supplierController::class, 'deleteproduk']);
+    // ->Middleware(['atuh', 'supplierOwner']);
+
+    Route::post('addtocart', [cartController::class, 'postcart']);
+
+    //update
+    Route::patch('/updatecart/{id}',[cartController::class, 'updatecart']);
 });

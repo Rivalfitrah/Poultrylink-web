@@ -15,6 +15,14 @@ class supplierOwner
      */
     public function handle(Request $request, Closure $next): Response
     {
+
+        $currentUser = Auth::user();
+        $supplier = $supplier::findOrFail($request->id);
+        
+        if($supplier->user_id != $currentUser->id){
+            return response()->json(['message' => 'data not found']);
+        }
+
         return $next($request);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Produk;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Resources\produkResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\supplierResource;
@@ -29,6 +30,7 @@ class supplierController extends Controller
         $validate = $request->validate([
             'nama_produk' =>'required',
             'deskripsi' =>'required',
+            'harga' => 'required',
             'kategori_id' =>'required|exists:kategori,id',
             'image' => 'nullable|file', // Validasi image agar nullable dan berbentuk file
         ]);
@@ -39,18 +41,25 @@ class supplierController extends Controller
             $image = $request->file('image')->store('produk', 'public'); 
         }
 
-        // Simpan path image ke dalam database
         $request['image'] = $image ? $image : null;
-
-        // Simpan produk dengan semua data
         $produk = Produk::create($request->all());
-
         return new produkResource($produk->loadMissing('getSupplier'));;
 
     }
 
     //update produk
     public function updateProduk(Request $request, $id) {
+
+        $validate = $request->validate([
+            'nama_produk' =>'nullable',
+            'deskripsi' =>'nullable',
+            'harga' =>'nullable',
+            'kategori_id' =>'nullable|exists:kategori,id',
+            'image' => 'nullable|file', // Validasi image agar nullable dan berbentuk file
+        ]);
+
+        Log::info($request->all());
+
         // Cari produk berdasarkan ID
         $produk = Produk::findOrFail($id);
     
@@ -70,13 +79,16 @@ class supplierController extends Controller
     
         $dataToUpdate = [];
     
-        if ($request->filled('nama_produk')) {
+        if ($request->has('nama_produk') && $request->input('nama_produk') != $produk->nama_produk) {
             $dataToUpdate['nama_produk'] = $request->input('nama_produk');
         }
-        if ($request->filled('deskripsi')) {
+        if ($request->has('deskripsi') && $request->input('deskripsi') != $produk->deskripsi) {
             $dataToUpdate['deskripsi'] = $request->input('deskripsi');
         }
-        if ($request->filled('kategori_id')) {
+        if ($request->has('harga') && $request->input('harga') != $produk->kategori_id) {
+            $dataToUpdate['harga'] = $request->input('harga');
+        }
+        if ($request->has('kategori_id') && $request->input('kategori_id') != $produk->kategori_id) {
             $dataToUpdate['kategori_id'] = $request->input('kategori_id');
         }
         if ($request->hasFile('image')) {
@@ -96,6 +108,8 @@ class supplierController extends Controller
                 'updated' => []
             ]);
         }
+
+        Log::info($dataToUpdate);  // Ini akan menampilkan data yang akan diperbarui
     }
     
     public function deleteproduk($id){

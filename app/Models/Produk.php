@@ -18,6 +18,7 @@ class Produk extends Model
         'rating',
         'kategori_id',
         'supplier_id',
+        'harga',
         'image',
     ];
 
