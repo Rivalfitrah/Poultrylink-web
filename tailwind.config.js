@@ -1,17 +1,17 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 module.exports = {
   content: [
-    "./src/**/*.{html,js,jsx,ts,tsx}",   // File di folder src
-    "./public/**/*.html",                 // File HTML di public
+    "./src/**/*.{html,js,jsx,ts,tsx}",
+    "./public/**/*.html",
     "./public/sign/**/*.html",
     "./public/dashboard/**/*.html",
-    "/public/akun/**/*.html "          
+    "/public/akun/**/*.html"
   ],
   theme: {
     extend: {
       colors: {
-        'primary': '#FF6600',
-        'second' : '#FFBF78'
+        primary: '#FF6600',
+        second: '#FFBF78',
       },
       fontFamily: {
         bauhause: ['Bauhause', 'sans-serif'],
@@ -19,4 +19,7 @@ module.exports = {
     },
   },
   plugins: [],
+  watchOptions: {
+    ignored: ['C:\\DumpStack.log.tmp'], // Tambahkan path ini agar diabaikan
+  },
 };

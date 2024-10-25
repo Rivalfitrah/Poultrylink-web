@@ -1,18 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="/src/output.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/src/css/style.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-  <script src="https://unpkg.com/@heroicons/react/outline"></script>
-  <title>PoultryLink</title>
-  <link rel="icon" href="/img/Group 55.svg">
-</head>
+<head lang="en" class="scroll-smooth">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/src/output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="/src/css/animasi.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <!-- icon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <title>PoultryLink</title>
+    <link rel="icon" href="/img/Group 55.svg">
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  </head>
 
 <body class="bg-gray-100">
+  <div id="loading-screen">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+
+  <div id="content" style="display: none;"></div>
+
   <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <!-- Logo dan Nama PoultryLink -->
@@ -23,22 +35,18 @@
 
       <!-- Link Navigasi -->
       <div class="hidden md:flex space-x-6">
-        <a href="#"
-          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">
-          Tentang poultryLink
-        </a>
-        <a href="#"
-          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">
-          Produk
-        </a>
+        <a href="/public/compony/about.html"
+          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+        <a href="shop.html"
+          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Produk</a>
       </div>
-
 
       <!-- Fitur Search, Wishlist, Cart, dan Akun -->
       <div class="flex items-center space-x-4 mr-12">
         <!-- Search Bar -->
-        <div class="relative">
-          <input type="text" class="border rounded-full py-2 px-4 text-gray-800 border-primary" placeholder="Search...">
+        <div class="relative w-80"> <!-- Tambahkan class w-96 untuk memperlebar search -->
+          <input type="text" id="searchInput" class="border rounded-full py-2 px-4 w-full text-gray-800 border-primary"
+            placeholder="Search...">
           <span class="absolute right-3 top-2 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -81,7 +89,7 @@
 
           <!-- Dropdown -->
           <div id="account-dropdown"
-            class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-95 group-hover:scale-100">
+            class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 transition-opacity duration-300 transform scale-95 group-hover:opacity-100 group-hover:scale-100">
             <!-- Login and Register buttons -->
             <div class="flex justify-between px-4 py-2">
               <a href="sign/login.html" id="login-btn"
@@ -111,14 +119,13 @@
         </div>
       </div>
     </div>
-    </div>
   </nav>
 
   <!-- Slider Container -->
-  <section class="slider-container mt-20">
+  <section class="slider-container mt-20 h-[600px]"> <!-- Atur h-96 atau h-[600px] sesuai kebutuhan -->
     <div class="slider" id="slider">
       <!-- Slide 1 -->
-      <div class="slide slide1 relative">
+      <div class="slide slide1 relative h-full">
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
           <h1 class="text-4xl font-bold mb-4">Selamat Datang di PoultryLink</h1>
@@ -130,7 +137,7 @@
         </div>
       </div>
       <!-- Slide 2 -->
-      <div class="slide slide2 relative">
+      <div class="slide slide2 relative h-full">
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
           <h1 class="text-4xl font-bold mb-4">Kualitas Produk Terbaik</h1>
@@ -142,7 +149,7 @@
         </div>
       </div>
       <!-- Slide 3 -->
-      <div class="slide slide3 relative">
+      <div class="slide slide3 relative h-full">
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white">
           <h1 class="text-4xl font-bold mb-4">Pengiriman Cepat dan Aman</h1>
@@ -154,7 +161,7 @@
         </div>
       </div>
     </div>
-
+  
     <!-- Tombol Navigasi -->
     <button class="nav-btn prev-btn" id="prevBtn">
       <i class="fas fa-chevron-left"></i>
@@ -163,60 +170,57 @@
       <i class="fas fa-chevron-right"></i>
     </button>
   </section>
+  
 
-  <!-- Layanan Section -->
-  <section class="py-12 bg-gray-100">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-bold text-gray-800 mb-8">Layanan Kami</h2>
+<!-- Layanan Section -->
+<section class="py-12 bg-gray-100">
+  <div class="container mx-auto text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8" data-aos="fade-down" data-aos-duration="800">
+      Layanan Kami
+    </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mx-9">
-        <!-- Layanan 1: Pembelian Produk Unggas -->
-        <div class="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-          <div class="mb-4">
-            <i class="fas fa-drumstick-bite text-orange-500 text-4xl"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-700 mb-2">
-            Pembelian Produk Unggas
-          </h3>
-          <p class="text-gray-600">
-            Dapatkan berbagai produk unggas seperti ayam, telur, dan pakan
-            langsung dari peternak terpercaya.
-          </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mx-9">
+      <!-- Layanan 1: Pembelian Produk Unggas -->
+      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" 
+           data-aos="fade-right" data-aos-delay="200" data-aos-duration="1000" data-aos-offset="200">
+        <div class="mb-4">
+          <i class="fas fa-drumstick-bite text-orange-500 text-4xl"></i>
         </div>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Pembelian Produk Unggas</h3>
+        <p class="text-gray-600">
+          Dapatkan berbagai produk unggas seperti ayam, telur, dan pakan langsung dari peternak terpercaya.
+        </p>
+      </div>
 
-        <!-- Layanan 2: Pengiriman Cepat -->
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-          <div class="mb-4">
-            <i class="fas fa-shipping-fast text-orange-500 text-4xl"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-700 mb-2">
-            Pengiriman Cepat
-          </h3>
-          <p class="text-gray-600">
-            Nikmati layanan pengiriman cepat dan aman hingga ke pintu rumah
-            Anda.
-          </p>
+      <!-- Layanan 2: Pengiriman Cepat -->
+      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" 
+           data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000" data-aos-offset="200">
+        <div class="mb-4">
+          <i class="fas fa-shipping-fast text-orange-500 text-4xl"></i>
         </div>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Pengiriman Cepat</h3>
+        <p class="text-gray-600">
+          Nikmati layanan pengiriman cepat dan aman hingga ke pintu rumah Anda.
+        </p>
+      </div>
 
-        <!-- Layanan 3: Kemitraan Peternak -->
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-          <div class="mb-4">
-            <i class="fas fa-handshake text-orange-500 text-4xl"></i>
-          </div>
-          <h3 class="text-xl font-semibold text-gray-700 mb-2">
-            Kemitraan Peternak
-          </h3>
-          <p class="text-gray-600">
-            Kami membuka peluang kemitraan bagi peternak lokal untuk menjual
-            produk unggas mereka di platform kami.
-          </p>
+      <!-- Layanan 3: Kemitraan Peternak -->
+      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" 
+           data-aos="fade-left" data-aos-delay="600" data-aos-duration="1000" data-aos-offset="200">
+        <div class="mb-4">
+          <i class="fas fa-handshake text-orange-500 text-4xl"></i>
         </div>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Kemitraan Peternak</h3>
+        <p class="text-gray-600">
+          Kami membuka peluang kemitraan bagi peternak lokal untuk menjual produk unggas mereka di platform kami.
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Kategori Section -->
-  <section class="py-12 bg-white">
+  <section class="py-12 bg-white" data-aos="fade-left" data-aos-delay="5000" data-aos-duration="1000" data-aos-offset="300">
     <div class="container mx-auto text-center">
       <h2 class="text-3xl font-bold text-gray-800 mb-8">Kategori Produk</h2>
 
@@ -295,13 +299,17 @@
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-20">
         <!-- Card Produk 1 -->
         <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md">
-          <a href="#">
-            <img class="h-40 rounded-t-lg object-cover"
-              src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="product image" />
+          <a href="#" class="group">
+            <img 
+              class="h-40 w-full rounded-t-lg object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" 
+              src="/img/ayam.webp" 
+              alt="product image" 
+            />
           </a>
           <span
-            class="absolute top-0 left-0 w-16 translate-y-3 -translate-x-4 -rotate-45 bg-black text-center text-xs text-white">Sale</span>
+            class="absolute top-0 left-0 w-16 translate-y-3 -translate-x-4 -rotate-45 bg-black text-center text-xs text-white">
+            Sale
+          </span>
           <div class="mt-3 px-4 pb-4">
             <a href="detail.html">
               <h5 class="text-base font-semibold tracking-tight text-slate-900">
@@ -333,207 +341,7 @@
             </div>
           </div>
         </div>
-
-        <!-- Card Produk 2 (Duplikasi Card 1) -->
-        <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md">
-          <a href="#">
-            <img class="h-40 rounded-t-lg object-cover"
-              src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="product image" />
-          </a>
-          <span
-            class="absolute top-0 left-0 w-16 translate-y-3 -translate-x-4 -rotate-45 bg-black text-center text-xs text-white">Sale</span>
-          <div class="mt-3 px-4 pb-4">
-            <a href="#">
-              <h5 class="text-base font-semibold tracking-tight text-slate-900">
-                Nike Air MX Super 5000
-              </h5>
-            </a>
-            <div class="mt-2.5 mb-4 flex items-center">
-              <span class="mr-1 rounded bg-yellow-200 px-2 py-0.5 text-xs font-semibold">5.0</span>
-              <svg aria-hidden="true" class="h-4 w-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                </path>
-              </svg>
-            </div>
-            <div class="flex items-center justify-between">
-              <p>
-                <span class="text-xl font-bold text-slate-900">$249</span>
-                <span class="text-xs text-slate-900 line-through">$299</span>
-              </p>
-              <a href="#"
-                class="flex items-center rounded-md bg-slate-900 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Add to cart</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md">
-          <a href="#">
-            <img class="h-40 rounded-t-lg object-cover"
-              src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="product image" />
-          </a>
-          <span
-            class="absolute top-0 left-0 w-16 translate-y-3 -translate-x-4 -rotate-45 bg-black text-center text-xs text-white">Sale</span>
-          <div class="mt-3 px-4 pb-4">
-            <a href="#">
-              <h5 class="text-base font-semibold tracking-tight text-slate-900">
-                Nike Air MX Super 5000
-              </h5>
-            </a>
-            <div class="mt-2.5 mb-4 flex items-center">
-              <span class="mr-1 rounded bg-yellow-200 px-2 py-0.5 text-xs font-semibold">5.0</span>
-              <svg aria-hidden="true" class="h-4 w-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                </path>
-              </svg>
-            </div>
-            <div class="flex items-center justify-between">
-              <p>
-                <span class="text-xl font-bold text-slate-900">$249</span>
-                <span class="text-xs text-slate-900 line-through">$299</span>
-              </p>
-              <a href="#"
-                class="flex items-center rounded-md bg-slate-900 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Add to cart</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md">
-          <a href="#">
-            <img class="h-40 rounded-t-lg object-cover"
-              src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="product image" />
-          </a>
-          <span
-            class="absolute top-0 left-0 w-16 translate-y-3 -translate-x-4 -rotate-45 bg-black text-center text-xs text-white">Sale</span>
-          <div class="mt-3 px-4 pb-4">
-            <a href="#">
-              <h5 class="text-base font-semibold tracking-tight text-slate-900">
-                Nike Air MX Super 5000
-              </h5>
-            </a>
-            <div class="mt-2.5 mb-4 flex items-center">
-              <span class="mr-1 rounded bg-yellow-200 px-2 py-0.5 text-xs font-semibold">5.0</span>
-              <svg aria-hidden="true" class="h-4 w-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                </path>
-              </svg>
-            </div>
-            <div class="flex items-center justify-between">
-              <p>
-                <span class="text-xl font-bold text-slate-900">$249</span>
-                <span class="text-xs text-slate-900 line-through">$299</span>
-              </p>
-              <a href="#"
-                class="flex items-center rounded-md bg-slate-900 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Add to cart</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md">
-          <a href="#">
-            <img class="h-40 rounded-t-lg object-cover"
-              src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="product image" />
-          </a>
-          <span
-            class="absolute top-0 left-0 w-16 translate-y-3 -translate-x-4 -rotate-45 bg-black text-center text-xs text-white">Sale</span>
-          <div class="mt-3 px-4 pb-4">
-            <a href="#">
-              <h5 class="text-base font-semibold tracking-tight text-slate-900">
-                Nike Air MX Super 5000
-              </h5>
-            </a>
-            <div class="mt-2.5 mb-4 flex items-center">
-              <span class="mr-1 rounded bg-yellow-200 px-2 py-0.5 text-xs font-semibold">5.0</span>
-              <svg aria-hidden="true" class="h-4 w-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                </path>
-              </svg>
-            </div>
-            <div class="flex items-center justify-between">
-              <p>
-                <span class="text-xl font-bold text-slate-900">$249</span>
-                <span class="text-xs text-slate-900 line-through">$299</span>
-              </p>
-              <a href="#"
-                class="flex items-center rounded-md bg-slate-900 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Add to cart</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md">
-          <a href="#">
-            <img class="h-40 rounded-t-lg object-cover"
-              src="https://images.unsplash.com/flagged/photo-1556637640-2c80d3201be8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="product image" />
-          </a>
-          <span
-            class="absolute top-0 left-0 w-16 translate-y-3 -translate-x-4 -rotate-45 bg-black text-center text-xs text-white">Sale</span>
-          <div class="mt-3 px-4 pb-4">
-            <a href="#">
-              <h5 class="text-base font-semibold tracking-tight text-slate-900">
-                Nike Air MX Super 5000
-              </h5>
-            </a>
-            <div class="mt-2.5 mb-4 flex items-center">
-              <span class="mr-1 rounded bg-yellow-200 px-2 py-0.5 text-xs font-semibold">5.0</span>
-              <svg aria-hidden="true" class="h-4 w-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                </path>
-              </svg>
-            </div>
-            <div class="flex items-center justify-between">
-              <p>
-                <span class="text-xl font-bold text-slate-900">$249</span>
-                <span class="text-xs text-slate-900 line-through">$299</span>
-              </p>
-              <a href="#"
-                class="flex items-center rounded-md bg-slate-900 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24"
-                  stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                Add to cart</a>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </div>
   </section>
@@ -609,10 +417,22 @@
     </div>
   </footer>
 
+
+  <!-- icon -->
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- gsap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js"></script>
   <script src="/src/js/script.js"></script>
+  <script src="/src/js/animasi.js"></script>
 
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true, // Animasi hanya terjadi sekali saat scroll pertama
+      anchorPlacement: 'top-bottom', // Mulai animasi ketika elemen bagian bawah terlihat di viewport
+    });
+  </script>
 </body>
-
 </html>

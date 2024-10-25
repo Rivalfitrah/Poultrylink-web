@@ -3,4 +3,6 @@
 @tailwind utilities;
 
       
-      
+colors: {
+    'primary': '#FF6600',
+    'second' : '#FFBF78'
