@@ -11,9 +11,6 @@ use App\Http\Controllers\buyerController;
 use App\Http\Controllers\supplierController;
 use App\Http\Controllers\authenticationController;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 
 Route::get('/users/{id}', [userController::class, 'show']);
 Route::get('/users', [userController::class, 'index']);
@@ -64,5 +61,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('addtocart', [cartController::class, 'postcart']);
 
     //update
-    Route::patch('/updatecart/{id}',[cartController::class, 'updatecart']);
+    Route::post('/updatecart/{id}',[cartController::class, 'updatecart']);
+    Route::post('/order', [cartController::class, 'postorder']);
 });

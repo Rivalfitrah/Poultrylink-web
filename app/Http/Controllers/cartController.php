@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Produk;
 use Illuminate\Http\Request;
 use App\Http\Resources\cartResource;
@@ -53,8 +54,59 @@ class cartController extends Controller
         ]);
 
         return new CartResource($cart->loadMissing(['produkGet','userGet']));
-    
     }
+
+    public function postorder(Request $request){
+        $validate = $request->validate([
+            'cart_id' => 'required|array', 
+            'cart_id.*' => 'required|exists:cart,id',  
+        ]);
+    
+        $user_id = Auth::user()->id;
+        $orders = [];
+    
+        foreach ($request->cart_id as $cartId) {
+            $cart = Cart::findOrFail($cartId);
+    
+            $totalHarga = $cart->total_harga;
+            $totalBarang = $cart->total_barang;
+    
+            $notagihan = $this->generateRandomString();
+    
+            $order = Order::create([
+                'cart_id' => $cart->id,
+                'user_id' => $user_id,
+                'notagihan' => $notagihan,
+                'total' => $totalBarang,
+                'harga' => $totalHarga,
+            ]);
+    
+            $orders[] = [
+                'order_id' => $order->id,
+                'cart_id' => $cart->id,
+                'notagihan' => $notagihan,
+                'total' => $totalBarang,
+                'harga' => $totalHarga,
+            ];
+        }
+    
+        return response()->json([
+            'message' => 'Order berhasil dibuat',
+            'orders' => $orders,
+        ]);
+    }
+    
+
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
 
     public function deleteitem(){
         $cart = Cart::findOrFail($id);
