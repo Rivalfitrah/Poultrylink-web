@@ -1,12 +1,14 @@
 {
   "devDependencies": {
+    "lite-server": "^2.6.1",
     "tailwindcss": "^3.4.14"
   },
   "dependencies": {
     "tw-elements": "^2.0.0"
   },
   "scripts": {
-    "dev": "npx tailwindcss -o ./src/output.css --watch",
-    "build": "npx tailwindcss -o ./src/output.css --minify"
+    "dev": "npx tailwindcss -o ./public/src/output.css --watch",
+    "build": "npx tailwindcss -o ./public/src/output.css --minify",
+    "start": "lite-server --baseDir=public"
   }
 }

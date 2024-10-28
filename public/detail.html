@@ -2,29 +2,31 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/src/output.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/src/css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-    <script src="https://unpkg.com/@heroicons/react/outline"></script>
-    <title>PoultryLink</title>
-    <link rel="icon" href="/img/Group 55.svg">
-  </head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./src/output.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/@heroicons/react/outline"></script>
+  <title>PoultryLink</title>
+  <link rel="icon" href="./src/img/Group 55.svg">
+  <!-- aos -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
 
 <body class="bg-gray-50 mx-0">
 
-  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20">
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20" data-aos="fade-down" data-aos-duration="2000">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <!-- Logo dan Nama PoultryLink -->
       <a href="index.html" class="flex items-center space-x-2 ml-7">
-        <img src="/img/Group 55.svg" alt="PoultryLink Logo" class="h-16 w-16">
+        <img src="./src/img/Group 55.svg" alt="PoultryLink Logo" class="h-16 w-16">
         <span class="text-3xl font-bold text-primary">PoultryLink</span>
       </a>
 
       <!-- Link Navigasi -->
       <div class="hidden md:flex space-x-6">
-        <a href="/public/compony/about.html"
+        <a href="./compony/about.html"
           class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
         <a href="shop.html"
           class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Produk</a>
@@ -33,9 +35,13 @@
       <!-- Fitur Search, Wishlist, Cart, dan Akun -->
       <div class="flex items-center space-x-4 mr-12">
         <!-- Search Bar -->
-        <div class="relative w-80"> <!-- Tambahkan class w-96 untuk memperlebar search -->
-          <input type="text" id="searchInput" class="border rounded-full py-2 px-4 w-full text-gray-800 border-primary"
-            placeholder="Search...">
+        <div class="relative w-80">
+          <input
+            type="text"
+            id="searchInput"
+            class="border border-primary rounded-full py-2 px-4 w-full text-primary focus:border-primary focus:outline-none"
+            placeholder="Search..."
+          />
           <span class="absolute right-3 top-2 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -46,15 +52,7 @@
         </div>
 
         <!-- Wishlist Icon -->
-        <a href="akun/whislist.html" class="relative text-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 000-7.78z">
-            </path>
-          </svg>
-        </a>
-
+        
         <!-- Cart Icon -->
         <a href="cart.html" class="relative text-primary">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -99,7 +97,7 @@
               </svg>
               Manage Account
             </a>
-            <a href="#" id="manage-account-btn"
+            <a href="dashboard/toko.html" id="manage-account-btn"
               class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
               <i class="fa-solid fa-shop mx-2"></i>
               Buka toko
@@ -109,261 +107,245 @@
       </div>
     </div>
   </nav>
+  <!-- Main Content -->
+  <!-- Container for the Product Detail Page -->
+  <div class="container mx-auto p-6 mt-7">
+    <!-- Breadcrumbs -->
+    <nav class="flex mb-6 text-gray-700 mt-20" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li>
+          <a href="index.html" class="inline-flex items-center text-xl font-medium text-primary">
+            <ion-icon name="home-outline"></ion-icon> Home
+          </a>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+            <span class="ml-1 text-xl font-medium text-gray-500 md:ml-2">Detail</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
 
-<!-- Hamburger Icon for Mobile -->
-<button class="md:hidden" id="hamburger-btn">
-    <i class="fas fa-bars text-xl text-primary"></i>
-</button>
-
-<div class="hidden md:flex space-x-6" id="nav-links">
-    <a href="#" class="hover:underline">About PoultryLink</a>
-    <a href="#" class="hover:underline">Shop</a>
-</div>
-
-<div class="flex items-center space-x-4 mr-12">
-    <input type="text" class="border rounded-full py-2 px-4 border-primary" placeholder="Search..." />
-    <a href="#" class="text-primary">
-        <i class="fas fa-heart"></i>
-    </a>
-    <a href="cart.html" class="text-primary">
-        <i class="fas fa-shopping-cart"></i>
-    </a>
-
-    <!-- Account Dropdown -->
-    <div class="relative">
-        <button id="account-icon" class="text-primary">
-            <i class="fas fa-user-circle"></i>
-        </button>
-        <div id="account-dropdown" class="absolute right-0 mt-2 hidden bg-white rounded-lg shadow-lg p-4">
-            <a href="sign/login.html" class="block mb-2">Login</a>
-            <a href="sign/register.html" class="block mb-2">Register</a>
-            <a href="#" class="block">Manage Account</a>
-        </div>
-    </div>
-</div>
-</div>
-</nav>
-
-<!-- Main Content -->
-<!-- Container for the Product Detail Page -->
-<div class="container mx-auto p-6 mt-7">
-  <!-- Breadcrumbs -->
-  <nav class="flex mb-6 text-gray-700" aria-label="Breadcrumb">
-    <ol class="inline-flex items-center space-x-1 md:space-x-3">
-      <li>
-        <a href="index.html" class="inline-flex items-center text-sm font-medium text-primary">
-          <ion-icon name="home-outline"></ion-icon> Home
-        </a>
-      </li>
-      <li aria-current="page">
-        <div class="flex items-center">
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-          <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Detail</span>
-        </div>
-      </li>
-    </ol>
-  </nav>
-
-  <!-- Product Section -->
-  <div class="flex flex-col lg:flex-row gap-10">
-    <!-- Product Image (resized) -->
-    <div class="lg:w-80">
-      <img src="https://via.placeholder.com/400" alt="Product Image" class="w-full rounded-lg shadow-md">
-    </div>
-
-    <!-- Product Information -->
-    <div class="lg:w-1/2">
-      <h1 class="text-3xl font-bold text-gray-800">Fresh Organic Chicken</h1>
-      <p class="text-xl text-green-500 font-semibold mt-2 mb-4">$19.99</p>
-
-      <!-- Product Rating -->
-      <div class="flex items-center mb-4">
-        <span class="text-yellow-400 text-xl">★★★★★</span>
-        <span class="ml-2 text-gray-500">(120 Reviews)</span>
+    <!-- Product Section -->
+    <div class="flex flex-col lg:flex-row gap-10">
+      <!-- Product Image (resized) -->
+      <div class="lg:w-80">
+        <img src="https://via.placeholder.com/400" alt="Product Image" class="w-full rounded-lg shadow-md">
       </div>
 
-      <!-- Product Description -->
-      <p class="text-gray-600 leading-relaxed mb-6">
-        Our fresh organic chicken is locally sourced and free of any preservatives. Ideal for healthy meals, packed with protein.
-      </p>
+      <!-- Product Information -->
+      <div class="lg:w-1/2">
+        <h1 class="text-3xl font-bold text-gray-800">Fresh Organic Chicken</h1>
+        <p class="text-xl text-primary font-semibold mt-2 mb-4">$19.99</p>
 
-      <!-- Quantity and Add to Cart -->
-      <div class="flex items-center space-x-4 mb-6">
-        <label for="quantity" class="text-gray-700">Quantity:</label>
-        <div class="flex items-center space-x-2">
-          <button id="decrease-quantity" class="px-3 py-1 bg-gray-200 rounded-md">-</button>
-          <input type="number" id="quantity" name="quantity" min="1" value="1" class="w-16 border rounded-md p-2 text-center" readonly>
-          <button id="increase-quantity" class="px-3 py-1 bg-gray-200 rounded-md">+</button>
+        <!-- Product Rating -->
+        <div class="flex items-center mb-4">
+          <span class="text-yellow-400 text-xl">★★★★★</span>
+          <span class="ml-2 text-gray-500">(120 Reviews)</span>
         </div>
-        <button class="bg-primary hover:bg-white border border-primary hover:text-primary text-white px-5 py-2 rounded-md transition duration-700">Add to Cart</button>
-      </div>
 
-      <!-- Additional Product Details -->
-      <ul class="text-gray-600 mb-6 space-y-2">
-        <li><strong>Category:</strong> Poultry</li>
-        <li><strong>Weight:</strong> 1.5kg</li>
-        <li><strong>Availability:</strong> In Stock</li>
+        <!-- Product Description -->
+        <p class="text-gray-600 leading-relaxed mb-6">
+          Our fresh organic chicken is locally sourced and free of any preservatives. Ideal for healthy meals, packed
+          with protein.
+        </p>
+
+        <!-- Quantity and Add to Cart -->
+        <div class="flex items-center space-x-4 mb-6">
+          <label for="quantity" class="text-gray-700">Quantity:</label>
+          <div class="flex items-center space-x-2">
+            <button id="decrease-quantity" class="px-3 py-1 bg-gray-200 rounded-md">-</button>
+            <input type="number" id="quantity" name="quantity" min="1" value="1"
+              class="w-16 border rounded-md p-2 text-center" readonly>
+            <button id="increase-quantity" class="px-3 py-1 bg-gray-200 rounded-md">+</button>
+          </div>
+          <button
+            class="bg-primary hover:bg-white border border-primary hover:text-primary text-white px-5 py-2 rounded-md transition duration-700">Add
+            to Cart</button>
+        </div>
+
+        <!-- Additional Product Details -->
+        <ul class="text-gray-600 mb-6 space-y-2">
+          <li><strong>Category:</strong> Poultry</li>
+          <li><strong>Weight:</strong> 1.5kg</li>
+          <li><strong>Availability:</strong> In Stock</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tabs for Description and Reviews -->
+    <div class="mt-10">
+      <ul class="flex border-b mb-4">
+        <li id="description-tab" class="mr-8 pb-2 text-gray-700 font-semibold border-b-2 border-primary cursor-pointer">
+          Description</li>
+        <li id="reviews-tab" class="mr-8 pb-2 text-gray-500 hover:text-gray-700 cursor-pointer">Reviews (120)</li>
       </ul>
-    </div>
-  </div>
 
-  <!-- Tabs for Description and Reviews -->
-  <div class="mt-10">
-    <ul class="flex border-b mb-4">
-      <li id="description-tab" class="mr-8 pb-2 text-gray-700 font-semibold border-b-2 border-primary cursor-pointer">Description</li>
-      <li id="reviews-tab" class="mr-8 pb-2 text-gray-500 hover:text-gray-700 cursor-pointer">Reviews (120)</li>
-    </ul>
-
-    <!-- Description Content -->
-    <div id="description-content" class="mb-8">
-      <h3 class="text-xl font-semibold mb-4">Product Description</h3>
-      <p class="text-gray-600 leading-relaxed">
-        This organic chicken is perfect for your culinary needs. It is raised in a natural environment, ensuring the best flavor and nutrition. 
-        Ideal for grilling, roasting, or slow-cooking.
-      </p>
-    </div>
-
-    <!-- Reviews Section (Initially hidden) -->
-    <div id="reviews-content" class="hidden border-t pt-6">
-      <h3 class="text-xl font-semibold mb-4">Customer Reviews</h3>
-
-      <!-- Single Review -->
-      <div class="mb-6">
-        <div class="flex items-center mb-2">
-          <span class="text-yellow-400">★★★★☆</span>
-          <span class="ml-2 text-gray-600">John Doe</span>
-        </div>
-        <p class="text-gray-500 mb-2">"The quality of the chicken was excellent! Perfect for my family dinner."</p>
-        <p class="text-gray-400 text-sm">Reviewed on: Oct 22, 2024</p>
+      <!-- Description Content -->
+      <div id="description-content" class="mb-8">
+        <h3 class="text-xl font-semibold mb-4">Product Description</h3>
+        <p class="text-gray-600 leading-relaxed">
+          This organic chicken is perfect for your culinary needs. It is raised in a natural environment, ensuring the
+          best flavor and nutrition.
+          Ideal for grilling, roasting, or slow-cooking.
+        </p>
       </div>
 
-      <!-- Add Review Form -->
-      <h4 class="text-lg font-semibold mb-4">Add Your Review</h4>
-      <form>
-        <div class="mb-4">
-          <label for="review-text" class="block text-gray-700">Your Review</label>
-          <textarea id="review-text" class="w-full border rounded-md p-3" rows="4"></textarea>
+      <!-- Reviews Section (Initially hidden) -->
+      <div id="reviews-content" class="hidden border-t pt-6">
+        <h3 class="text-xl font-semibold mb-4">Customer Reviews</h3>
+
+        <!-- Single Review -->
+        <div class="mb-6">
+          <div class="flex items-center mb-2">
+            <span class="text-yellow-400">★★★★☆</span>
+            <span class="ml-2 text-gray-600">John Doe</span>
+          </div>
+          <p class="text-gray-500 mb-2">"The quality of the chicken was excellent! Perfect for my family dinner."</p>
+          <p class="text-gray-400 text-sm">Reviewed on: Oct 22, 2024</p>
         </div>
-        <button class="bg-primary hover:bg-white border border-primary hover:text-primary text-white px-5 py-2 rounded-md transition duration-700">Submit Review</button>
-      </form>
+
+        <!-- Add Review Form -->
+        <h4 class="text-lg font-semibold mb-4">Add Your Review</h4>
+        <form>
+          <div class="mb-4">
+            <label for="review-text" class="block text-gray-700">Your Review</label>
+            <textarea id="review-text" class="w-full border rounded-md p-3" rows="4"></textarea>
+          </div>
+          <button
+            class="bg-primary hover:bg-white border border-primary hover:text-primary text-white px-5 py-2 rounded-md transition duration-700">Submit
+            Review</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
 
-    <footer class="bg-primary text-white py-10">
-        <div class="container w-full grid grid-cols-1 md:grid-cols-3 gap-8">
-          <!-- Logo and Description -->
-          <div class="mx-20">
-            <h2 class="text-2xl font-bold mb-4">PoultryLink</h2>
-            <p class="text-white">Connecting poultry farmers with consumers for fresh poultry products like eggs, chicken,
-              and feed.</p>
-          </div>
-    
-          <!-- Navigation Links -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-            <ul>
-              <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">About
-                  PoultryLink</a></li>
-              <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Shop</a>
-              </li>
-              <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Contact
-                  Us</a></li>
-              <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Privacy
-                  Policy</a></li>
-            </ul>
-          </div>
-    
-    
-          <!-- Download App Banners -->
-          <div>
-            <h3 class="text-lg font-semibold mb-4">Download Our App</h3>
-            <div class="flex space-x-4">
-              <a href="#">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                  alt="Download on Play Store" class="h-12">
-              </a>
-              <a href="#">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg"
-                  alt="Download on App Store" class="h-12">
-              </a>
-            </div>
-            <div class="flex space-x-6 mt-2 pt-5 ml-3">
-              <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path
-                    d="M22.162 5.656c-0.824 0.366-1.711 0.615-2.64 0.727 0.949-0.569 1.678-1.47 2.022-2.543-0.887 0.526-1.87 0.907-2.915 1.112-0.838-0.893-2.032-1.451-3.354-1.451-2.54 0-4.603 2.063-4.603 4.603 0 0.36 0.041 0.71 0.118 1.047-3.826-0.192-7.221-2.025-9.493-4.812-0.397 0.682-0.623 1.476-0.623 2.32 0 1.602 0.816 3.013 2.057 3.843-0.757-0.024-1.471-0.232-2.093-0.579v0.059c0 2.237 1.592 4.104 3.703 4.527-0.388 0.105-0.797 0.162-1.218 0.162-0.297 0-0.586-0.028-0.868-0.081 0.586 1.83 2.287 3.163 4.3 3.199-1.575 1.233-3.561 1.97-5.719 1.97-0.372 0-0.738-0.022-1.101-0.065 2.039 1.307 4.458 2.071 7.057 2.071 8.468 0 13.101-7.015 13.101-13.101 0-0.199-0.004-0.397-0.014-0.594 0.898-0.648 1.68-1.458 2.297-2.38z" />
-                </svg>
-              </a>
-              <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
-                </svg>
-              </a>
-              <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
-                </svg>
-              </a>
-            </div>
-          </div>
+  <footer class="bg-primary text-white py-10" data-aos="fade-up" data-aos-duration="1500" data-aos-easing="ease-in-out">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Logo and Description -->
+      <div class="mx-20">
+        <h2 class="text-2xl font-bold mb-4">PoultryLink</h2>
+        <p class="text-white">Connecting poultry farmers with consumers for fresh poultry products like eggs, chicken,
+          and feed.</p>
+      </div>
+
+      <!-- Navigation Links -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul>
+          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">About
+            </a></li>
+          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Shop</a>
+          </li>
+          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Contact
+              Us</a></li>
+          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Privacy
+              Policy</a></li>
+        </ul>
+      </div>
+
+
+      <!-- Download App Banners -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Download Our App</h3>
+        <div class="flex space-x-4">
+          <a href="#">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+              alt="Download on Play Store" class="h-12">
+          </a>
+          <a href="#">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg"
+              alt="Download on App Store" class="h-12">
+          </a>
         </div>
-    
-        <!-- Social Media Icons -->
-        <div class="container mx-auto mt-10 border-t border-gray-700 pt-6">
-          <div class="flex flex-col items-center">
-            <p class="text-white text-center">&copy; 2024 PoultryLink. All rights reserved.</p>
-          </div>
+        <div class="flex space-x-6 mt-2 pt-5 ml-3">
+          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M22.162 5.656c-0.824 0.366-1.711 0.615-2.64 0.727 0.949-0.569 1.678-1.47 2.022-2.543-0.887 0.526-1.87 0.907-2.915 1.112-0.838-0.893-2.032-1.451-3.354-1.451-2.54 0-4.603 2.063-4.603 4.603 0 0.36 0.041 0.71 0.118 1.047-3.826-0.192-7.221-2.025-9.493-4.812-0.397 0.682-0.623 1.476-0.623 2.32 0 1.602 0.816 3.013 2.057 3.843-0.757-0.024-1.471-0.232-2.093-0.579v0.059c0 2.237 1.592 4.104 3.703 4.527-0.388 0.105-0.797 0.162-1.218 0.162-0.297 0-0.586-0.028-0.868-0.081 0.586 1.83 2.287 3.163 4.3 3.199-1.575 1.233-3.561 1.97-5.719 1.97-0.372 0-0.738-0.022-1.101-0.065 2.039 1.307 4.458 2.071 7.057 2.071 8.468 0 13.101-7.015 13.101-13.101 0-0.199-0.004-0.397-0.014-0.594 0.898-0.648 1.68-1.458 2.297-2.38z" />
+            </svg>
+          </a>
+          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram"
+              viewBox="0 0 16 16">
+              <path
+                d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+            </svg>
+          </a>
+          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook"
+              viewBox="0 0 16 16">
+              <path
+                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+            </svg>
+          </a>
         </div>
-      </footer>
+      </div>
+    </div>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Social Media Icons -->
+    <div class="container mx-auto mt-10 border-t border-gray-700 pt-6">
+      <div class="flex flex-col items-center">
+        <p class="text-white text-center">&copy; 2024 PoultryLink. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
-    <!-- <script src="/src/js/script.js"></script> -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+  <script src="./src/js/script.js"></script>
+
+  <script>
+    // JavaScript for switching between tabs
+    const descriptionTab = document.getElementById('description-tab');
+    const reviewsTab = document.getElementById('reviews-tab');
+    const descriptionContent = document.getElementById('description-content');
+    const reviewsContent = document.getElementById('reviews-content');
+
+    descriptionTab.addEventListener('click', function () {
+      descriptionContent.classList.remove('hidden');
+      reviewsContent.classList.add('hidden');
+      descriptionTab.classList.add('border-b-2', 'border-primary', 'text-gray-700');
+      reviewsTab.classList.remove('border-b-2', 'border-primary', 'text-gray-700');
+      reviewsTab.classList.add('text-gray-500');
+    });
+
+    reviewsTab.addEventListener('click', function () {
+      reviewsContent.classList.remove('hidden');
+      descriptionContent.classList.add('hidden');
+      reviewsTab.classList.add('border-b-2', 'border-primary', 'text-gray-700');
+      descriptionTab.classList.remove('border-b-2', 'border-primary', 'text-gray-700');
+      descriptionTab.classList.add('text-gray-500');
+    });
+
+    // JavaScript for quantity increment/decrement
+    document.getElementById('increase-quantity').addEventListener('click', function () {
+      let quantityInput = document.getElementById('quantity');
+      let currentValue = parseInt(quantityInput.value);
+      quantityInput.value = currentValue + 1;
+    });
+
+    document.getElementById('decrease-quantity').addEventListener('click', function () {
+      let quantityInput = document.getElementById('quantity');
+      let currentValue = parseInt(quantityInput.value);
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
+      }
+    });
+
+  </script>
+
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-      // JavaScript for switching between tabs
-      const descriptionTab = document.getElementById('description-tab');
-      const reviewsTab = document.getElementById('reviews-tab');
-      const descriptionContent = document.getElementById('description-content');
-      const reviewsContent = document.getElementById('reviews-content');
-  
-      descriptionTab.addEventListener('click', function() {
-        descriptionContent.classList.remove('hidden');
-        reviewsContent.classList.add('hidden');
-        descriptionTab.classList.add('border-b-2', 'border-primary', 'text-gray-700');
-        reviewsTab.classList.remove('border-b-2', 'border-primary', 'text-gray-700');
-        reviewsTab.classList.add('text-gray-500');
-      });
-  
-      reviewsTab.addEventListener('click', function() {
-        reviewsContent.classList.remove('hidden');
-        descriptionContent.classList.add('hidden');
-        reviewsTab.classList.add('border-b-2', 'border-primary', 'text-gray-700');
-        descriptionTab.classList.remove('border-b-2', 'border-primary', 'text-gray-700');
-        descriptionTab.classList.add('text-gray-500');
-      });
-  
-      // JavaScript for quantity increment/decrement
-      document.getElementById('increase-quantity').addEventListener('click', function() {
-        let quantityInput = document.getElementById('quantity');
-        let currentValue = parseInt(quantityInput.value);
-        quantityInput.value = currentValue + 1;
-      });
-  
-      document.getElementById('decrease-quantity').addEventListener('click', function() {
-        let quantityInput = document.getElementById('quantity');
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-          quantityInput.value = currentValue - 1;
-        }
+      AOS.init({
+        once: true, // Animasi hanya terjadi sekali saat scroll pertama
+        anchorPlacement: 'top-bottom', // Mulai animasi ketika elemen bagian bawah terlihat di viewport
       });
     </script>
+
 </body>
 
 </html>

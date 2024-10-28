@@ -1,0 +1,25 @@
+/* Loading Screen */
+/* CSS Styling */
+/* CSS Styling */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; /* Background layar loading */
+  z-index: 9999;
+}
+
+#loading-circle {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ff6600; /* Warna sesuai tema */
+  border-top: 5px solid transparent; /* Bagian atas transparan untuk efek putar */
+  border-radius: 50%;
+}
+
+

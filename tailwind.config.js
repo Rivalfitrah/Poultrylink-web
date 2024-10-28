@@ -1,11 +1,12 @@
 // tailwind.config.js
 module.exports = {
   content: [
-    "./src/**/*.{html,js,jsx,ts,tsx}",
-    "./public/**/*.html",
-    "./public/sign/**/*.html",
-    "./public/dashboard/**/*.html",
-    "/public/akun/**/*.html"
+    "./public/**/*.html",               // Mendeteksi semua HTML di folder public dan subfoldernya
+    "./public/src/**/*.{js,css}",        // Mendeteksi semua JavaScript dan CSS di dalam public/src
+    // "./public/src/**/*.{jsx,ts,tsx}",
+    // "./public/sign/**/*.html",
+    // "./public/dashboard/**/*.html",
+    // "./public/akun/**/*.html"
   ],
   theme: {
     extend: {

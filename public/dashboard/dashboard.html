@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="../src/output.css" rel="stylesheet" />
+        <!-- <link rel="stylesheet" href="/src/css/style.css"> -->
+        <!-- <link rel="stylesheet" href="/src/css/animasi.css"> -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+        <!-- icon -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <title>PoultryLink</title>
+        <link rel="icon" href="../src/img/Group 55.svg">
+        <!-- AOS -->
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+      </head>
+      <body class="bg-gray-100 font-sans leading-normal tracking-normal">
+        <!-- Sidebar -->
+        <div class="flex">
+          <div class="bg-white h-screen w-64 hidden lg:block shadow-lg">
+            <a href="index.html" class="flex items-center space-x-2 ml-7">
+              <img src="../src/img/Group 55.svg" alt="PoultryLink Logo" class="h-12 w-12 mt-3">
+              <span class="text-2xl font-bold text-primary mt-3">PoultryLink</span>
+            </a>
+            <nav class="mt-10 px-6">
+              <a href="#" class="flex items-center p-2 my-3 bg-primary text-white transition-colors duration-200">
+                <span class="material-icons">dashboard</span>
+                <span class="mx-4">Dashboard</span>
+              </a>
+              <a href="#" class="flex items-center p-2 my-3 text-primary transition-colors duration-200">
+                <span class="material-icons">storefront</span>
+                <span class="mx-4">Products</span>
+              </a>
+              <a href="#" class="flex items-center p-2 my-3 text-primary transition-colors duration-200">
+                <span class="material-icons">receipt_long</span>
+                <span class="mx-4">Orders</span>
+              </a>
+              <a href="#" class="flex items-center p-2 my-3 text-primary transition-colors duration-200">
+                <span class="material-icons">insights</span>
+                <span class="mx-4">Sales Reports</span>
+              </a>
+              <a href="#" class="flex items-center p-2 my-3 text-primary transition-colors duration-200">
+                <span class="material-icons">settings</span>
+                <span class="mx-4">Settings</span>
+              </a>
+            </nav>
+            
+          </div>
+          
+          
+      
+          <!-- Main Dashboard Content -->
+          <div class="flex-1 min-h-screen">
+            <!-- Header -->
+            <header class="flex justify-between items-center bg-white p-4 shadow-md">
+              <div class="text-xl font-bold text-gray-800">Supplier Dashboard</div>
+              <div class="flex items-center space-x-4">
+                <button class="text-primary">
+                  <span class="material-icons">notifications</span>
+                </button>
+                <div class="relative">
+                  <button class="flex items-center text-primary focus:outline-none" id="profileButton">
+                    <img class="w-8 h-8 rounded-full border-2 border-orange-500" src="https://via.placeholder.com/32" alt="Profile Image" />
+                    <span class="ml-2 font-semibold">John Doe</span>
+                    <span class="material-icons ml-1">expand_more</span>
+                  </button>
+                  <!-- Dropdown -->
+                  <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">View Profile</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
+                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                  </div>
+                </div>
+              </div>
+            </header>
+      
+            <!-- Main Content -->
+            <div class="p-8 bg-gray-100">
+              <!-- Dashboard Cards -->
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="p-4 bg-white shadow-lg rounded-lg">
+                  <p class="font-bold text-gray-800">Total Sales</p>
+                  <p class="text-3xl font-semibold text-primary mt-2">$15,200</p>
+                </div>
+                <div class="p-4 bg-white shadow-lg rounded-lg">
+                  <p class="font-bold text-gray-800">Products Listed</p>
+                  <p class="text-3xl font-semibold text-primary mt-2">120</p>
+                </div>
+                <div class="p-4 bg-white shadow-lg rounded-lg">
+                  <p class="font-bold text-gray-800">New Orders</p>
+                  <p class="text-3xl font-semibold text-primary mt-2">24</p>
+                </div>
+                <div class="p-4 bg-white shadow-lg rounded-lg">
+                  <p class="font-bold text-gray-800">Total Earnings</p>
+                  <p class="text-3xl font-semibold text-primary mt-2">$3,800</p>
+                </div>
+              </div>
+      
+              <!-- Recent Orders Table -->
+              <div class="bg-white shadow-lg rounded-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">Recent Orders</h2>
+                <table class="w-full table-auto">
+                  <thead>
+                    <tr class="text-left border-b">
+                      <th class="p-4">Order ID</th>
+                      <th class="p-4">Product</th>
+                      <th class="p-4">Quantity</th>
+                      <th class="p-4">Status</th>
+                      <th class="p-4">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="p-4">#00123</td>
+                      <td class="p-4">Chicken Feed</td>
+                      <td class="p-4">10 bags</td>
+                      <td class="p-4 text-green-600">Delivered</td>
+                      <td class="p-4">$200</td>
+                    </tr>
+                    <tr class="bg-gray-50">
+                      <td class="p-4">#00124</td>
+                      <td class="p-4">Egg Cartons</td>
+                      <td class="p-4">50 cartons</td>
+                      <td class="p-4 text-yellow-500">Pending</td>
+                      <td class="p-4">$150</td>
+                    </tr>
+                    <tr>
+                      <td class="p-4">#00125</td>
+                      <td class="p-4">Live Chickens</td>
+                      <td class="p-4">15 chickens</td>
+                      <td class="p-4 text-red-500">Cancelled</td>
+                      <td class="p-4">$300</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Script to toggle dropdown -->
+        <script>
+          document.getElementById("profileButton").addEventListener("click", function () {
+            const dropdown = document.getElementById("profileDropdown");
+            dropdown.classList.toggle("hidden");
+          });
+          document.addEventListener("click", function (event) {
+            const dropdown = document.getElementById("profileDropdown");
+            const profileButton = document.getElementById("profileButton");
+            if (!profileButton.contains(event.target) && !dropdown.contains(event.target)) {
+              dropdown.classList.add("hidden");
+            }
+          });
+        </script>
+      </body>
+      
+      
+</html>

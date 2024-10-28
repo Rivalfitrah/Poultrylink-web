@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PoultryLink</title>
-    <link rel="stylesheet" href="/src/output.css">
+    <link rel="stylesheet" href="../src/output.css">
+    <link rel="icon" href="../src/img/Group 55.svg">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white shadow-md rounded-lg overflow-hidden flex w-3/4 max-w-4xl">
         
         <!-- Image Section -->
         <div class="w-1/2 hidden md:block">
-            <img src="/img/logo2.png" alt="">
+            <img src="../src/img/logo2.png" alt="">
         </div>
         
         <!-- Login Form Section -->
@@ -69,11 +70,74 @@
             <!-- Register Button -->
             <div class="text-center">
                 <p class="text-gray-600 mb-4">Don't have an account?</p>
-                <a href="register.html" class="bg-primary hover:bg-white hover:text-white px-6 py-2 rounded-md transition duration-300">
+                <a href="register.html" class=" text-primary px-6 py-2 rounded-md transition duration-300">
                     Create an Account
                 </a>                                 
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity=”sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8” crossorigin=”anonymous”></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        function sendData(){
+          var username = $("#username").val();
+          var password = $("#password").val();
+          (async () => {
+            const rawResponse = await fetch('localhost:8080/api/userlogin/login', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({username: username , password: password})
+            });
+            const content = await rawResponse.json();
+      
+            console.log(content);
+          })();
+        }
+      
+        function loginAtmin(){
+          var username = $("#username").val();
+          var password = $("#password").val();
+          var base_url = window.location.origin;
+          $.ajax({
+            url: "http://localhost:8080/api/user/login",
+            type: "POST",
+            data: {
+              username : username,
+              password : password
+            },
+            success: function (rsp){
+              if(rsp.status == '99'){
+                Swal.fire({
+                  title: "Warning",
+                  text: rsp.message,
+                  icon: "info"
+                });
+              }else{
+                Swal.fire({
+                  title: "Success",
+                  text: "Berhasil Login untuk User " + username,
+                  icon: "success",
+                  showCancelButton: false,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor: "#d33",
+                  confirmButtonText: "Ok"
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location = base_url + '/designWeb/admin/tables.html';
+                    // console.log(base_url + '/designWeb');
+                  }
+                });
+      
+              }
+              console.log(rsp);
+            }
+          });
+        }
+      </script>
 </body>
 </html>

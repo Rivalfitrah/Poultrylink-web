@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../src/output.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <title>PoultryLink</title>
+    <link rel="icon" href="../src/img/Group 55.svg">
+</head>
+<body>
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div id="loading-screen">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+
+  <div id="content" style="display: none;"></div>
+  <div class="max-w-lg w-full p-8 bg-white rounded-xl shadow-lg">
+    <div class="flex justify-center space-x-4 mb-6">
+      <div id="step1" class="w-10 h-10 flex items-center justify-center rounded-full text-white font-bold bg-primary shadow-md">1</div>
+      <div id="step2" class="w-10 h-10 flex items-center justify-center rounded-full text-gray-700 font-bold bg-gray-200">2</div>
+      <div id="step3" class="w-10 h-10 flex items-center justify-center rounded-full text-gray-700 font-bold bg-gray-200">3</div>
+    </div>
+
+    <!-- Form Step 1 -->
+    <form id="form1" class="space-y-4">
+      <h2 class="text-2xl font-semibold text-gray-800 text-center">Informasi Toko</h2>
+      <div>
+        <label class="block font-medium text-gray-700">Nama Toko</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Kota</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Kecamatan</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Kode Pos</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+    </form>
+
+    <!-- Form Step 2 -->
+    <form id="form2" class="hidden space-y-4">
+      <h2 class="text-2xl font-semibold text-gray-800 text-center">Upload Dokumen</h2>
+      <div>
+        <label class="block font-medium text-gray-700">KTP</label>
+        <input type="file" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">NPWP</label>
+        <input type="file" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+    </form>
+
+    <!-- Form Step 3 -->
+    <form id="form3" class="hidden space-y-4">
+      <h2 class="text-2xl font-semibold text-gray-800 text-center">Data Pribadi</h2>
+      <div>
+        <label class="block font-medium text-gray-700">NIK</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Nama</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Tempat Tanggal Lahir (TTL)</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Alamat</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Kewarganegaraan</label>
+        <input type="text" class="w-full mt-1 p-3 border border-primary rounded-lg focus:ring-2 focus:ring-primary outline-none">
+      </div>
+    </form>
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between mt-6">
+      <button class="bg-gray-400 text-white py-2 px-6 rounded-lg shadow-lg hover:bg-gray-500">Back</button>
+      <button class="next-button bg-primary text-white py-2 px-6 rounded-lg shadow-lg hover:bg-orange-600">Next</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const forms = [document.getElementById("form1"), document.getElementById("form2"), document.getElementById("form3")];
+  const steps = [document.getElementById("step1"), document.getElementById("step2"), document.getElementById("step3")];
+  const nextButton = document.querySelector(".next-button");
+  const backButton = document.querySelector(".bg-gray-400");
+
+  let currentStep = 0;
+
+  function showForm(step) {
+    forms.forEach((form, index) => {
+      form.classList.toggle("hidden", index !== step);
+      steps[index].classList.toggle("bg-primary", index === step);
+      steps[index].classList.toggle("bg-gray-200", index !== step);
+    });
+
+    backButton.style.display = step === 0 ? "none" : "inline-block";
+    nextButton.textContent = step === forms.length - 1 ? "Submit" : "Next";
+  }
+
+  nextButton.addEventListener("click", () => {
+    if (currentStep < forms.length - 1) {
+      currentStep++;
+      showForm(currentStep);
+    } else {
+      alert("Form submitted!");
+    }
+  });
+
+  backButton.addEventListener("click", () => {
+    if (currentStep > 0) {
+      currentStep--;
+      showForm(currentStep);
+    }
+  });
+
+  showForm(currentStep);
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</body>
+</html>

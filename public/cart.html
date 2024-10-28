@@ -4,26 +4,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="/src/output.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/src/css/style.css">
+  <link href="./src/output.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/css/style.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
   <script src="https://unpkg.com/@heroicons/react/outline"></script>
   <title>PoultryLink</title>
-  <link rel="icon" href="/img/Group 55.svg">
+  <link rel="icon" href="./src/img/Group 55.svg">
 </head>
 
 <body>
-  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20">
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20" data-aos="fade-down" data-aos-duration="2000">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <!-- Logo dan Nama PoultryLink -->
       <a href="index.html" class="flex items-center space-x-2 ml-7">
-        <img src="/img/Group 55.svg" alt="PoultryLink Logo" class="h-16 w-16">
+        <img src="./src/img/Group 55.svg" alt="PoultryLink Logo" class="h-16 w-16">
         <span class="text-3xl font-bold text-primary">PoultryLink</span>
       </a>
 
       <!-- Link Navigasi -->
       <div class="hidden md:flex space-x-6">
-        <a href="/public/compony/about.html"
+        <a href="./compony/about.html"
           class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
         <a href="shop.html"
           class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Produk</a>
@@ -32,9 +32,13 @@
       <!-- Fitur Search, Wishlist, Cart, dan Akun -->
       <div class="flex items-center space-x-4 mr-12">
         <!-- Search Bar -->
-        <div class="relative w-80"> <!-- Tambahkan class w-96 untuk memperlebar search -->
-          <input type="text" id="searchInput" class="border rounded-full py-2 px-4 w-full text-gray-800 border-primary"
-            placeholder="Search...">
+        <div class="relative w-80">
+          <input
+            type="text"
+            id="searchInput"
+            class="border border-primary rounded-full py-2 px-4 w-full text-primary focus:border-primary focus:outline-none"
+            placeholder="Search..."
+          />
           <span class="absolute right-3 top-2 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -45,15 +49,7 @@
         </div>
 
         <!-- Wishlist Icon -->
-        <a href="akun/whislist.html" class="relative text-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 000-7.78z">
-            </path>
-          </svg>
-        </a>
-
+        
         <!-- Cart Icon -->
         <a href="cart.html" class="relative text-primary">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -98,7 +94,7 @@
               </svg>
               Manage Account
             </a>
-            <a href="#" id="manage-account-btn"
+            <a href="dashboard/toko.html" id="manage-account-btn"
               class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
               <i class="fa-solid fa-shop mx-2"></i>
               Buka toko
@@ -115,14 +111,14 @@
   <nav class="flex mb-6 text-gray-700" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 md:space-x-3">
       <li>
-        <a href="index.html" class="inline-flex items-center text-sm font-medium text-primary">
+        <a href="index.html" class="inline-flex items-center text-xl font-medium text-primary">
           <ion-icon name="home-outline"></ion-icon> Home
         </a>
       </li>
       <li aria-current="page">
         <div class="flex items-center">
           <ion-icon name="chevron-forward-outline"></ion-icon>
-          <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2">Cart</span>
+          <span class="ml-1 text-xl font-medium text-gray-500 md:ml-2">Cart</span>
         </div>
       </li>
     </ol>
@@ -306,7 +302,7 @@
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <script src="/src/js/tes.js"></script>
+  <script src="./src/js/tes.js"></script>
 </body>
 
 </html>
