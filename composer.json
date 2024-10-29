@@ -9,6 +9,7 @@
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
+        "quix-lab/laravel-supabase-flysystem": "*",
         "supabase/supabase-php":  "1.2.3"
     },
     "require-dev": {

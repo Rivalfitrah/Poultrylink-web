@@ -24,9 +24,66 @@ class supplierController extends Controller
         return produkResource::collection($produk->loadMissing('getSupplier'));
     }
 
+    public function postinfo(Request $request){
+        $validate = $request->validate([
+            'nama_toko' =>'required',
+            'alamat' =>'required',
+            'kota' => 'required',
+            'kodepos' =>'required',
+            'provinsi' => 'required',
+            'negara' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'nullable|file|max:2048',
+        ]);
+
+         // Upload gambar jika ada
+         $image = null;
+         if ($request->hasFile('image')) {
+             $image = $request->file('image')->store('supplier', 'public'); // Simpan di folder 'supplier'
+         }
+ 
+         $request['user_id'] = Auth::user()->id;
+         $supplierData = $request->all();
+         
+         if ($image) {
+             $supplierData['image'] = $image; 
+         }
+ 
+         $supplier = Supplier::create($supplierData);
+         return new supplierResource($supplier->loadMissing('userGet'));
+    }
+
+    public function updateinfo(){
+        $validate = $request->validate([
+            'nama_toko' =>'nullable',
+            'alamat' =>'nullable',
+            'kota' => 'nullable',
+            'kodepos' =>'nullable',
+            'provinsi' => 'nullable',
+            'negara' => 'nullable',
+            'deskripsi' => 'nullable',
+            'image' => 'nullable|file|max:2048',
+        ]);
+
+        $supplier= Supplier::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($supplier->image) {
+                Storage::delete('public/' . $supplier->image);  // Hapus gambar lama dari storage
+            }
+
+            // Simpan gambar baru
+            $image = $request->file('image')->store('supplier', 'public');
+            $supplier->image = $image; // Update path gambar di database
+        }
+
+        $supplier->update(array_filter($request->all()));
+        return new supplierResource($supplier->loadMissing('userGet'));
+    }
+
     //post produk
     public function postproduk(Request $request) {
-
         $validate = $request->validate([
             'nama_produk' =>'required',
             'deskripsi' =>'required',

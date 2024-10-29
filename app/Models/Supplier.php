@@ -21,6 +21,7 @@ class Supplier extends Model
         'negara',
         'deskripsi',
         'rating',
+        'image',
         'user_id',
     ];
 

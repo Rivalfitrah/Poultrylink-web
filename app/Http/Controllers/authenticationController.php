@@ -31,25 +31,6 @@ class authenticationController extends Controller
             ]);
         }
 
-        // $request->validate([
-        //     'email' => 'required|email',
-        //     'password' => 'required',
-        // ]);
-
-        // $user = User::where('email', $request->email)->first();
-        
-        // if (! $user || $request->password !== $user->password) {
-        //     throw ValidationException::withMessages([
-        //         'email' => ['The provided credentials are incorrect.'],
-        //     ]);
-        // }
-
-        // $token = $user->createToken('API Token')->plainTextToken;
-
-        // return response()->json([
-        //     'token' => $token,
-        // ]);
-        
     }
 
     public function logout (Request $request){

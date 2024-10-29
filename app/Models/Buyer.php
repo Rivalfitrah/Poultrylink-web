@@ -22,6 +22,7 @@ class Buyer extends Model
         'kodepos',
         'provinsi',
         'negara',
+        'image',
         'user_id'
     ];
 

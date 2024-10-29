@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\userDetailRecourse;
-use App\Http\Resources\userResource;
+use Validator;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Log;
+use App\Http\Resources\userResource;
+use App\Http\Resources\userDetailRecourse;
 
 
 class userController extends Controller
@@ -24,34 +25,36 @@ class userController extends Controller
     }
 
     //create account
-    public function register(Request $request){
-
+    public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required|unique:users',
             'username' => 'required|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
         ]);
-
-        if($validator->fails()){
+    
+        if($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'something wrong',
                 'data' => $validator->errors(),
             ]);
         }
-
-        $input = $request->all();
+    
+        // Mengambil data tanpa `confirm_password`
+        $input = $request->except('confirm_password');
+        $input['password'] = bcrypt($input['password']); // Enkripsi password
+    
         $user = User::create($input);
-
+    
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['username'] = $user->username;
-
+    
         return response()->json([
-            'success' => false,
+            'success' => true,
             'message' => 'success',
             'data' => $success,
         ]);
-
     }
+    
 }
