@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\cartController;
+use App\Http\Controllers\fileController;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use App\Http\Middleware\owner;
@@ -17,6 +18,9 @@ Route::get('/users', [userController::class, 'index']);
 Route::post('/login', [authenticationController::class, 'login']);
 Route::post('/register', [userController::class, 'register']);
 Route::get('/getSupplier',[supplierController::class, 'supplierindex']);
+
+Route::post('/upload-dummy', [fileController::class, 'uploadDummyFile']);
+Route::post('/upload', [fileController::class, 'upload']);
 
 
 

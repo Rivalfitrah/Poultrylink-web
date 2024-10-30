@@ -77,8 +77,8 @@ return [
     'supabase' => [
         'driver' => 'supabase',
         'key'    => env('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhic3N5bHV1Y3J3c2JmenNweWZwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyOTY1NTg5MSwiZXhwIjoyMDQ1MjMxODkxfQ.QehWYMlZDgm-Z0Ngado8ipN9dWOxYt8UKmxGK3ZnZkE'), // Use a privileged key; read-only does not work
-        'bucket' => env('SUPABASE_STORAGE_BUCKET'),
-        'endpoint' => env('SUPABASE_STORAGE_ENDPOINT'),
+        'bucket' => env( 'products'),
+        'endpoint' => env('https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/s3'),
 
         'url'      => null, // <- Automatically generated; change here if you are using a proxy
 
