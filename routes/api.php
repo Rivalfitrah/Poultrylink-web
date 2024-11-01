@@ -18,9 +18,15 @@ Route::get('/users', [userController::class, 'index']);
 Route::post('/login', [authenticationController::class, 'login']);
 Route::post('/register', [userController::class, 'register']);
 Route::get('/getSupplier',[supplierController::class, 'supplierindex']);
+Route::get('/kategori', [supplierController::class, 'kategori']);
 
 Route::post('/upload-dummy', [fileController::class, 'uploadDummyFile']);
 Route::post('/upload', [fileController::class, 'upload']);
+Route::post('/update-image', [fileController::class, 'updateImage']);
+Route::post('/delete-image', [fileController::class, 'deleteImage']);
+Route::post('/postprodukp', [supplierController::class, 'postproduk']);
+Route::post('/upload-multiple-files', [supplierController::class, 'uploadMultipleFiles']);
+Route::post('/postproduk', [supplierController::class, 'postproduk']);
 
 
 
@@ -52,7 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     ->Middleware('supplierOwner');
 
     //postproduk
-    Route::post('/postproduk', [supplierController::class, 'postproduk']);
+    
     // ->Middleware(['atuh', 'supplierOwner']);
 
     //update

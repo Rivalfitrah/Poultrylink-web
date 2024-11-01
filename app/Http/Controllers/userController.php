@@ -32,7 +32,7 @@ class userController extends Controller
             'password' => 'required',
             'confirm_password' => 'required|same:password',
         ]);
-    
+
         if($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -40,21 +40,21 @@ class userController extends Controller
                 'data' => $validator->errors(),
             ]);
         }
-    
+
         // Mengambil data tanpa `confirm_password`
         $input = $request->except('confirm_password');
         $input['password'] = bcrypt($input['password']); // Enkripsi password
-    
+
         $user = User::create($input);
-    
+
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['username'] = $user->username;
-    
+
         return response()->json([
             'success' => true,
             'message' => 'success',
             'data' => $success,
         ]);
     }
-    
+
 }
