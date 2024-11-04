@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - PoultryLink</title>
     <link rel="stylesheet" href="../src/output.css">
-    <link rel="icon" href="../src/img/Group 55.svg">
+    <link rel="icon" href="../src/img/logo.svg">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="bg-white shadow-md rounded-lg overflow-hidden flex w-3/4 max-w-4xl">
@@ -24,6 +24,7 @@
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>
                     <input
+                        name="username"
                         type="email"
                         id="email"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
@@ -35,6 +36,7 @@
                 <div class="mb-6">
                     <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
                     <input
+                        name="password"
                         type="password"
                         id="password"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
@@ -53,9 +55,10 @@
 
                 <!-- Login Button -->
                 <button
-                    type="submit"
+                    type="button"
                     class="w-full bg-orange-500 text-white font-semibold py-2 rounded-lg hover:bg-orange-600 transition duration-300 ease-in-out"
-                >
+                    class="login"() onclick="loginAtmin()"
+                    >
                     Login
                 </button>
             </form>
@@ -75,9 +78,9 @@
                 </a>                                 
             </div>
         </div>
-    </div>
+    </div> 
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity=”sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8” crossorigin=”anonymous”></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -85,7 +88,7 @@
           var username = $("#username").val();
           var password = $("#password").val();
           (async () => {
-            const rawResponse = await fetch('localhost:8080/api/userlogin/login', {
+            const rawResponse = await fetch('http://127.0.0.1:8000/api/login/', {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -100,11 +103,12 @@
         }
       
         function loginAtmin(){
+          event.preventDefault();
           var username = $("#username").val();
           var password = $("#password").val();
           var base_url = window.location.origin;
           $.ajax({
-            url: "http://localhost:8080/api/user/login",
+            url: "http://127.0.0.1:8000/api/login/",
             type: "POST",
             data: {
               username : username,
@@ -128,8 +132,7 @@
                   confirmButtonText: "Ok"
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    window.location = base_url + '/designWeb/admin/tables.html';
-                    // console.log(base_url + '/designWeb');
+                    window.location = base_url + '/frontend/public/index.html';
                   }
                 });
       

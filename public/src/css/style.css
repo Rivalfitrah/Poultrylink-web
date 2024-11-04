@@ -1,5 +1,5 @@
-body{
-    font-family: sans-serif;                                   
+body {
+  font-family: sans-serif;
 }
 
 .slider-container {
@@ -21,28 +21,27 @@ body{
   background-position: center;
 }
 
-    /* Tombol navigasi */
-    .nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      padding: 0.5rem;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 10;
-    }
+/* Tombol navigasi */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
 
-    .prev-btn {
-      left: 1rem;
-    }
+.prev-btn {
+  left: 1rem;
+}
 
-    .next-btn {
-      right: 1rem;
-    }
+.next-btn {
+  right: 1rem;
+}
 
-    .nav-btn i {
-      font-size: 1.5rem; /* Ukuran icon */
-    }
-
+.nav-btn i {
+  font-size: 1.5rem; /* Ukuran icon */
+}

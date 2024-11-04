@@ -1,47 +1,56 @@
-let currentIndex = 0;
-const slides = document.querySelectorAll(".slide");
-const totalSlides = slides.length;
+document.addEventListener("DOMContentLoaded", () => {
+  let currentIndex = 0;
+  const slides = document.querySelectorAll(".slide");
+  const totalSlides = slides.length;
 
-// Fungsi untuk menampilkan slide berdasarkan indeks
-function showSlide(index) {
-  if (index >= totalSlides) {
-    currentIndex = 0;
-  } else if (index < 0) {
-    currentIndex = totalSlides - 1;
-  } else {
-    currentIndex = index;
+  function showSlide(index) {
+    if (index >= totalSlides) {
+      currentIndex = 0;
+    } else if (index < 0) {
+      currentIndex = totalSlides - 1;
+    } else {
+      currentIndex = index;
+    }
+    document.getElementById("slider").style.transform = `translateX(-${
+      currentIndex * 100
+    }%)`;
   }
-  document.getElementById("slider").style.transform = `translateX(-${
-    currentIndex * 100
-  }%)`;
-}
 
-// Fungsi untuk menampilkan slide berikutnya
-function showNextSlide() {
-  showSlide(currentIndex + 1);
-}
+  function showNextSlide() {
+    showSlide(currentIndex + 1);
+  }
 
-// Fungsi untuk menampilkan slide sebelumnya
-function showPrevSlide() {
-  showSlide(currentIndex - 1);
-}
+  function showPrevSlide() {
+    showSlide(currentIndex - 1);
+  }
 
-// Event listener untuk tombol Next dan Prev
-document.getElementById("nextBtn").addEventListener("click", showNextSlide);
-document.getElementById("prevBtn").addEventListener("click", showPrevSlide);
+  const nextBtn = document.getElementById("nextBtn");
+  const prevBtn = document.getElementById("prevBtn");
 
-// Pindah slide otomatis setiap 5 detik
-setInterval(showNextSlide, 5000);
+  if (nextBtn) {
+    nextBtn.addEventListener("click", showNextSlide);
+  }
+  if (prevBtn) {
+    prevBtn.addEventListener("click", showPrevSlide);
+  }
 
+  setInterval(showNextSlide, 5000);
+});
 
-  // Toggle untuk mobile menu
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
+// dropdown dashboard
+const profileButton = document.getElementById("profileButton");
+const profileDropdown = document.getElementById("profileDropdown");
 
-  menuToggle.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
+if (profileButton) {
+  profileButton.addEventListener("click", function () {
+    profileDropdown.classList.toggle("hidden");
   });
-
+}
+document.addEventListener("click", function (event) {
+  if (profileButton && profileDropdown && !profileButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+    profileDropdown.classList.add("hidden");
+  }
+});
 
 
 

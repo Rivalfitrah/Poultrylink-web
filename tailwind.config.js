@@ -1,18 +1,14 @@
 // tailwind.config.js
 module.exports = {
   content: [
-    "./public/**/*.html",               // Mendeteksi semua HTML di folder public dan subfoldernya
-    "./public/src/**/*.{js,css}",        // Mendeteksi semua JavaScript dan CSS di dalam public/src
-    // "./public/src/**/*.{jsx,ts,tsx}",
-    // "./public/sign/**/*.html",
-    // "./public/dashboard/**/*.html",
-    // "./public/akun/**/*.html"
-  ],
+    "./public/**/*.html",
+    "./public/src/**/*.{js,css,jsx,ts,tsx}", // Tangkap file JS, CSS, JSX, dll.
+  ],  
   theme: {
     extend: {
       colors: {
         primary: '#FF6600',
-        second: '#FFBF78',
+        second: '#3b65ed',
       },
       fontFamily: {
         bauhause: ['Bauhause', 'sans-serif'],
