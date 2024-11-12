@@ -5,7 +5,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
-class SupabaseStorageService extends Controller
+class SupabaseStorageAvatar extends Controller
 {
     private $supabaseUrl;
     private $supabaseApiKey;
@@ -15,7 +15,7 @@ class SupabaseStorageService extends Controller
     {
         $this->supabaseUrl = env('SUPABASE_URL');
         $this->supabaseApiKey = env('SUPABASE_API_KEY');
-        $this->bucketName = env('SUPABASE_BUCKET', 'products'); // Set the default bucket name
+        $this->bucketName = env('SUPABASE_BUCKET', 'avatar'); // Set the default bucket name
     }
 
     public function uploadFile($filePath, $filePathInSupabase)
@@ -127,4 +127,6 @@ class SupabaseStorageService extends Controller
             throw new \Exception('File deletion failed: ' . $e->getMessage());
         }
     }
+
+    
 }

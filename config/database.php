@@ -169,6 +169,21 @@ return [
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
 
+        'supabase' => [
+            'driver' => 'pgsql',
+            'url' => env('SUPABASE_URL'),
+            'host' => parse_url(env('SUPABASE_URL'), PHP_URL_HOST),
+            'port' => parse_url(env('SUPABASE_URL'), PHP_URL_PORT),
+            'database' => parse_url(env('SUPABASE_URL'), PHP_URL_PATH),
+            'username' => null,
+            'password' => env('SUPABASE_KEY'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
     ],
 
 ];

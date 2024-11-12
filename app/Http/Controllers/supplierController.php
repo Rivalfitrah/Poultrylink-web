@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Produk;
 use App\Models\Kategori;
 use App\Models\Supplier;
+use App\Models\Orderdetail;
 use Illuminate\Http\Request;
+use App\Models\Verifsupplier;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use App\Http\Resources\produkResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\supplierResource;
@@ -15,7 +21,6 @@ use App\Http\Controllers\SupabaseStorageService;
 
 class supplierController extends Controller
 {
-    
     
     private $supabaseStorageService;
     private $fileController;
@@ -38,7 +43,7 @@ class supplierController extends Controller
     public function getproduk()
     {
         $produk = Produk::all();
-        return produkResource::collection($produk->loadMissing('getSupplier'));
+        return produkResource::collection($produk);
     }
 
     public function kategori(){
@@ -57,56 +62,29 @@ class supplierController extends Controller
             'negara' => 'required',
             'deskripsi' => 'required',
         ]);
-
-        //  // Upload gambar jika ada
-        //  $image = null;
-        //  if ($request->hasFile('image')) {
-        //      $image = $request->file('image')->store('supplier', 'public'); // Simpan di folder 'supplier'
-        //  }
-
+        
         $request['user_id'] = Auth::user()->id;
         $supplierData = $request->all();
 
-        //  if ($image) {
-        //      $supplierData['image'] = $image;
-        //  }
-
         $supplier = Supplier::create($supplierData);
-        return new supplierResource($supplier->loadMissing('userGet'));
-    }
-
-    public function updateinfo()
-    {
-        $validate = $request->validate([
-            'nama_toko' => 'nullable',
-            'alamat' => 'nullable',
-            'kota' => 'nullable',
-            'kodepos' => 'nullable',
-            'provinsi' => 'nullable',
-            'negara' => 'nullable',
-            'deskripsi' => 'nullable',
-        ]);
-
-        $supplier = Supplier::findOrFail($id);
-
-        // if ($request->hasFile('image')) {
-        //     // Hapus gambar lama jika ada
-        //     if ($supplier->image) {
-        //         Storage::delete('public/' . $supplier->image);  // Hapus gambar lama dari storage
-        //     }
-
-        //     // Simpan gambar baru
-        //     $image = $request->file('image')->store('supplier', 'public');
-        //     $supplier->image = $image; // Update path gambar di database
-        // }
-
-        $supplier->update(array_filter($request->all()));
         return new supplierResource($supplier->loadMissing('userGet'));
     }
 
     //post produk
     public function postproduk(Request $request)
     {
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: Authorization");
+
+        // Ambil user ID dari token yang terautentikasi
+        $user = $request->user();
+        
+        // Cari supplier berdasarkan user_id
+        $supplier = Supplier::where('user_id', $user->id)->first();
+
+        if (!$supplier) {
+            return response()->json(['error' => 'User is not registered as a supplier'], 403);
+        }
 
         $validate = $request->validate([
             'nama_produk' => 'required',
@@ -118,180 +96,179 @@ class supplierController extends Controller
             'images.*' => 'nullable|file',
         ]);
 
-        // Create product without images
-        $produk = Produk::create($request->except('images'));
+        try{
+            // Create product without images
+            $produkData = $request->except('images');
+            $produkData['supplier_id'] = $supplier->id;
 
-        // Set folder name to product ID
-        $filePathSupabase = "{$produk->id}";
-        $images = [];
+            $produk = Produk::create($produkData);
 
-        if ($request->hasFile('images')) {
-            $files = $request->file('images');
-            if (is_array($files)) {
-                // Upload multiple files
-                $results = $this->supabaseStorageService->uploadMultipleFiles($files, $filePathSupabase);
-                foreach ($results as $result) {
-                    if (isset($result['data']['url'])) {
-                        $images[] = $result['data']['url']; // Optionally, store individual URLs if needed
+            // Set folder name to product ID
+            $filePathSupabase = "{$produk->id}";
+            $images = [];
+
+            if ($request->hasFile('images')) {
+                $files = $request->file('images');
+                if (is_array($files)) {
+                    // Upload multiple files
+                    $results = $this->supabaseStorageService->uploadMultipleFiles($files, $filePathSupabase);
+                    foreach ($results as $result) {
+                        if (isset($result['data']['url'])) {
+                            $images[] = $result['data']['url']; // Optionally, store individual URLs if needed
+                        }
+                    }
+                } else {
+                    // Upload single file
+                    $result = $this->supabaseStorageService->uploadFile($files->getRealPath(), $filePathSupabase);
+                    if (isset($result['url'])) {
+                        $images[] = $result['url']; // Optionally, store the URL
                     }
                 }
-            } else {
-                // Upload single file
-                $result = $this->supabaseStorageService->uploadFile($files->getRealPath(), $filePathSupabase);
-                if (isset($result['url'])) {
-                    $images[] = $result['url']; // Optionally, store the URL
+            }
+
+            // Store only the product ID as the image path in the database
+            $produk->update(['image' => $filePathSupabase]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product created successfully',
+                'produk' => $produk, ]);
+                
+        } catch (\Exception $e) {
+            Log::error('Error during product creation: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to create product'], 500);
+        }
+    }
+
+    //update
+    public function updateproduk(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'nama_produk' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
+            'harga' => 'nullable|numeric',
+            'kategori_id' => 'nullable|exists:kategori,id',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|file',
+        ]);
+
+        // Temukan produk berdasarkan ID
+        $produk = Produk::findOrFail($id);
+
+        // Update atribut non-gambar
+        $produk->fill($request->except('images'));
+        $produk->save();
+
+        // Path folder di Supabase berdasarkan ID produk
+        $filePathSupabase = "{$produk->id}";
+
+        // Pastikan kolom image diambil sebagai array atau inisialisasi sebagai array kosong
+        $images = json_decode($produk->image, true);
+        if (!is_array($images)) {
+            $images = []; // Pastikan images selalu berupa array
+        }
+
+        // Tambahkan gambar baru jika ada
+        if ($request->hasFile('images')) {
+            $files = $request->file('images');
+            foreach ($files as $key => $file) {
+                if ($file) {
+                    // Tentukan nama file dalam folder produk yang tepat
+                    $fileName = ($key + 1) . ".jpg"; // Misalnya: 1.jpg, 2.jpg, dll.
+                    $filePath = "{$filePathSupabase}";  // Path lengkap untuk Supabase
+
+                    // Hapus file lama di storage jika ada di indeks yang sama
+                    if (isset($images[$key])) {
+                        if ($this->supabaseStorageService->fileExists($filePathSupabase. '/' .basename($images[$key]))) {
+                            $this->supabaseStorageService->deleteFile($filePathSupabase. '/' .basename($images[$key]));
+                        } 
+                    }
+
+                    // Upload file baru dan simpan URL di array $images pada posisi yang sama
+                    $result = $this->supabaseStorageService->uploadFile($file->getRealPath(), $filePath);
+                    
+                    if (isset($result['url'])) {
+                        // Simpan URL gambar yang baru
+                        $images[$key] = $result['url']; // Simpan URL yang baru
+                    }
                 }
             }
         }
 
-        // Store only the product ID as the image path in the database
+        // Update kolom image dengan array JSON terbaru
         $produk->update(['image' => $filePathSupabase]);
 
         return new produkResource($produk->loadMissing('getSupplier'));
     }
+    
 
-    // public function postproduk(Request $request) {
-    //     $validate = $request->validate([
-    //         'nama_produk' =>'required',
-    //         'deskripsi' =>'required',
-    //         'harga' => 'required',
-    //         'kategori_id' =>'required|exists:kategori,id',
-    //         'image' => 'nullable|file', // Validasi image agar nullable dan berbentuk file
-    //     ]);
-
-    //     $image = null;
-
-    //     if ($request->hasFile('image')) {
-    //         $image = $request->file('image')->store('produk', 'public');
-    //     }
-
-    //     $request['image'] = $image ? $image : null;
-    //     $produk = Produk::create($request->all());
-    //     return new produkResource($produk->loadMissing('getSupplier'));;
-
-    // }
-
-    //update
-    public function updateProduk(Request $request, $id)
-    {
-        $validate = $request->validate([
-            'nama_produk' => 'nullable',
-            'deskripsi' => 'nullable',
-            'harga' => 'nullable',
-            'kategori_id' => 'nullable|exists:kategori,id',
-            'image' => 'nullable|file',
-        ]);
-
-        // Cari produk berdasarkan ID
+    public function deleteproduk($id){
+        // Temukan produk berdasarkan ID
         $produk = Produk::findOrFail($id);
-        $imageUrl = $produk->image;
+        $filePathSupabase = "{$produk->id}";
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $fileName = $file->getClientOriginalName();
-
-            try {
-                $supabaseService = new SupabaseStorageService();
-                $uploadResult = $supabaseService->uploadFile($file->getRealPath(), "products/{$id}/{$fileName}");
-                $imageUrl = $uploadResult['publicURL'] ?? $imageUrl;
-            } catch (\Exception $e) {
-                return response()->json(['error' => 'File upload to Supabase failed: ' . $e->getMessage()], 500);
-            }
+        if ($produk->image) {
+            $this->supabaseStorageService->deleteFile($filePathSupabase);
         }
+        $produk->delete();
 
-        // Array perubahan data yang akan disimpan
-        $dataToUpdate = array_filter([
-            'nama_produk' => $request->input('nama_produk') !== $produk->nama_produk ? $request->input('nama_produk') : null,
-            'deskripsi' => $request->input('deskripsi') !== $produk->deskripsi ? $request->input('deskripsi') : null,
-            'harga' => $request->input('harga') !== $produk->harga ? $request->input('harga') : null,
-            'kategori_id' => $request->input('kategori_id') !== $produk->kategori_id ? $request->input('kategori_id') : null,
-            'image' => $imageUrl,
-        ]);
-
-        if (!empty($dataToUpdate)) {
-            $produk->update($dataToUpdate);
-            return response()->json([
-                'message' => 'Produk berhasil diperbarui',
-                'updated' => $produk->only(array_keys($dataToUpdate))
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Tidak ada perubahan pada produk',
-                'updated' => []
-            ]);
-        }
+        return response()->json([
+            'message' => 'Produk berhasil dihapus',
+            'id' => $id
+        ], 200);
     }
 
-
-
-    // public function updateProduk(Request $request, $id) {
-
-    //     $validate = $request->validate([
-    //         'nama_produk' =>'nullable',
-    //         'deskripsi' =>'nullable',
-    //         'harga' =>'nullable',
-    //         'kategori_id' =>'nullable|exists:kategori,id',
-    //         'image' => 'nullable|file', // Validasi image agar nullable dan berbentuk file
-    //     ]);
-
-    //     Log::info($request->all());
-
-    //     // Cari produk berdasarkan ID
-    //     $produk = Produk::findOrFail($id);
-
-    //     $image = $produk->image; // Gunakan gambar lama jika tidak diubah
-
-    //     if ($request->hasFile('image')) {
-    //         if ($image) {
-    //             Storage::delete('public/produk/' . $image);
-    //         }
-
-    //         $fileName = $this->generateRandomString();
-    //         $extension = $request->file('image')->extension();
-    //         $image = $fileName . '.' . $extension;
-
-    //         Storage::putFileAs('public/produk', $request->file('image'), $image);
-    //     }
-
-    //     $dataToUpdate = [];
-
-    //     if ($request->has('nama_produk') && $request->input('nama_produk') != $produk->nama_produk) {
-    //         $dataToUpdate['nama_produk'] = $request->input('nama_produk');
-    //     }
-    //     if ($request->has('deskripsi') && $request->input('deskripsi') != $produk->deskripsi) {
-    //         $dataToUpdate['deskripsi'] = $request->input('deskripsi');
-    //     }
-    //     if ($request->has('harga') && $request->input('harga') != $produk->kategori_id) {
-    //         $dataToUpdate['harga'] = $request->input('harga');
-    //     }
-    //     if ($request->has('kategori_id') && $request->input('kategori_id') != $produk->kategori_id) {
-    //         $dataToUpdate['kategori_id'] = $request->input('kategori_id');
-    //     }
-    //     if ($request->hasFile('image')) {
-    //         $dataToUpdate['image'] = $image;
-    //     }
-
-    //     if (!empty($dataToUpdate)) {
-    //         $produk->update($dataToUpdate);
-    //         $updatedFields = $produk->only(array_keys($dataToUpdate));
-    //         return response()->json([
-    //             'message' => 'Produk berhasil diperbarui',
-    //             'updated' => $updatedFields
-    //         ]);
-    //     } else {
-    //         return response()->json([
-    //             'message' => 'Tidak ada perubahan pada produk',
-    //             'updated' => []
-    //         ]);
-    //     }
-
-    //     Log::info($dataToUpdate);  // Ini akan menampilkan data yang akan diperbarui
-    // }
-
-    public function deleteproduk($id)
+    public function getorder(Request $request)
     {
-        $produk = Produk::findOrFail($id);
-        $produk->delete();
-        return response()->json('deleted success');
+        $user = $request->user();
+        
+        // Cari supplier berdasarkan user_id
+        $supplier = Supplier::where('user_id', $user->id)->first();
+
+        if (!$supplier) {
+            return response()->json(['error' => 'User is not registered as a supplier'], 403);
+        }
+    
+        // Ambil semua order yang terkait dengan supplier_id produk di order_detail
+        $orders = Orderdetail::where('supplier_id', $supplier->id) // Filter berdasarkan supplier_id
+                            ->join('order', 'order_details.order_id', '=', 'order.id') // Gabungkan dengan tabel orders
+                            ->select('order.id as order_id', 'order.user_id', 'order.total', 'order.harga', 'order.confirmed', 'order_details.produk_id', 'order_details.quantity', 'order_details.price', 'order_details.total_price')
+                            ->get();
+    
+        if ($orders->isEmpty()) {
+            return response()->json([
+                'message' => 'Tidak ada pesanan untuk supplier ini.'
+            ], 404);
+        }
+    
+        return response()->json([
+            'message' => 'Data pesanan berhasil diambil.',
+            'orders' => $orders
+        ]);
+    }
+
+    public function getProdukSupplier(Request $request)
+    {
+        if (!$request->user()) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+        $user = $request->user();
+        $supplier = Supplier::where('user_id', $user->id)->first();
+    
+        if (!$supplier) {
+            return response()->json(['error' => 'User is not registered as a supplier'], 403);
+        }
+    
+        $produks = Produk::where('supplier_id', $supplier->id)->get();
+        return response()->json(['success' => true, 'produks' => $produks]);
+    }
+
+    public function checkSupplier(Request $request)
+    {
+        $user = Auth::user();
+        $supplier = Supplier::where('user_id', $user->id)->first();
+        return response()->json([
+            'id_supplier' => $supplier ? $supplier->id : null,
+        ]);
     }
 }

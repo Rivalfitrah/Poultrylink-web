@@ -5,7 +5,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 
-class SupabaseStorageService extends Controller
+class SupabaseStorageVerif extends Controller
 {
     private $supabaseUrl;
     private $supabaseApiKey;
@@ -15,32 +15,31 @@ class SupabaseStorageService extends Controller
     {
         $this->supabaseUrl = env('SUPABASE_URL');
         $this->supabaseApiKey = env('SUPABASE_API_KEY');
-        $this->bucketName = env('SUPABASE_BUCKET', 'products'); // Set the default bucket name
+        $this->bucketName = env('SUPABASE_BUCKET2', 'verif'); // Default bucket verif
     }
 
     public function uploadFile($filePath, $filePathInSupabase)
     {
         Log::info("Uploading file to Supabase at path: {$filePathInSupabase}");
-
+    
         try {
-            // Determine the file name
             $fileName = '1.jpg';
             $fileIndex = 1;
-
-            while ($this->fileExists($filePathInSupabase . '/' . $fileName)) {
+    
+            while ($this->fileExists("{$this->bucketName}/{$filePathInSupabase}/{$fileName}")) {
                 $fileIndex++;
                 $fileName = "{$fileIndex}.jpg";
             }
-
+    
             $response = Http::withHeaders([
                     'Authorization' => 'Bearer ' . $this->supabaseApiKey,
                     'apikey' => $this->supabaseApiKey,
                 ])
                 ->attach('file', file_get_contents($filePath), $fileName)
                 ->post("{$this->supabaseUrl}/storage/v1/object/{$this->bucketName}/{$filePathInSupabase}/{$fileName}");
-
+    
             if ($response->successful()) {
-                return ['url' => "{$filePathInSupabase}"];
+                return ['url' => "{$this->supabaseUrl}/storage/v1/object/public/{$this->bucketName}/{$filePathInSupabase}/{$fileName}"];
             } else {
                 throw new \Exception('Error uploading file: ' . $response->body());
             }
@@ -127,4 +126,6 @@ class SupabaseStorageService extends Controller
             throw new \Exception('File deletion failed: ' . $e->getMessage());
         }
     }
+
+    
 }

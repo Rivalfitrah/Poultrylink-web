@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class orderController extends Controller
 {
@@ -38,16 +41,16 @@ class orderController extends Controller
                 'cart_id' => $cart->id,
                 'user_id' => $user_id,
                 'notagihan' => $notagihan,
-                'total_barang' => $total_barang,
-                'total_harga' => $total_harga,
+                'total_barang' => $totalHarga,
+                'total_harga' => $totalBarang,
             ]);
         }
     
         return response()->json([
             'message' => 'Order berhasil dibuat',
             'no_tagihan' => $notagihan,
-            'total_barang' => $total_barang,
-            'total_harga' => $total_harga,
+            'total_barang' => $totalBarang,
+            'total_harga' => $totalBarang,
         ]);
     }
 

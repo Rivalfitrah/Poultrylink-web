@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Produk;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
@@ -18,15 +20,22 @@ class Cart extends Model
         'produk_id',
     ];
 
-    public function userGet(){
-        return $this->belongsTo(User::class, 'user_id', 'id');
+    // Relasi ke User
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function produkGet(){
-        return $this->belongsTo(Produk::class, 'produk_id', 'id');
+    // Relasi ke Produk
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class, 'produk_id');
     }
 
-    public function totalharga(){
-        
+    // Relasi ke OrderDetail
+    public function orderDetails()
+    {
+        return $this->hasMany(Orderdetail::class, 'produk_id');
     }
+
 }

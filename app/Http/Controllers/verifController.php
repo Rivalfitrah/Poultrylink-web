@@ -2,43 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buyer;
 use Illuminate\Http\Request;
 use App\Models\Verifsupplier;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SupabaseStorageVerif;
 
 class verifController extends Controller
 {
+    private $storageService;
+
+    public function __construct(SupabaseStorageVerif $storageService)
+    {
+        $this->storageService = $storageService;
+    }
+
     public function postverif(Request $request)
-{
-        // Validasi input
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User is not authenticated'], 401);
+        }
+    
+        $buyerExists = Buyer::where('user_id', $user->id)->exists();
+        if (!$buyerExists) {
+            return response()->json(['error' => 'User is not registered as a buyer'], 400);
+        }
+    
         $validate = $request->validate([
-            'imageKtp' => 'required|file',
-            'imageNPWP' => 'required|file',
-            'nik' => 'required',
-            'nama' => 'required',
-            'ttl' => 'required',
-            'alamat' => 'required',
-            'kewarganegaraan' => 'required',
+            'nik' => 'required|string',
+            'nama' => 'required|string',
+            'ttl' => 'required|string',
+            'alamat' => 'required|string',
+            'kewarganegaraan' => 'required|string',
+            'images' => 'required|array',
+            'images.*' => 'required|file',
         ]);
-        $imageKtpPath = null;
-        $imageNPWPPath = null;
 
-        if ($request->hasFile('imageKtp')) {
-            $imageKtpPath = $request->file('imageKtp')->store('verifSupplier', 'public');
+         // otomatis detect siapa 
+        $verif = Verifsupplier::create(array_merge(
+            $request->except('images'),
+            ['user_id' => $user->id] // Set user_id dari user yang login
+        ));
+    
+        // Atur folder di Supabase berdasarkan user ID
+        $filePathSupabase = "{$user->id}";
+        $images = [];
+
+        if ($request->hasFile('images')) {
+            $files = $request->file('images');
+            $results = $this->storageService->uploadMultipleFiles($files, $filePathSupabase);
+            
+            foreach ($results as $result) {
+                if (isset($result['data']['url'])) {
+                    $images[] = $result['data']['url'];
+                }
+            }
         }
-        if ($request->hasFile('imageNPWP')) {
-            $imageNPWPPath = $request->file('imageNPWP')->store('verifSupplier', 'public');
-        }
-
-        $request['user_id'] = Auth::user()->id;
-        $verifData = $request->all();
-        $verifData['imageKtp'] = $imageKtpPath;
-        $verifData['imageNPWP'] = $imageNPWPPath;
-
-        $verif = Verifsupplier::create($verifData);
+        $verif->update(['image' => $filePathSupabase]);
+    
         return response()->json([
-            'message' => 'Data verifikasi berhasil disimpan',
-            'data' => $verif,
-    ]);
-}
-   
+            'message' => 'Verification and file upload successful',
+            'verif' => $verif,
+            'uploaded_images' => $images,
+        ]);
+    }
 }

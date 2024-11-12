@@ -23,9 +23,6 @@ class produkResource extends JsonResource
             'kategori_id' => $this->kategori_id,
             'supplier_id' => $this->supplier_id,
             'image' => $this->image,
-            'supplier' => [
-                'namatoko' => $this->getSupplier->namatoko
-            ]
         ];
     }
 }

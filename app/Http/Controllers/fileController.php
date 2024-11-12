@@ -45,7 +45,7 @@ class fileController extends Controller
         // Retrieve file data
         $file = $request->file('file');
         $productId = $request->input('product_id');
-
+        
         try {
             // Upload the file using the Supabase service with product ID as folder name
             $filePathInSupabase = "{$productId}";

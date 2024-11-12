@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\User;
+use App\Models\Buyer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\userResource;
@@ -46,6 +47,9 @@ class userController extends Controller
         $input['password'] = bcrypt($input['password']); // Enkripsi password
 
         $user = User::create($input);
+        Buyer::create([
+            'user_id' => $user->id,
+        ]);
 
         $success['token'] = $user->createToken('auth_token')->plainTextToken;
         $success['username'] = $user->username;

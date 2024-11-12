@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Cart;
+use App\Models\User;
+use App\Models\Produk;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -14,8 +17,18 @@ class Order extends Model
     protected $fillable = [
         'total',
         'harga',
-        'cart_id',
-        'produk_id',
         'user_id',
+        'confirmed',
     ];
+
+    // Relasi ke OrderDetail
+    public function details()
+    {
+        return $this->hasMany(Orderdetail::class, 'order_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
