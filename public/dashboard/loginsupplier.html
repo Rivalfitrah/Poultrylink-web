@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PoultryLink</title>
+    <link rel="stylesheet" href="../src/output.css">
+    <link rel="icon" href="../src/img/logo.svg">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden flex w-3/4 max-w-4xl">
+        
+        <!-- Image Section -->
+        <div class="w-1/2 hidden md:block">
+            <img src="../src/img/Tablet login-cuate.svg" alt="">
+        </div>
+        
+        <!-- Login Form Section -->
+        <div class="w-full md:w-1/2 p-8">
+            <h2 class="text-2xl font-bold text-orange-600 mb-4">Welcome Supplier PoultryLink!</h2>
+            <p class="text-gray-600 mb-6">Please login to your account</p>
+            <form id="login_supplier">
+                <!-- Email Input -->
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>
+                    <input
+                        name="email"
+                        type="email"
+                        id="email"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+                        placeholder="Enter your email"
+                    />
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
+                    <input
+                        name="password"
+                        type="password"
+                        id="password"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
+                        placeholder="Enter your password"
+                    />
+                </div>
+
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    class="w-full bg-orange-500 text-white font-semibold py-2 rounded-lg hover:bg-orange-600 transition duration-300 ease-in-out"
+                    >
+                    Login 
+                </button>
+            </form>
+        </div>
+    </div> 
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            var token = localStorage.getItem('auth_token');
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            
+            $('#login_supplier').on('submit', function(event) {
+                event.preventDefault();
+    
+                const email = $('#email').val();
+                const password = $('#password').val();
+    
+                $.ajax({
+                    url: 'http://poultrylink.ambatuwin.xyz/api/loginsupplier', 
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    data: JSON.stringify({
+                        email: email,
+                        password: password
+                    }),
+                    success: function(response) {
+                        console.log("Response from server:", response);
+                        if (response.success) {
+                            console.log("Token:", response.token); // Pastikan token ada
+                            localStorage.setItem('supplier_token', response.data.token);
+                            Swal.fire({
+                                title: "Success",
+                                text: "Berhasil Login sebagai Supplier",
+                                icon: "success",
+                                confirmButtonColor: "#3085d6",
+                                confirmButtonText: "Ok"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = "/dashboard/dashboard.html"; // Ganti sesuai dengan halaman dashboard Anda
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Warning",
+                                text: response.message,
+                                icon: "info"
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        let errorMessage = "Anda bukan supplier";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        Swal.fire({
+                            title: "Error",
+                            text: errorMessage,
+                            icon: "error"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    
+    
+  
+
+</body>
+</html>

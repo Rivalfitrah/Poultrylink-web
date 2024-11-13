@@ -45,3 +45,17 @@ body {
 .nav-btn i {
   font-size: 1.5rem; /* Ukuran icon */
 }
+
+#account-dropdown {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#account-dropdown.visible {
+  display: block;
+  opacity: 1;
+}
+
+/* mobile versi */
+

@@ -12,6 +12,11 @@
     <script src="https://unpkg.com/@heroicons/react/outline"></script>
     <title>PoultryLink</title>
     <link rel="icon" href="../src/img/logo.svg" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="flex justify-center items-center min-h-screen bg-gray-100">
@@ -26,21 +31,21 @@
           <h2 class="text-4xl font-bold text-primary">PoultryLink</h2>
         </div>
         <!-- Form Input -->
-        <form>
-          <!-- Foto Profil Upload dan Preview -->
+        <form id="addprofile_form" enctype="multipart/form-data">
           <div class="mb-6 text-center">
-            <label class="block mb-2 text-gray-700 font-semibold"
-              >Foto Profil</label
-            >
-            <div
-              class="relative w-32 h-32 mx-auto rounded-full overflow-hidden bg-gray-200 border-4 border-primary"
-            >
+            <label class="block mb-2 text-gray-700 font-semibold">Foto Profil</label>
+            
+            <!-- Avatar container -->
+            <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden bg-gray-200 border-4 border-primary">
+              <!-- Image element -->
               <img
-                id="profileImage"
+                id="imageUploadPreview"
                 src="#"
                 alt="Foto Profil"
                 class="w-full h-full object-cover hidden"
               />
+              
+              <!-- Placeholder text -->
               <div
                 id="placeholder"
                 class="flex items-center justify-center w-full h-full text-gray-400"
@@ -48,18 +53,20 @@
                 <span class="text-sm">Unggah Foto</span>
               </div>
             </div>
+            
             <!-- Custom Button for Upload -->
             <label
-              for="imageUpload"
+              for="avatar_path"
               class="inline-flex items-center justify-center w-auto px-6 py-2 mt-4 font-semibold text-white bg-primary rounded-md cursor-pointer hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
               Pilih Foto
               <input
                 type="file"
-                id="imageUpload"
+                id="avatar_path"
+                name="avatar_path"
                 accept="image/*"
-                onchange="loadImage(event)"
                 class="hidden"
+                onchange="previewImage(event)"
               />
             </label>
           </div>
@@ -73,6 +80,9 @@
               type="text"
               placeholder="Masukkan First Name"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="firstname"
+              name="firstname"
+              required
             />
           </div>
 
@@ -85,6 +95,9 @@
               type="text"
               placeholder="Masukkan Last Name"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="lastname"
+              name="lastname"
+              required
             />
           </div>
 
@@ -97,6 +110,9 @@
               type="tel"
               placeholder="Masukkan nomor telepon"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="telepon"
+              name="telepon"
+              required
             />
           </div>
 
@@ -109,6 +125,9 @@
               type="text"
               placeholder="Masukkan alamat lengkap"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="alamat"
+              name="alamat"
+              required
             />
           </div>
 
@@ -119,6 +138,9 @@
               type="text"
               placeholder="Masukkan kota"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="kota"
+              name="kota"
+              required
             />
           </div>
 
@@ -131,6 +153,9 @@
               type="text"
               placeholder="Masukkan kode pos"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="kodepos"
+              name="kodepos"
+              required
             />
           </div>
 
@@ -143,6 +168,9 @@
               type="text"
               placeholder="Masukkan provinsi"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="provinsi"
+              name="provinsi"
+              required
             />
           </div>
 
@@ -153,6 +181,9 @@
               type="text"
               placeholder="Masukkan negara"
               class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              id="negara"
+              name="negara"
+              required
             />
           </div>
 
@@ -161,6 +192,7 @@
             <button
               type="submit"
               class="w-full bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-primary-dark focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              id="submit"
             >
               Simpan Profil
             </button>
@@ -168,15 +200,96 @@
         </form>
       </div>
     </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-      // JavaScript untuk menampilkan preview foto yang diunggah
-      function loadImage(event) {
-        var image = document.getElementById("profileImage");
-        var placeholder = document.getElementById("placeholder");
-        image.src = URL.createObjectURL(event.target.files[0]);
-        image.classList.remove("hidden");
-        placeholder.classList.add("hidden");
+      $(document).ready(function () {
+    const base_url = window.location.origin;
+    var token = localStorage.getItem("auth_token");
+
+    $("#addprofile_form").on("submit", function (event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        
+        if (token) {
+            $.ajax({
+                type: "POST",
+                url: "http://poultrylink.ambatuwin.xyz/api/updateprofile",
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: "Success",
+                            text: response.message,
+                            icon: "success",
+                            confirmButtonText: "Ok",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = base_url + "/public/home.html";
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: response.message || "Gagal menyimpan profil. Silakan coba lagi.",
+                            icon: "error",
+                        });
+                    }
+                    console.log(response);
+                },
+                error: function (xhr) {
+                    let errorMessage = xhr.responseJSON?.message || "Terjadi kesalahan pada server.";
+                    Swal.fire({
+                        title: "Error",
+                        text: errorMessage,
+                        icon: "error",
+                    });
+                },
+            });
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: "Token tidak ditemukan. Silakan login atau register ulang.",
+                icon: "error",
+            });
+        }
+    });
+});
+
+    </script>
+    
+
+    <script>
+      // Function to preview the image once selected
+      function previewImage(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        // Once the file is loaded, set the image source and show the image
+        reader.onload = function (e) {
+          const image = document.getElementById("imageUploadPreview");
+          const placeholder = document.getElementById("placeholder");
+
+          // Show image and hide placeholder
+          image.src = e.target.result;
+          image.classList.remove("hidden");
+          placeholder.classList.add("hidden");
+        };
+
+        // Read the file as a Data URL
+        if (file) {
+          reader.readAsDataURL(file);
+        }
       }
     </script>
   </body>

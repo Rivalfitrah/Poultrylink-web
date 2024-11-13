@@ -47,10 +47,50 @@ if (profileButton) {
   });
 }
 document.addEventListener("click", function (event) {
-  if (profileButton && profileDropdown && !profileButton.contains(event.target) && !profileDropdown.contains(event.target)) {
+  if (
+    profileButton &&
+    profileDropdown &&
+    !profileButton.contains(event.target) &&
+    !profileDropdown.contains(event.target)
+  ) {
     profileDropdown.classList.add("hidden");
   }
 });
 
+// toogle profile
+function toggleDropdown(event) {
+  event.preventDefault();
+  const dropdown = document.getElementById("account-dropdown");
+  dropdown.classList.toggle("visible");
+}
+
+// tutup dropdown
+document.addEventListener("click", function (event) {
+  const dropdown = document.getElementById("account-dropdown");
+  const accountIcon = document.getElementById("account-icon");
+  if (!accountIcon.contains(event.target) && !dropdown.contains(event.target)) {
+    dropdown.classList.add("opacity-0", "invisible");
+    dropdown.classList.remove("opacity-100", "visible");
+  }
+});
+
+// jumlah cart
+
+const addToCartButtons = document.querySelectorAll(".add-to-cart");
+const cartCount = document.getElementById("cart-count");
+
+// jumlah item pada keranjang
+let itemCount = 0;
+
+// menambah event untuk add ti cart
+addToCartButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault(); // Mencegah link agar tidak berpindah halaman
+
+    // Tambah jumlah item di keranjang
+    itemCount++;
+    cartCount.textContent = itemCount;
+  });
+});
 
 

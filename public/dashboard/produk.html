@@ -71,9 +71,6 @@
         >
           <div class="text-xl font-bold text-gray-800">Supplier Dashboard</div>
           <div class="flex items-center space-x-4">
-            <button class="text-primary">
-              <span class="material-icons">notifications</span>
-            </button>
             <div class="relative">
               <button
                 class="flex items-center text-primary focus:outline-none"
@@ -88,25 +85,8 @@
                 <span class="material-icons ml-1">expand_more</span>
               </button>
               <!-- Dropdown -->
-              <div
-                id="profileDropdown"
-                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden"
-              >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >View Profile</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >Settings</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >Logout</a
-                >
+              <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
+                <a href="#"  id ="logout-btn" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
               </div>
             </div>
           </div>
@@ -117,16 +97,16 @@
           <h1 class="text-3xl font-bold mb-6">Manage Products</h1>
 
           <div class="mb-4">
-            <button
-              onclick="toggleModal()"
-              class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90"
+            <a
+            href="addproduk.html"
+            class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90"
             >
               Tambah Produk
-            </button>
+            </a>
           </div>
 
           <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
-            <table class="min-w-full bg-white">
+            <table class="min-w-full bg-white" id="produkTable">
               <thead class="bg-primary text-white">
                 <tr>
                   <th class="py-3 px-4 text-left">Nama Barang</th>
@@ -137,262 +117,152 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-b">
-                  <td class="py-3 px-4">Ayam Kampung</td>
-                  <td class="py-3 px-4">Ayam kampung organik segar</td>
-                  <td class="py-3 px-4">Rp 50.000</td>
-                  <td class="py-3 px-4">Daging</td>
-                  <td class="py-3 px-4">
-                    <button
-                    onclick="openEditModal('Ayam Kampung', 'Ayam kampung organik segar', 50000, 'Daging')"
-                    class="inline-block text-white bg-blue-500 px-2 py-1 rounded-md"
-                  style="background-color: blue;">
-                    Edit
-                  </button>
-                  |
-                  <button
-                    onclick="confirmDelete()"
-                    class="inline-block text-white bg-red-600 px-2 py-1 rounded-md"
-                  style="background-color: red;">
-                    Hapus
-                  </button>                  
-                  </td>
-                </tr>
+                <!-- Data produk akan dimuat di sini -->
               </tbody>
             </table>
+            <div id="pagination" class="mt-4 flex justify-center items-center space-x-2"></div>
           </div>
+          
         </div>
-
-        <!-- Modal -->
-        <div
-          id="modal"
-          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden"
-        >
-          <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
-            <h2 class="text-xl font-semibold mb-4">Tambah Produk</h2>
-            <form action="#" method="POST" enctype="multipart/form-data" id="form-produk">
-              <!-- Nama Barang -->
-              <div class="mb-4">
-                <label
-                  for="nama"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Nama Barang</label
-                >
-                <input
-                  type="text"
-                  id="nama"
-                  name="nama"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Masukkan nama barang"
-                />
-              </div>
-
-              <!-- Deskripsi -->
-              <div class="mb-4">
-                <label
-                  for="deskripsi"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Deskripsi</label
-                >
-                <textarea
-                  id="deskripsi"
-                  name="deskripsi"
-                  required
-                  rows="4"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Deskripsi produk"
-                ></textarea>
-              </div>
-
-              <!-- Harga -->
-              <div class="mb-4">
-                <label
-                  for="harga"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Harga</label
-                >
-                <input
-                  type="number"
-                  id="harga"
-                  name="harga"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Harga produk"
-                />
-              </div>
-
-              <!-- Kategori -->
-              <div class="mb-4">
-                <label
-                  for="kategori"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Kategori</label
-                >
-                <select
-                  id="kategori"
-                  name="kategori"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                >
-                  <option value="" disabled selected>Pilih kategori</option>
-                  <option value="daging">Daging</option>
-                  <option value="telur">Telur</option>
-                  <option value="pakan">Pakan</option>
-                </select>
-              </div>
-
-              <!-- Gambar -->
-              <div class="mb-4">
-                <label
-                  for="gambar"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Gambar Produk</label
-                >
-                <input
-                  type="file"
-                  id="gambar"
-                  name="gambar"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                />
-              </div>
-
-              <div class="flex justify-end">
-                <button
-                  type="button"
-                  onclick="toggleModal()"
-                  class="mr-2 px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-                >
-                  Batal
-                </button>
-                <button
-                  type="submit"
-                  class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90"
-                >
-                  Simpan
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <!-- Modal Edit -->
-        <div
-          id="editModal"
-          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden"
-        >
-          <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
-            <h2 class="text-xl font-semibold mb-4">Edit Produk</h2>
-            <form action="#" method="POST" enctype="multipart/form-data">
-              <!-- Nama Barang -->
-              <div class="mb-4">
-                <label
-                  for="edit_nama"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Nama Barang</label
-                >
-                <input
-                  type="text"
-                  id="edit_nama"
-                  name="edit_nama"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Masukkan nama barang"
-                />
-              </div>
-
-              <!-- Deskripsi -->
-              <div class="mb-4">
-                <label
-                  for="edit_deskripsi"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Deskripsi</label
-                >
-                <textarea
-                  id="edit_deskripsi"
-                  name="edit_deskripsi"
-                  required
-                  rows="4"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Deskripsi produk"
-                ></textarea>
-              </div>
-
-              <!-- Harga -->
-              <div class="mb-4">
-                <label
-                  for="edit_harga"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Harga</label
-                >
-                <input
-                  type="number"
-                  id="edit_harga"
-                  name="edit_harga"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                  placeholder="Harga produk"
-                />
-              </div>
-
-              <!-- Kategori -->
-              <div class="mb-4">
-                <label
-                  for="edit_kategori"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Kategori</label
-                >
-                <select
-                  id="edit_kategori"
-                  name="edit_kategori"
-                  required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                >
-                  <option value="" disabled selected>Pilih kategori</option>
-                  <option value="daging">Daging</option>
-                  <option value="telur">Telur</option>
-                  <option value="pakan">Pakan</option>
-                </select>
-              </div>
-
-              <!-- Gambar -->
-              <div class="mb-4">
-                <label
-                  for="edit_gambar"
-                  class="block text-sm font-medium text-gray-700 mb-1"
-                  >Gambar Produk</label
-                >
-                <input
-                  type="file"
-                  id="edit_gambar"
-                  name="edit_gambar"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                />
-              </div>
-
-              <div class="flex justify-end">
-                <button
-                  type="button"
-                  onclick="closeEditModal()"
-                  class="mr-2 px-4 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400"
-                >
-                  Batal
-                </button>
-                <button
-                  type="submit"
-                  class="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-90"
-                >
-                  Simpan
-                </button>
-              </div>
-            </form>
-          </div>
         </div>
       </div>
     </div>
 
     <script src="../src/js/script.js"></script>
     <script src="../src/js/modal.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      $(document).ready(function () {
+  const token = localStorage.getItem('auth_token');
+  const limit = 10; // Jumlah data per halaman
+  let currentPage = 1; // Halaman saat ini
+
+  // Fungsi untuk memuat data produk dari API berdasarkan halaman
+  function loadProdukSupplier(page) {
+    const offset = (page - 1) * limit;
+
+    $.ajax({
+      type: 'GET',
+      url: `http://poultrylink.ambatuwin.xyz/api/produksupplier?limit=${limit}&offset=${offset}`,
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      success: function (response) {
+        if (response.success) {
+          const produks = response.produks;
+          let tableBody = '';
+
+          produks.forEach(produk => {
+            tableBody += `
+              <tr class="border-b">
+                <td class="py-3 px-4">${produk.nama_produk}</td>
+                <td class="py-3 px-4">${produk.deskripsi}</td>
+                <td class="py-3 px-4">Rp ${produk.harga}</td>
+                <td class="py-3 px-4">${produk.kategori_id}</td>
+                <td class="py-3 px-4">
+                  <a href="editproduk.html" class="inline-block text-white bg-blue-500 px-2 py-1 rounded-md">Edit</a> |
+                  <a onclick="deleteProduk(${produk.id})" class="inline-block text-white bg-red-600 px-2 py-1 rounded-md">Hapus</a>
+                </td>
+              </tr>`;
+          });
+
+          $('#produkTable tbody').html(tableBody);
+
+          // Panggil fungsi untuk menampilkan tombol halaman
+          renderPagination(response.total, page);
+        }
+      },
+      error: function (xhr) {
+        console.error("Gagal mengambil data produk", xhr);
+      }
+    });
+  }
+
+  // Fungsi untuk menampilkan tombol halaman
+  function renderPagination(totalData, currentPage) {
+  const totalPages = Math.ceil(totalData / limit);
+  let paginationHtml = '';
+
+  // Tombol Previous (untuk halaman sebelumnya)
+  paginationHtml += `
+    <button class="pagination-btn ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''} py-2 px-4 rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 disabled:opacity-50" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>
+      &laquo; Prev
+    </button>`;
+
+  // Tombol nomor halaman
+  for (let i = 1; i <= totalPages; i++) {
+    paginationHtml += `
+      <button class="pagination-btn ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} py-2 px-4 rounded-md hover:bg-blue-400 transition duration-300" data-page="${i}">
+        ${i}
+      </button>`;
+  }
+
+  // Tombol Next (untuk halaman selanjutnya)
+  paginationHtml += `
+    <button class="pagination-btn ${currentPage === totalPages ? 'cursor-not-allowed opacity-50' : ''} py-2 px-4 rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 disabled:opacity-50" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>
+      Next &raquo;
+    </button>`;
+
+  $('#pagination').html(paginationHtml);
+}
+
+
+  // Event listener untuk tombol halaman
+  $('#pagination').on('click', '.pagination-btn', function () {
+    const selectedPage = $(this).data('page');
+    currentPage = selectedPage;
+    loadProdukSupplier(currentPage);
+  });
+
+  // Fungsi untuk menghapus produk
+  window.deleteProduk = function (id) {
+    if (confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
+      $.ajax({
+        type: 'DELETE',
+        url: `http://poultrylink.ambatuwin.xyz/api/deleteproduk/${id}`,
+        headers: {
+          'Authorization': 'Bearer ' + token
+        },
+        success: function (response) {
+          if (response.success) {
+            alert('Produk berhasil dihapus.');
+            loadProdukSupplier(currentPage); // Refresh tabel pada halaman saat ini setelah menghapus
+          } else {
+            alert('Gagal menghapus produk.');
+          }
+        },
+        error: function () {
+          alert('Terjadi kesalahan saat menghapus produk.');
+        }
+      });
+    }
+  };
+
+  // Panggil fungsi saat halaman dimuat
+  loadProdukSupplier(currentPage);
+});
+
+        </script>
+
+<!-- <script>
+  $(document).ready(function () {
+    const base_url = window.location.origin;
+    // Memeriksa apakah token ada di localStorage
+    const token = localStorage.getItem('supplier_token');
+
+    // Jika tidak ada token, arahkan pengguna ke halaman login
+    if (!token) {
+      window.location.href = base_url + '/poultrylink/frontend1/public/dashboard/loginsupplier.html';  // Arahkan ke halaman login jika tidak ada token
+    } else {
+      // Jika ada token, lanjutkan ke halaman home
+      console.log('Token ditemukan, pengguna dapat melanjutkan');
+    }
+  });
+</script> -->
+
+    <script src="../src/js/logout.js"></script>
   </body>
 </html>

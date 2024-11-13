@@ -22,64 +22,52 @@
         <span class="text-3xl font-bold text-primary mt-4">PoultryLink</span>
       </a>
   
-      <form class="space-y-10">
-        <!-- Informasi Toko -->
+      <form class="space-y-10" id="register_supplier">
+      <!-- Data Pribadi -->
         <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
-          <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Informasi Toko</h2>
+          <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Data Pribadi</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block font-medium text-gray-700">Nama Toko</label>
-              <input type="text" placeholder="Masukkan nama toko" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
+              <label class="block font-medium text-gray-700">NIK</label>
+              <input type="text" placeholder="Masukkan NIK" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              id="nik" name="nik">
             </div>
             <div>
-              <label class="block font-medium text-gray-700">Kota</label>
-              <input type="text" placeholder="Masukkan kota" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
+              <label class="block font-medium text-gray-700">Nama</label>
+              <input type="text" placeholder="Masukkan nama" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              id="nama" name="nama">
             </div>
             <div>
-              <label class="block font-medium text-gray-700">Kecamatan</label>
-              <input type="text" placeholder="Masukkan kecamatan" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
+              <label class="block font-medium text-gray-700">Alamat</label>
+              <input type="text" placeholder="Masukkan alamat" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              id="alamat" name="alamat">
             </div>
             <div>
-              <label class="block font-medium text-gray-700">Kode Pos</label>
-              <input type="text" placeholder="Masukkan kode pos" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
+              <label class="block font-medium text-gray-700">Kewarganegaraan</label>
+              <input type="text" placeholder="Masukkan kewarganegaraan" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              id="kewarganegaraan" name="kewarganegaraan">
+            </div>
+            <div>
+              <label class="block font-medium text-gray-700">Tempat Tanggal Lahir</label>
+              <input type="text" placeholder="Masukkan kewarganegaraan" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              id="ttl" name="ttl">
             </div>
           </div>
         </div>
-  
+
         <!-- Upload Dokumen -->
         <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
           <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Upload Dokumen</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block font-medium text-gray-700">KTP</label>
-              <input type="file" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
+              <input type="file" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              id="images[]" name="images[]">
             </div>
             <div>
               <label class="block font-medium text-gray-700">NPWP</label>
-              <input type="file" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
-            </div>
-          </div>
-        </div>
-  
-        <!-- Data Pribadi -->
-        <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
-          <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Data Pribadi</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block font-medium text-gray-700">NIK</label>
-              <input type="text" placeholder="Masukkan NIK" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
-            </div>
-            <div>
-              <label class="block font-medium text-gray-700">Nama</label>
-              <input type="text" placeholder="Masukkan nama" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
-            </div>
-            <div>
-              <label class="block font-medium text-gray-700">Alamat</label>
-              <input type="text" placeholder="Masukkan alamat" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
-            </div>
-            <div>
-              <label class="block font-medium text-gray-700">Kewarganegaraan</label>
-              <input type="text" placeholder="Masukkan kewarganegaraan" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none">
+              <input type="file" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
+              id="images[]" name="images[]">
             </div>
           </div>
         </div>
@@ -93,6 +81,55 @@
       </form>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    $(document).ready(function() {
+        $('#register_supplier').on('submit', function(event) {
+          const base_url = window.location.origin;
+          var buyer_token = localStorage.getItem('auth_token');
+            
+            event.preventDefault();
+            const formData = new FormData(this);
+            $.ajax({
+                url: 'http://poultrylink.ambatuwin.xyz/api/postverif',
+                method: 'POST',
+                data: formData,
+                processData: false, // Jangan memproses data agar tetap dalam bentuk FormData
+                contentType: false, // Biarkan jQuery menangani pengaturan tipe konten
+                headers: {
+                    'Authorization': 'Bearer ' + buyer_token, // Ganti dengan token autentikasi Anda jika perlu
+                },
+                success: function(response) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Data berhasil dikirim untuk verifikasi",
+                        icon: "success",
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Ok"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect ke halaman lain jika diperlukan
+                            window.location = base_url + "/thankyou.html"; // Sesuaikan tujuan halaman setelah submit
+                        }
+                    });
+                },
+                error: function(xhr) {
+                    let errorMessage = "Terjadi kesalahan pada server";
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+                    Swal.fire({
+                        title: "Error",
+                        text: errorMessage,
+                        icon: "error"
+                    });
+                }
+            });
+        });
+    });
+  </script>
+
   
 </body>
 </html>

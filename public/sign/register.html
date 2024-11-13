@@ -14,7 +14,7 @@
       <!-- Image Section -->
       <div class="w-1/2 hidden md:block">
         <img
-          src="../src/img/logo2.png"
+          src="../src/img/Computer login-rafiki.svg"
           alt="Register Image"
           class="w-full h-96 mt-24 object-cover"
         />
@@ -76,7 +76,7 @@
             <input
               name="confirm_password"
               type="password"
-              id="passwordconfirm"
+              id="password_confirm"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Create a password"
             />
@@ -127,27 +127,44 @@
 
           $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:8000/api/register",
+            url: "http://poultrylink.ambatuwin.xyz/api/register",
             data: formData,
             contentType: false,
             processData: false,
-            success: function (newRegister) {
-              Swal.fire({
-                title: "Success",
-                text: "Berhasil register!",
-                icon: "success",
-                showCancelButton: false,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ok",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  window.location = base_url + "/frontend/public/index.html";
-                }
-              });
+            success: function (response) {
+              if (response.success) {
+                // Simpan username dan email di localStorage
+                localStorage.setItem("user_email", formData.get("email"));
+                localStorage.setItem("user_username", formData.get("username"));
+
+                Swal.fire({
+                  title: "Success",
+                  text: "Berhasil register!",
+                  icon: "success",
+                  confirmButtonText: "Ok",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location =
+                      base_url +
+                      "/sign/login2.html";
+                  }
+                });
+              } else {
+                Swal.fire({
+                  title: "Error",
+                  text:
+                    response.message || "Gagal register. Silakan coba lagi.",
+                  icon: "error",
+                });
+              }
             },
             error: function (xhr) {
-              console.log(xhr.responseText); // Ini akan menampilkan pesan error jika ada
+              console.log(xhr.responseText);
+              Swal.fire({
+                title: "Error",
+                text: "Terjadi kesalahan pada server.",
+                icon: "error",
+              });
             },
           });
         });

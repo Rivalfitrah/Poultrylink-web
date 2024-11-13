@@ -16,10 +16,7 @@
     <title>PoultryLink</title>
     <link rel="icon" href="../src/img/logo.svg" />
     <!-- AOS -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/aos@next/dist/aos.css"
-    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
   <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <!-- Sidebar -->
@@ -97,25 +94,8 @@
                 <span class="material-icons ml-1">expand_more</span>
               </button>
               <!-- Dropdown -->
-              <div
-                id="profileDropdown"
-                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden"
-              >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >View Profile</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >Settings</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >Logout</a
-                >
+              <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
+                <a href="#"  id ="logout-btn" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
               </div>
             </div>
           </div>
@@ -123,49 +103,96 @@
 
         <!-- History Transaksi Section -->
         <main class="p-6 bg-gray-100">
-          <h2 class="text-2xl font-semibold text-gray-800 mb-6">History Transaksi</h2>
+          <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+            History Transaksi
+          </h2>
           <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <table class="min-w-full bg-white">
+            <table class="min-w-full bg-white" id="orders-table">
               <thead>
-                <tr class="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <tr
+                  class="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+                >
                   <th class="py-3 px-6 text-left">Tanggal</th>
                   <th class="py-3 px-6 text-left">Produk</th>
                   <th class="py-3 px-6 text-center">Jumlah</th>
+                  <th class="py-3 px-6 text-center">Harga</th>
                   <th class="py-3 px-6 text-center">Total Harga</th>
                   <th class="py-3 px-6 text-center">Status</th>
                 </tr>
               </thead>
-              <tbody class="text-gray-700 text-sm font-light">
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                  <td class="py-3 px-6 text-left">2024-11-01</td>
-                  <td class="py-3 px-6 text-left">Ayam Potong</td>
-                  <td class="py-3 px-6 text-center">10</td>
-                  <td class="py-3 px-6 text-center">Rp1.000.000</td>
-                  <td class="py-3 px-6 text-center text-green-500">Sukses</td>
-                </tr>
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                  <td class="py-3 px-6 text-left">2024-10-28</td>
-                  <td class="py-3 px-6 text-left">Telur</td>
-                  <td class="py-3 px-6 text-center">50</td>
-                  <td class="py-3 px-6 text-center">Rp500.000</td>
-                  <td class="py-3 px-6 text-center text-yellow-500">Pending</td>
-                </tr>
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                  <td class="py-3 px-6 text-left">2024-10-22</td>
-                  <td class="py-3 px-6 text-left">Pakan Ayam</td>
-                  <td class="py-3 px-6 text-center">20</td>
-                  <td class="py-3 px-6 text-center">Rp200.000</td>
-                  <td class="py-3 px-6 text-center text-red-500">Gagal</td>
-                </tr>
-              </tbody>
+              <tbody class="text-gray-700 text-sm font-light-"></tbody>
             </table>
           </div>
         </main>
       </div>
     </div>
 
-  <!-- Script to toggle dropdown -->
-  <script src="../src/js/script.js"></script>
-  
+    <!-- Script to toggle dropdown -->
+    <script src="../src/js/script.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      $(document).ready(function () {
+        const token = localStorage.getItem("auth_token");
+        $.ajax({
+          url: "http://poultrylink.ambatuwin.xyz/api/supplier/orders", // Endpoint yang sesuai dengan controller getorder
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+          success: function (response) {
+            if (response.orders && response.orders.length > 0) {
+              let orders = response.orders;
+              let html = "";
+
+              // Loop untuk menampilkan setiap pesanan
+              orders.forEach(function (order) {
+                html += `
+                        <tr class="border-b border-gray-200 hover:bg-gray-100">
+                            <td class="py-3 px-6 text-left">${order.created_at}</td>
+                            <td class="py-3 px-6 text-left">${order.produk_id}</td>
+                            <td class="py-3 px-6 text-center">${order.quantity}</td>
+                            <td class="py-3 px-6 text-center">${order.price}</td>
+                            <td class="py-3 px-6 text-center">${order.total_price}</td>
+                            <td class="py-3 px-6 text-center">${order.confirmed}</td>
+                        </tr>
+                    `;
+              });
+
+              // Insert HTML ke dalam tabel
+              $("#orders-table tbody").html(html);
+            } else {
+              alert("Tidak ada pesanan untuk supplier ini.");
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Terjadi kesalahan:", error);
+          },
+        });
+      });
+    </script>
+
+<script>
+  $(document).ready(function () {
+    const base_url = window.location.origin;
+    // Memeriksa apakah token ada di localStorage
+    const token = localStorage.getItem('supplier_token');
+
+    // Jika tidak ada token, arahkan pengguna ke halaman login
+    if (!token) {
+      window.location.href = base_url + '/dashboard/loginsupplier.html';  // Arahkan ke halaman login jika tidak ada token
+    } else {
+      // Jika ada token, lanjutkan ke halaman home
+      console.log('Token ditemukan, pengguna dapat melanjutkan');
+    }
+  });
+</script>
+
+<script src="../src/js/logout.js"></script>
   </body>
 </html>

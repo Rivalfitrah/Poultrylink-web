@@ -19,23 +19,23 @@
   <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20" data-aos="fade-down" data-aos-duration="2000">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <!-- Logo dan Nama PoultryLink -->
-      <a href="../index.html" class="flex items-center space-x-2 ml-7">
+      <a href="../home.html" class="flex items-center space-x-2 ml-7">
         <img src="../src/img/logo.svg" alt="PoultryLink Logo" class="h-16 w-16">
         <span class="text-3xl font-bold text-primary">PoultryLink</span>
       </a>
-
-      <!-- Link Navigasi -->
+  
+      <!-- Link Navigasi (Desktop) -->
       <div class="hidden md:flex space-x-6">
-        <a href="/public/compony/about.html"
+        <a href="../compony/about.html"
           class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
-        <a href="/public/shop.html"
+        <a href="../shop.html"
           class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Produk</a>
       </div>
-
+  
       <!-- Fitur Search, Wishlist, Cart, dan Akun -->
-      <div class="flex items-center space-x-4 mr-12">
-        <!-- Search Bar -->
-        <div class="relative w-80">
+      <div class="md:flex items-center space-x-4 mr-12">
+        <!-- Search Bar (Hidden di layar mobile) -->
+        <div class="relative w-80 hidden md:block">
           <input type="text" id="searchInput"
             class="border border-primary rounded-full py-2 px-4 w-full text-primary focus:border-primary focus:outline-none"
             placeholder="Search..." />
@@ -47,19 +47,9 @@
             </svg>
           </span>
         </div>
-
-        <!-- Wishlist Icon -->
-        <a href="akun/whislist.html" class="relative text-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path
-              d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 000-7.78z">
-            </path>
-          </svg>
-        </a>
-
+  
         <!-- Cart Icon -->
-        <a href="/public/cart.html" class="relative text-primary">
+        <a href="cart.html" class="relative text-primary hidden md:block">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"></circle>
@@ -67,10 +57,10 @@
             <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-8.28H5.73"></path>
           </svg>
         </a>
-
+  
         <!-- Account Icon with Dropdown -->
-        <div class="relative group">
-          <a href="#" class="relative text-primary" id="account-icon">
+        <div class="account-icon relative">
+          <a href="#" class="relative text-primary" id="account-icon" onclick="toggleDropdown(event)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
@@ -81,34 +71,53 @@
 
           <!-- Dropdown -->
           <div id="account-dropdown"
-            class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 transition-opacity duration-300 transform scale-95 group-hover:opacity-100 group-hover:scale-100">
-            <!-- Login and Register buttons -->
-            <div class="flex justify-between px-4 py-2">
-              <a href="/public/sign/login.html" id="login-btn"
-                class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-white hover:text-primary hover:border-primary hover:border-2 transition-colors duration-200">Login</a>
-              <a href="/public/sign/register.html" id="register-btn"
-                class="bg-white text-primary px-4 py-2 rounded-lg hover:bg-primary hover:text-white border-2 border-primary transition-colors duration-200">Register</a>
-            </div>
+            class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 invisible transition-opacity duration-300 transform scale-95">
 
             <!-- Manage Account -->
-            <a href="#" id="manage-account-btn"
-              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+            <a href="akun/profil.html" id="manage-account-btn"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-person-vcard mx-2" viewBox="0 0 16 16">
                 <path
-                  d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5" />
+                  d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5">
+                </path>
                 <path
-                  d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z" />
+                  d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z">
+                </path>
               </svg>
               Manage Account
             </a>
-            <a href="/public/dashboard/toko.html" id="manage-account-btn"
-              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+            <a href="dashboard/toko.html" id="menu-buka-toko"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
               <i class="fa-solid fa-shop mx-2"></i>
               Buka toko
             </a>
+            <a href="#" id="logout-btn"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+              <i class="fas fa-sign-out-alt mx-2"></i>
+              Logout
+            </a>
           </div>
         </div>
+      </div>
+  
+
+    </div>
+  
+    <!-- Menu Dropdown (Mobile Only) -->
+    <div id="mobile-menu" class="hidden bg-white shadow-md md:hidden">
+      <div class="flex flex-col items-start p-4 space-y-4">
+        <a href="./compony/about.html" class="text-primary text-xl">Tentang</a>
+        <a href="shop.html" class="text-primary text-xl">Produk</a>
+        <a href="cart.html" class="text-primary text-xl">Keranjang</a>
+        <a href="sign/login.html"
+          class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary px-4 py-2 rounded-lg">
+          Login
+        </a>
+        <a href="sign/register.html"
+          class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border-2 border-primary">
+          Register
+        </a>
       </div>
     </div>
   </nav>
@@ -120,17 +129,24 @@
       <!-- Sidebar -->
       <aside class="bg-gradient-to-br from-white to-gray-50 p-6 rounded-xl shadow-lg">
         <!-- Profil Pengguna -->
-        <div class="flex items-center space-x-4 mb-8">
-          <div class="relative">
-            <img class="h-20 w-20 rounded-full object-cover shadow-md border-4 border-white"
-              src="https://via.placeholder.com/64" alt="User profile picture">
-            <span class="absolute bottom-0 right-0 h-4 w-4 bg-green-400 border-2 border-white rounded-full"></span>
-          </div>
-          <div>
-            <p class="text-xl font-bold text-gray-900">Ambatuwin🏆</p>
-            <p class="text-gray-500">Hello, Ambatuwin!</p>
-          </div>
-        </div>
+<div class="flex items-center space-x-4 mb-8">
+  <div class="relative">
+      <img
+          id="profile_image" 
+          class="h-20 w-20 rounded-full object-cover shadow-md border-4 border-white"
+          src="https://via.placeholder.com/64"
+          alt="User profile picture"
+      />
+      <span class="absolute bottom-0 right-0 h-4 w-4 bg-green-400 border-2 border-white rounded-full"></span>
+  </div>
+  <div>
+      <!-- Tampilkan Username -->
+      <p id="profile_username" class="text-xl font-bold text-gray-900">Ambatuwin🏆</p>
+      <!-- Tampilkan Greeting dengan Username -->
+      <p id="profile_greeting" class="text-gray-500">Hello, Ambatuwin!</p>
+  </div>
+</div>
+
 
         <!-- Navigasi Sidebar -->
         <nav class="space-y-4">
@@ -144,9 +160,9 @@
             class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
             <i class="fas fa-history mr-3 text-primary"></i> <span class="font-medium">Riwayat Pembelian</span>
           </a>
-          <a href="#"
+          <a href="../dashboard/loginsupplier.html"
             class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
-            <i class="fas fa-sign-out-alt mr-3 text-primary"></i> <span class="font-medium">Keluar</span>
+            <i class="fa solid fa-shop mr-3 text-primary"></i> <span class="font-medium">Dashboard Suplier</span>
           </a>
         </nav>
       </aside>
@@ -155,32 +171,33 @@
       <div class="col-span-2 bg-white p-6 rounded-xl shadow-lg">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-semibold text-gray-800">Informasi Akun</h2>
+          <!-- Tombol Edit -->
+          <button onclick="toggleModal()"
+            class="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary-dark transition-all duration-200">
+            Edit Profil
+          </button>
         </div>
-        <!-- Tombol Edit -->
-        <button onclick="toggleModal()"
-          class="px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary-dark transition-all duration-200 mr-24">
-          Edit Profil
-        </button>
+
 
         <!-- Tampilan Data dengan Grid 2 Kolom -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-gray-700">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-gray-700" id="data_buyer">
           <!-- Data Pribadi -->
           <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
             <h3 class="font-semibold text-lg mb-3">Data Pribadi</h3>
-            <p><span class="font-semibold">Nama Depan:</span> John</p>
-            <p><span class="font-semibold">Nama Belakang:</span> Doe</p>
-            <p><span class="font-semibold">Nomor Telepon:</span> +62 812 3456 7890</p>
-            <p><span class="font-semibold">Email:</span> johndoe@gmail.col-md-1</p>
+            <p><span class="font-semibold">Nama Depan:</span> <span id="firstname"></span></p>
+            <p><span class="font-semibold">Nama Belakang:</span> <span id="lastname"></span></p>
+            <p><span class="font-semibold">Nomor Telepon:</span> <span id="telepon"></span></p>
+            <p><span class="font-semibold">Email:</span> <span id="email"> </span></p>
           </div>
 
           <!-- Data Alamat -->
           <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
             <h3 class="font-semibold text-lg mb-3">Alamat</h3>
-            <p><span class="font-semibold">Alamat Lengkap:</span> Jalan Merdeka No. 123</p>
-            <p><span class="font-semibold">Kota:</span> Jakarta</p>
-            <p><span class="font-semibold">Kode Pos:</span> 12345</p>
-            <p><span class="font-semibold">Provinsi:</span> DKI Jakarta</p>
-            <p><span class="font-semibold">Negara:</span> Indonesia</p>
+            <p><span class="font-semibold">Alamat Lengkap:</span> <span id="alamat"></span></p>
+            <p><span class="font-semibold">Kota:</span> <span id="kota"></span></p>
+            <p><span class="font-semibold">Kode Pos:</span> <span id="kodepos"></span></p>
+            <p><span class="font-semibold">Provinsi:</span> <span id="provinsi"></span></p>
+            <p><span class="font-semibold">Negara:</span> <span id="negara"></span></p>
           </div>
         </div>
       </div>
@@ -190,51 +207,51 @@
     <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
       <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
         <h3 class="text-xl font-semibold mb-4 text-gray-800">Edit Informasi Akun</h3>
-        <form>
+        <form id="edit-profile-form">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
             <div>
               <label class="block text-sm font-medium mb-1">Nama Depan</label>
-              <input type="text"
+              <input type="text" id="edit-firstname" name="firstname"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Nama Belakang</label>
-              <input type="text"
+              <input type="text" id="edit-lastname" name="lastname"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Nomor Telepon</label>
-              <input type="text"
+              <input type="text" id="edit-telepon" name="telepon"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Alamat Lengkap</label>
-              <input type="text"
+              <input type="text" id="edit-alamat" name="alamat"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Kota</label>
-              <input type="text"
+              <input type="text" id="edit-kota" name="kota"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Kode Pos</label>
-              <input type="text"
+              <input type="text" id="edit-kodepos" name="kodepos"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Provinsi</label>
-              <input type="text"
+              <input type="text" id="edit-provinsi" name="provinsi"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Negara</label>
-              <input type="text"
+              <input type="text" id="edit-negara" name="negara"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
             <div class="col-span-2">
               <label class="block text-sm font-medium mb-1">Foto Profil</label>
-              <input type="file" class="w-full">
+              <input type="file" id="edit-foto" class="w-full">
             </div>
           </div>
 
@@ -250,9 +267,256 @@
     </div>
 
 
+
     <!-- AOS -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="../src/js/aos.js"></script>
+
+    <!-- Modal -->
     <script src="../src/js/modal.js"></script>
+    <script src="../src/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- logout -->
+
+
+    <script>
+      $(document).ready(function () {
+        const token = localStorage.getItem('auth_token');
+        const storedEmail = localStorage.getItem("user_email");
+        const storedUsername = localStorage.getItem("user_username");
+    
+        // Tampilkan username dan email di halaman profil
+        $('#profile_username').text(storedUsername || "Guest");
+        $('#profile_greeting').text(`Hello, ${storedUsername || "User"}!`);
+        $('#email').text(storedEmail || "No email provided");
+    
+        $.ajax({
+            url: 'http://poultrylink.ambatuwin.xyz/api/getprofile', // Pastikan ini URL API yang benar
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (response) {
+                console.log(response); // Debugging respons
+    
+                if (response.data) {
+                    $('#firstname').text(response.data.firstname);
+                    $('#lastname').text(response.data.lastname);
+                    $('#telepon').text(response.data.telepon);
+                    $('#email').text(response.data.email || storedEmail);
+                    $('#alamat').text(response.data.alamat);
+                    $('#kota').text(response.data.kota);
+                    $('#kodepos').text(response.data.kodepos);
+                    $('#provinsi').text(response.data.provinsi);
+                    $('#negara').text(response.data.negara);
+    
+                    // Ambil avatar_path dari respons dan tampilkan di gambar profil
+                    const profileImageUrl = response.data.avatar_path;
+                    if (profileImageUrl) {
+                        // Periksa apakah URL lengkap atau perlu di-append dengan base URL
+                        const fullImageUrl = profileImageUrl.startsWith('http') 
+                            ? profileImageUrl 
+                            : `http://poultrylink.ambatuwin.xyz/${profileImageUrl}`;
+    
+                        // Periksa jika URL gambar valid, jika tidak gunakan placeholder
+                        const img = new Image();
+                        img.onload = function () {
+                            // Jika gambar berhasil dimuat, tampilkan gambar
+                            $('#profile_image').attr('src', fullImageUrl);
+                        };
+                        img.onerror = function () {
+                            // Jika gambar gagal dimuat, gunakan placeholder
+                            $('#profile_image').attr('src', 'https://via.placeholder.com/64');
+                        };
+                        img.src = fullImageUrl;
+                    } else {
+                        // Jika tidak ada avatar, gunakan placeholder
+                        $('#profile_image').attr('src', 'https://via.placeholder.com/64');
+                    }
+                }
+            },
+            error: function (xhr) {
+                console.log("Error:", xhr.responseText);
+            }
+        });
+      });
+    </script>
+    
+
+    <!-- edit -->
+    <script>
+    $(document).ready(function () {
+    const token = localStorage.getItem('auth_token');
+
+    // Memuat data profil saat halaman dimuat
+    $.ajax({
+        url: 'http://poultrylink.ambatuwin.xyz/api/getprofile',
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.data) {
+                // Isi form dengan data profil yang ada
+                $('#edit-firstname').val(response.data.firstname || '');
+                $('#edit-lastname').val(response.data.lastname || '');
+                $('#edit-telepon').val(response.data.telepon || '');
+                $('#edit-alamat').val(response.data.alamat || '');
+                $('#edit-kota').val(response.data.kota || '');
+                $('#edit-kodepos').val(response.data.kodepos || '');
+                $('#edit-provinsi').val(response.data.provinsi || '');
+                $('#edit-negara').val(response.data.negara || '');
+                // Jika ada avatar_path, gunakan sebagai src gambar profil
+                const profileImageUrl = response.data.avatar_path;
+                if (profileImageUrl) {
+                    $('#profile_image').attr('src', profileImageUrl); // Mengatur gambar menggunakan id
+                }
+            }
+        },
+        error: function (xhr) {
+            console.log("Error:", xhr.responseText);
+        }
+    });
+
+    // Menangani proses submit form untuk menyimpan perubahan
+    $('#edit-profile-form').on('submit', function (event) {
+        event.preventDefault();
+
+        // Membuat objek FormData
+        var formData = new FormData();
+        formData.append('firstname', $('#edit-firstname').val());
+        formData.append('lastname', $('#edit-lastname').val());
+        formData.append('telepon', $('#edit-telepon').val());
+        formData.append('alamat', $('#edit-alamat').val());
+        formData.append('kota', $('#edit-kota').val());
+        formData.append('kodepos', $('#edit-kodepos').val());
+        formData.append('provinsi', $('#edit-provinsi').val());
+        formData.append('negara', $('#edit-negara').val());
+
+        // Cek jika ada file foto yang diupload
+        var fileInput = $('#edit-foto')[0];
+        if (fileInput.files.length > 0) {
+            formData.append('avatar_path', fileInput.files[0]); // Pastikan nama sesuai dengan nama field di Laravel
+        }
+
+        // Kirim data perubahan ke server menggunakan FormData
+        $.ajax({
+            url: 'http://poultrylink.ambatuwin.xyz/api/updateprofile',
+            type: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            data: formData,
+            processData: false, // Jangan proses data
+            contentType: false, // Biarkan browser mengatur content-type untuk multipart
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    Swal.fire({
+                        title: "Success",
+                        text: "Profil berhasil diperbarui!",
+                        icon: "success"
+                    });
+                    toggleModal(); // Tutup modal setelah berhasil
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Terjadi kesalahan saat memperbarui profil.",
+                        icon: "error"
+                    });
+                }
+            },
+            error: function (xhr) {
+                console.log("Error:", xhr.responseText);
+                Swal.fire({
+                    title: "Error",
+                    text: "Terjadi kesalahan saat menghubungi server.",
+                    icon: "error"
+                });
+            }
+        });
+    });
+});
+    </script>
+
+<script>
+  $(document).ready(function() {
+    const base_url = window.location.origin;
+      // Memeriksa apakah token ada di localStorage
+      const token = localStorage.getItem('auth_token');
+
+      // Jika tidak ada token, arahkan pengguna ke halaman login
+      if (!token) {
+          window.location.href =  base_url + '/poultrylink/frontend1/public/sign/login.html';  // Arahkan ke halaman login jika tidak ada token
+      } else {
+          // Jika ada token, lanjutkan ke halaman home
+          console.log('Token ditemukan, pengguna dapat melanjutkan');
+      }
+  });
+</script>
+
+<script>
+  $(document).ready(function() {
+    const base_url = window.location.origin;
+    $('#logout-btn').on('click', function(event) {
+        event.preventDefault(); // Mencegah link melakukan aksi default
+  
+        // Konfirmasi sebelum logout (opsional)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Ambil token autentikasi yang ada di localStorage
+                const token = localStorage.getItem('auth_token');
+  
+                // Kirim permintaan API untuk logout
+                $.ajax({
+                    url: 'http://poultrylink.ambatuwin.xyz/api/logout',  // Ganti dengan URL API logout yang sesuai
+                    type: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`  // Kirim token untuk autentikasi
+                    },
+                    success: function(response) {
+                        // Hapus data di localStorage setelah logout berhasil
+                        localStorage.removeItem('auth_token');
+                        localStorage.removeItem('isLoggedIn');  // Pastikan status login juga dihapus
+  
+                        // Berikan notifikasi logout berhasil
+                        Swal.fire(
+                            'Logged Out!',
+                            'You have been successfully logged out.',
+                            'success'
+                        ).then(() => {
+                            // Redirect ke halaman login setelah logout
+                            window.location.href = base_url + '/public/index.html';
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Jika ada error, tampilkan notifikasi kesalahan
+                        Swal.fire(
+                            'Error!',
+                            'Something went wrong. Please try again.',
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
+  });
+</script>
+
 </body>
+
 </html>

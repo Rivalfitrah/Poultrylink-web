@@ -18,7 +18,7 @@
   <!-- Sidebar -->
   <div class="flex">
     <div class="bg-white h-screen w-64 hidden lg:block shadow-lg">
-      <a href="index.html" class="flex items-center space-x-2 ml-7">
+      <a href="../index.html" class="flex items-center space-x-2 ml-7">
         <img src="../src/img/logo.svg" alt="PoultryLink Logo" class="h-12 w-12 mt-3">
         <span class="text-2xl font-bold text-primary mt-3">PoultryLink</span>
       </a>
@@ -65,9 +65,7 @@
             </button>
             <!-- Dropdown -->
             <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
-              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">View Profile</a>
-              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
-              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+              <a href="#"  id ="logout-btn" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
             </div>
           </div>
         </div>
@@ -137,8 +135,29 @@
     </div>
   </div>
 
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- Script to toggle dropdown -->
   <script src="../src/js/script.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      const base_url = window.location.origin;
+      // Memeriksa apakah token ada di localStorage
+      const token = localStorage.getItem('supplier_token');
+
+      // Jika tidak ada token, arahkan pengguna ke halaman login
+      if (!token) {
+        window.location.href = base_url + '/dashboard/loginsupplier.html';  // Arahkan ke halaman login jika tidak ada token
+      } else {
+        // Jika ada token, lanjutkan ke halaman home
+        console.log('Token ditemukan, pengguna dapat melanjutkan');
+      }
+    });
+  </script>
+
+  <script src="../src/js/logout.js"></script>
 </body>
 
 </html>

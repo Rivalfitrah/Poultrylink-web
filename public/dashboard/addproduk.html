@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="../src/output.css" rel="stylesheet" />
+  <!-- icon -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>PoultryLink</title>
+  <link rel="icon" href="../src/img/logo.svg">
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+</head>
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+  <!-- Sidebar -->
+  <div class="flex">
+    <div class="bg-white h-screen w-64 hidden lg:block shadow-lg">
+      <a href="../index.html" class="flex items-center space-x-2 ml-7">
+        <img
+          src="../src/img/logo.svg"
+          alt="PoultryLink Logo"
+          class="h-12 w-12 mt-3"
+        />
+        <span class="text-2xl font-bold text-primary mt-3">PoultryLink</span>
+      </a>
+      <nav class="mt-10 px-6">
+        <a
+          href="dashboard.html"
+          class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
+        >
+          <span class="material-icons">dashboard</span>
+          <span class="mx-4">Dashboard</span>
+        </a>
+        <a
+          href="produk.html"
+          class="flex items-center p-2 my-3 bg-primary text-white transition-colors duration-200"
+        >
+          <span class="material-icons">storefront</span>
+          <span class="mx-4">Products</span>
+        </a>
+        <a
+          href="history.html"
+          class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
+        >
+          <span class="material-icons">receipt_long</span>
+          <span class="mx-4">Orders</span>
+        </a>
+        <a
+          href="#"
+          class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
+        >
+          <span class="material-icons">insights</span>
+          <span class="mx-4">Sales Reports</span>
+        </a>
+        <a
+          href="#"
+          class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
+        >
+          <span class="material-icons">settings</span>
+          <span class="mx-4">Settings</span>
+        </a>
+      </nav>
+    </div>
+
+
+    <!-- Main Dashboard Content -->
+    <div class="flex-1 min-h-screen">
+      <!-- Header -->
+      <header class="flex justify-between items-center bg-white p-4 shadow-md">
+        <div class="text-xl font-bold text-gray-800">Supplier Dashboard</div>
+        <div class="flex items-center space-x-4">
+          <button class="text-primary">
+            <span class="material-icons">notifications</span>
+          </button>
+          <div class="relative">
+            <button class="flex items-center text-primary focus:outline-none" id="profileButton">
+              <img class="w-8 h-8 rounded-full border-2 border-orange-500" src="https://via.placeholder.com/32"
+                alt="Profile Image" />
+              <span class="ml-2 font-semibold">John Doe</span>
+              <span class="material-icons ml-1">expand_more</span>
+            </button>
+            <!-- Dropdown -->
+            <div id="profileDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden">
+              <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <div class="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Tambah Produk</h2>
+        
+        <form id="form_produk">
+          <!-- Nama Produk -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Nama Produk</label>
+            <input type="text"required
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Masukkan nama produk"
+                   name="nama_produk"
+                   id="nama_produk"
+                   >
+          </div>
+          <!-- Deskripsi Produk -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
+            <textarea id="deskripsi" name="deskripsi" rows="3" required
+                      class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                      placeholder="Masukkan deskripsi produk"></textarea>
+          </div>
+          
+          <!-- Harga Produk -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Harga</label>
+            <input type="number" id="harga" name="harga" required
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Masukkan harga produk">
+          </div>
+          <!-- Kategori Produk -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Kategori</label>
+            <select id="kategori_id" name="kategori_id" required
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <option value="">Pilih kategori</option>
+            </select>
+          </div>
+          
+          <!-- Gambar Produk -->
+          <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700">Upload Gambar</label>
+            <input type="file" id="images[]" name="images[]" accept="image/*" required
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+          </div>
+          
+          <!-- Tombol Submit -->
+          <button 
+          type="submit" class="w-full py-2 px-4 bg-primary text-white font-bold rounded-md hover:bg-indigo-700 focus:outline-none focus:bg-indigo-700"
+          >
+            Tambah Produk
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="../src/js/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $(document).ready(function () {
+      const token = localStorage.getItem('auth_token');
+      $('#form_produk').on('submit', function (e) {
+        e.preventDefault();
+  
+        var form = $(this)[0]; // Ambil form
+        var formData = new FormData(form); // Buat FormData untuk form
+  
+        $.ajax({
+          type: 'POST',
+          url: 'http://poultrylink.ambatuwin.xyz/api/postproduk',
+          data: formData,
+          dataType: 'json',
+          contentType: false, // Jangan mengatur Content-Type secara manual
+          processData: false, // Mencegah jQuery memproses data
+          headers: {
+            'Authorization': 'Bearer ' + token
+          },
+          success: function (response) {
+            if (response.success) {
+              Swal.fire({
+                title: 'Success',
+                text: 'Produk berhasil ditambahkan!',
+                icon: 'success'
+              }).then(() => {
+                window.location.href = 'addproduk.html'; // Redirect setelah berhasil
+              });
+            } else {
+              Swal.fire({
+                title: 'Error',
+                text: 'Gagal menambahkan produk!',
+                icon: 'error'
+              });
+            }
+          },
+          error: function (xhr) {
+            Swal.fire({
+              title: 'Error',
+              text: 'Terjadi kesalahan saat mengirim data',
+              icon: 'error'
+            });
+          }
+        });
+      });
+    });
+  </script>
+  
+  
+  
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+          url: "http://poultrylink.ambatuwin.xyz/api/kategori",
+          method: "GET",
+          success: function(response) {
+              if (response && response.data) {
+                  const kategoriSelect = $("#kategori_id");
+                  kategoriSelect.empty();
+                  kategoriSelect.append('<option value="">Pilih kategori</option>');
+
+                  response.data.forEach(function(item) {
+                      kategoriSelect.append(`<option value="${item.id}">${item.kategori}</option>`);
+                  });
+              } else {
+                  console.error("Data kategori tidak ditemukan");
+              }
+          },
+          error: function() {
+              console.error("Gagal mendapatkan data kategori dari server.");
+          }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
+// aos
 AOS.init({
-    once: true,
-    anchorPlacement: 'top-bottom',
-  });
+  once: true,
+  anchorPlacement: 'top-bottom',
+});
