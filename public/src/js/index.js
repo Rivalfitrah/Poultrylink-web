@@ -3,7 +3,7 @@ $(document).ready(function () {
     if ($produk.length > 0) {
         console.log("Element #produk ditemukan. Mulai mengambil data produk dari API Supabase...");
         $.ajax({
-            url: "https://hbssyluucrwsbfzspyfp.supabase.co/rest/v1/produk",
+            url: "https://hbssyluucrwsbfzspyfp.supabase.co/rest/v1/produk?limit=20",
             type: "GET",
             headers: {
                 "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhic3N5bHV1Y3J3c2JmenNweWZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk2NTU4OTEsImV4cCI6MjA0NTIzMTg5MX0.o6fkro2tPKFoA9sxAp1nuseiHRGiDHs_HI4-ZoqOTfQ",
@@ -14,7 +14,7 @@ $(document).ready(function () {
 
                 $.each(produks, function (i, produk) {
                     const imageUrl = produk.image
-                        ? `https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/public/products/${produk.image}`
+                        ? `https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/public/products/${produk.image}/1.jpg;`
                         : './path/to/default-image.jpg';
 
                     $produk.append(

@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primary: '#FF6600',
-        second: '#3b65ed',
+        second: '#E60000',
       },
       fontFamily: {
         bauhause: ['Bauhause', 'sans-serif'],

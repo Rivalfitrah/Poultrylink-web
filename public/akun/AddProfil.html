@@ -219,7 +219,8 @@
         if (token) {
             $.ajax({
                 type: "POST",
-                url: "http://poultrylink.ambatuwin.xyz/api/updateprofile",
+                dataType: 'json',
+                url: "http://127.0.0.1:8000/api/updateprofile",
                 headers: {
                     Authorization: "Bearer " + token,
                 },
@@ -235,7 +236,7 @@
                             confirmButtonText: "Ok",
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location = base_url + "/public/home.html";
+                                window.location = base_url + "/poultrylink/public/index.html";
                             }
                         });
                     } else {

@@ -47,14 +47,7 @@
             <span class="mx-4">Orders</span>
           </a>
           <a
-            href="#"
-            class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
-          >
-            <span class="material-icons">insights</span>
-            <span class="mx-4">Sales Reports</span>
-          </a>
-          <a
-            href="#"
+            href="setting.html"
             class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
           >
             <span class="material-icons">settings</span>
@@ -76,12 +69,7 @@
                 class="flex items-center text-primary focus:outline-none"
                 id="profileButton"
               >
-                <img
-                  class="w-8 h-8 rounded-full border-2 border-orange-500"
-                  src="https://via.placeholder.com/32"
-                  alt="Profile Image"
-                />
-                <span class="ml-2 font-semibold">John Doe</span>
+                <span class="ml-2 font-semibold">Hallo Supplier</span>
                 <span class="material-icons ml-1">expand_more</span>
               </button>
               <!-- Dropdown -->
@@ -126,7 +114,6 @@
         </div>
         </div>
       </div>
-    </div>
 
     <script src="../src/js/script.js"></script>
     <script src="../src/js/modal.js"></script>
@@ -136,132 +123,122 @@
 
     <script>
       $(document).ready(function () {
-  const token = localStorage.getItem('auth_token');
-  const limit = 10; // Jumlah data per halaman
-  let currentPage = 1; // Halaman saat ini
-
-  // Fungsi untuk memuat data produk dari API berdasarkan halaman
-  function loadProdukSupplier(page) {
-    const offset = (page - 1) * limit;
-
-    $.ajax({
-      type: 'GET',
-      url: `http://poultrylink.ambatuwin.xyz/api/produksupplier?limit=${limit}&offset=${offset}`,
-      headers: {
-        'Authorization': 'Bearer ' + token
-      },
-      success: function (response) {
-        if (response.success) {
-          const produks = response.produks;
-          let tableBody = '';
-
-          produks.forEach(produk => {
-            tableBody += `
-              <tr class="border-b">
-                <td class="py-3 px-4">${produk.nama_produk}</td>
-                <td class="py-3 px-4">${produk.deskripsi}</td>
-                <td class="py-3 px-4">Rp ${produk.harga}</td>
-                <td class="py-3 px-4">${produk.kategori_id}</td>
-                <td class="py-3 px-4">
-                  <a href="editproduk.html" class="inline-block text-white bg-blue-500 px-2 py-1 rounded-md">Edit</a> |
-                  <a onclick="deleteProduk(${produk.id})" class="inline-block text-white bg-red-600 px-2 py-1 rounded-md">Hapus</a>
-                </td>
-              </tr>`;
-          });
-
-          $('#produkTable tbody').html(tableBody);
-
-          // Panggil fungsi untuk menampilkan tombol halaman
-          renderPagination(response.total, page);
-        }
-      },
-      error: function (xhr) {
-        console.error("Gagal mengambil data produk", xhr);
-      }
-    });
-  }
-
-  // Fungsi untuk menampilkan tombol halaman
-  function renderPagination(totalData, currentPage) {
-  const totalPages = Math.ceil(totalData / limit);
-  let paginationHtml = '';
-
-  // Tombol Previous (untuk halaman sebelumnya)
-  paginationHtml += `
-    <button class="pagination-btn ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : ''} py-2 px-4 rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 disabled:opacity-50" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>
-      &laquo; Prev
-    </button>`;
-
-  // Tombol nomor halaman
-  for (let i = 1; i <= totalPages; i++) {
-    paginationHtml += `
-      <button class="pagination-btn ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} py-2 px-4 rounded-md hover:bg-blue-400 transition duration-300" data-page="${i}">
-        ${i}
-      </button>`;
-  }
-
-  // Tombol Next (untuk halaman selanjutnya)
-  paginationHtml += `
-    <button class="pagination-btn ${currentPage === totalPages ? 'cursor-not-allowed opacity-50' : ''} py-2 px-4 rounded-md text-gray-700 bg-gray-200 hover:bg-gray-300 disabled:opacity-50" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>
-      Next &raquo;
-    </button>`;
-
-  $('#pagination').html(paginationHtml);
-}
-
-
-  // Event listener untuk tombol halaman
-  $('#pagination').on('click', '.pagination-btn', function () {
-    const selectedPage = $(this).data('page');
-    currentPage = selectedPage;
-    loadProdukSupplier(currentPage);
-  });
-
-  // Fungsi untuk menghapus produk
-  window.deleteProduk = function (id) {
-    if (confirm("Apakah Anda yakin ingin menghapus produk ini?")) {
-      $.ajax({
-        type: 'DELETE',
-        url: `http://poultrylink.ambatuwin.xyz/api/deleteproduk/${id}`,
-        headers: {
-          'Authorization': 'Bearer ' + token
-        },
-        success: function (response) {
-          if (response.success) {
-            alert('Produk berhasil dihapus.');
-            loadProdukSupplier(currentPage); // Refresh tabel pada halaman saat ini setelah menghapus
-          } else {
-            alert('Gagal menghapus produk.');
+      const token = localStorage.getItem('auth_token');
+      const limit = 10; // Jumlah data per halaman
+      let currentPage = 1; // Halaman saat ini
+      var base_url = window.location.origin;
+    
+          // Fungsi untuk memuat data produk dari API berdasarkan halaman
+        function loadProdukSupplier(page) {
+        var base_url = window.location.origin;
+    
+         $.ajax({
+          type: 'GET',
+          url: 'https://poultrylink.ambatuwin.xyz/api/produksupplier',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          },
+          success: function (response) {
+            if (response.success) {
+              const produks = response.produks;
+              let tableBody = '';
+    
+              produks.forEach(produk => {
+                const editurl = `${base_url}/poultrylink/public/dashboard/editproduk.html?produk=${produk.id}`;
+                tableBody += `
+                  <tr class="border-b">
+                    <td class="py-3 px-4">${produk.nama_produk}</td>
+                    <td class="py-3 px-4">${produk.deskripsi.substring(0,30)} ...</td>
+                    <td class="py-3 px-4">Rp ${produk.harga}</td>
+                    <td class="py-3 px-4">${produk.kategori}</td>
+                    <td class="py-3 px-4">
+                      <a href="${editurl}" class="inline-block text-white bg-blue-500 px-2 py-1 rounded-md">Edit</a> |
+                      <a onclick="deleteProduk(${produk.id})" class="inline-block text-white bg-red-600 px-2 py-1 rounded-md">Hapus</a>
+                    </td>
+                  </tr>`;
+              });
+    
+              $('#produkTable tbody').html(tableBody);
+    
+              // Panggil fungsi untuk menampilkan tombol halaman
+              renderPagination(response.total, page);
+            }
+          },
+          error: function (xhr) {
+            console.error("Gagal mengambil data produk", xhr);
           }
-        },
-        error: function () {
-          alert('Terjadi kesalahan saat menghapus produk.');
+        });
+       }
+    
+        window.deleteProduk = function (id) {
+          // Menampilkan SweetAlert konfirmasi
+          Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Produk ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Mengirim permintaan AJAX untuk menghapus produk jika konfirmasi
+              $.ajax({
+                type: 'DELETE',
+                url: `https://poultrylink.ambatuwin.xyz/api/deleteproduk/${id}`,
+                headers: {
+                  'Authorization': 'Bearer ' + token
+                },
+                success: function (response) {
+                  if (response.success) {
+                    Swal.fire(
+                      'Dihapus!',
+                      'Produk berhasil dihapus.',
+                      'success'
+                    );
+                  } else {
+                    Swal.fire(
+                      'Dihapus!',
+                      'Produk berhasil dihapus.',
+                      'success'
+                    );
+                  }
+                  loadProdukSupplier(currentPage); // Refresh tabel pada halaman saat ini setelah menghapus
+                },
+                error: function () {
+                  Swal.fire(
+                    'Error!',
+                    'Terjadi kesalahan saat menghapus produk.',
+                    'error'
+                  );
+                }
+              });
+            }
+          });
+        };
+    
+      // Panggil fungsi saat halaman dimuat
+      loadProdukSupplier(currentPage);
+    });
+
+    </script>
+    <!--memeriksa apakah supplier-->
+     <script>
+      $(document).ready(function () {
+        const base_url = window.location.origin;
+        // Memeriksa apakah token ada di localStorage
+        const token = localStorage.getItem('supplier_token');
+    
+        // Jika tidak ada token, arahkan pengguna ke halaman login
+        if (!token) {
+          window.location.href = base_url + '/poultrylink/frontend1/public/dashboard/404.html'; 
+        } else {
+          // Jika ada token, lanjutkan ke halaman home
+          console.log('Token ditemukan, pengguna dapat melanjutkan');
         }
       });
-    }
-  };
-
-  // Panggil fungsi saat halaman dimuat
-  loadProdukSupplier(currentPage);
-});
-
-        </script>
-
-<!-- <script>
-  $(document).ready(function () {
-    const base_url = window.location.origin;
-    // Memeriksa apakah token ada di localStorage
-    const token = localStorage.getItem('supplier_token');
-
-    // Jika tidak ada token, arahkan pengguna ke halaman login
-    if (!token) {
-      window.location.href = base_url + '/poultrylink/frontend1/public/dashboard/loginsupplier.html';  // Arahkan ke halaman login jika tidak ada token
-    } else {
-      // Jika ada token, lanjutkan ke halaman home
-      console.log('Token ditemukan, pengguna dapat melanjutkan');
-    }
-  });
-</script> -->
+    </script>
 
     <script src="../src/js/logout.js"></script>
   </body>

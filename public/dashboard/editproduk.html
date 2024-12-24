@@ -49,14 +49,7 @@
           <span class="mx-4">Orders</span>
         </a>
         <a
-          href="#"
-          class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
-        >
-          <span class="material-icons">insights</span>
-          <span class="mx-4">Sales Reports</span>
-        </a>
-        <a
-          href="#"
+          href="setting.html"
           class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
         >
           <span class="material-icons">settings</span>
@@ -72,14 +65,9 @@
       <header class="flex justify-between items-center bg-white p-4 shadow-md">
         <div class="text-xl font-bold text-gray-800">Supplier Dashboard</div>
         <div class="flex items-center space-x-4">
-          <button class="text-primary">
-            <span class="material-icons">notifications</span>
-          </button>
           <div class="relative">
             <button class="flex items-center text-primary focus:outline-none" id="profileButton">
-              <img class="w-8 h-8 rounded-full border-2 border-orange-500" src="https://via.placeholder.com/32"
-                alt="Profile Image" />
-              <span class="ml-2 font-semibold">John Doe</span>
+              <span class="ml-2 font-semibold">Hallo Supplier</span>
               <span class="material-icons ml-1">expand_more</span>
             </button>
             <!-- Dropdown -->
@@ -98,7 +86,7 @@
           <!-- Nama Produk -->
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700">Nama Produk</label>
-            <input type="text"required
+            <input type="text" required
                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
                    placeholder="Masukkan nama produk"
                    name="nama_produk"
@@ -129,12 +117,32 @@
             </select>
           </div>
           
+          <!-- jumlah-->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Jumlah</label>
+            <input type="number" id="jumlah" name="jumlah" required
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" 
+                   placeholder="Masukkan jumlah produk">
+        </div>
+          
           <!-- Gambar Produk -->
-          <div class="mb-6">
+        <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700">Upload Gambar</label>
-            <input type="file" id="images[]" name="images[]" accept="image/*" required
+            <input type="file" id="images[]" name="images[]" accept="image/*" 
                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-          </div>
+        </div>
+          
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700">Upload Gambar</label>
+            <input type="file" id="images[]" name="images[]" accept="image/*" 
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
+          
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700">Upload Gambar</label>
+            <input type="file" id="images[]" name="images[]" accept="image/*" 
+                   class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        </div>
           
           <!-- Tombol Submit -->
           <button 
@@ -153,6 +161,11 @@
   <script>
     $(document).ready(function () {
       const token = localStorage.getItem('auth_token');
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryString = window.location.search;
+      const id = urlParams.get('produk');// Mendapatkan id dari URL, contoh: ?id=123
+      const base_url = window.location.origin;
+
       $('#form_produk').on('submit', function (e) {
         e.preventDefault();
   
@@ -161,7 +174,7 @@
   
         $.ajax({
           type: 'POST',
-          url: 'http://poultrylink.ambatuwin.xyz/api/postproduk',
+          url: 'https://poultrylink.ambatuwin.xyz/api/updateproduk/' + id,
           data: formData,
           dataType: 'json',
           contentType: false, // Jangan mengatur Content-Type secara manual
@@ -176,13 +189,13 @@
                 text: 'Produk berhasil ditambahkan!',
                 icon: 'success'
               }).then(() => {
-                window.location.href = 'addproduk.html'; // Redirect setelah berhasil
+                window.location = base_url + '/poultrylink/public/dashboard/produk.html'; // Redirect setelah berhasil
               });
             } else {
               Swal.fire({
-                title: 'Error',
-                text: 'Gagal menambahkan produk!',
-                icon: 'error'
+                title: 'success',
+                text: 'Berhasil update produk!',
+                icon: 'success'
               });
             }
           },
@@ -198,12 +211,44 @@
     });
   </script>
   
-  
+  <script>
+      $(document).ready(function () {
+        const token = localStorage.getItem('auth_token');
+        const urlParams = new URLSearchParams(window.location.search);
+        const produkId = urlParams.get('produk'); // Mendapatkan ID produk dari URL
+    
+        // Ambil data produk berdasarkan ID
+        $.ajax({
+            type: 'GET',
+            url: `https://poultrylink.ambatuwin.xyz/api/getprodukbyid/${produkId}`,
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (response) {
+                if (response.data) {
+                    const produk = response.data;
+    
+                    // Isi form dengan data produk yang diterima
+                    $('#nama_produk').val(produk.nama_produk);
+                    $('#deskripsi').val(produk.deskripsi);
+                    $('#harga').val(produk.harga);
+                    $('#kategori_id').val(produk.kategori_id);
+                    $('#jumlah').val(produk.jumlah);
+                } else {
+                    alert("Data produk tidak ditemukan!");
+                }
+            },
+            error: function (xhr) {
+                alert("Gagal mengambil data produk!");
+            }
+        });
+    });
+  </script>
   
   <script>
     $(document).ready(function() {
       $.ajax({
-          url: "http://poultrylink.ambatuwin.xyz/api/kategori",
+          url: "https://poultrylink.ambatuwin.xyz/api/kategori",
           method: "GET",
           success: function(response) {
               if (response && response.data) {
@@ -222,6 +267,23 @@
               console.error("Gagal mendapatkan data kategori dari server.");
           }
       });
+    });
+  </script>
+  
+  <!--mengecek supplier-->
+    <script>
+    $(document).ready(function () {
+      const base_url = window.location.origin;
+      // Memeriksa apakah token ada di localStorage
+      const token = localStorage.getItem('supplier_token');
+
+      // Jika tidak ada token, arahkan pengguna ke halaman login
+      if (!token) {
+        window.location.href = base_url + '/poultrylink/public/dashboard/404.html';  // Arahkan ke halaman login jika tidak ada token
+      } else {
+        // Jika ada token, lanjutkan ke halaman home
+        console.log('Token ditemukan, pengguna dapat melanjutkan');
+      }
     });
   </script>
 </body>

@@ -1,208 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./src/output.css" rel="stylesheet" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/output.css">
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="stylesheet" href="./src/css/animasi.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-    <script src="https://unpkg.com/@heroicons/react/outline"></script>
+    <script src="./src/js/script.js"></script>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>PoultryLink</title>
     <link rel="icon" href="./src/img/logo.svg">
-    <!-- aos -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-  </head>
-<body class="bg-gray-100">
-
-  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20" data-aos="fade-down" data-aos-duration="2000">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <!-- Logo dan Nama PoultryLink -->
-      <a href="index.html" class="flex items-center space-x-2 ml-7">
-        <img src="./src/img/logo.svg" alt="PoultryLink Logo" class="h-16 w-16">
-        <span class="text-3xl font-bold text-primary">PoultryLink</span>
-      </a>
-  
-      <!-- Link Navigasi -->
-      <div class="hidden md:flex space-x-6">
-        <a href="./compony/about.html"
-          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
-        <a href="shop.html"
-          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Produk</a>
-      </div>
-  
-      <!-- Fitur Search, Wishlist, Cart, dan Akun -->
-      <div class="flex items-center space-x-4 mr-12">
-        <!-- Search Bar -->
-        <div class="relative w-80">
-          <input
-          type="text"
-          id="searchInput"
-          class="border border-primary rounded-full py-2 px-4 w-full text-primary focus:border-primary focus:outline-none"
-          placeholder="Search..."
-        />
-          <span class="absolute right-3 top-2 text-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </span>
-        </div>
-  
-        <!-- Cart Icon -->
-        <a href="cart.html" class="relative text-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-8.28H5.73"></path>
-          </svg>
-        </a>
-  
-        <!-- Account Icon with Dropdown -->
-        <div class="relative">
-          <a href="#" class="relative text-primary" id="account-icon" onclick="toggleDropdown(event)">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
-              <path d="M4 21v-2a4 4 0 013-3.87"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </a>
-  
-          <!-- Dropdown -->
-          <div id="account-dropdown" class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 invisible transition-opacity duration-300 transform scale-95">
-            <!-- Login and Register buttons -->
-            <div class="flex justify-between px-4 py-2">
-              <a href="sign/login.html" id="login-btn" class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary px-4 py-2 rounded-lg">Login</a>
-              <a href="sign/register.html" id="register-btn" class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border-2 border-primary">Register</a>
-            </div>
-  
-            <!-- Manage Account -->
-            <a href="akun/profil.html" id="manage-account-btn" class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-vcard mx-2" viewBox="0 0 16 16">
-                <path d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5"></path>
-                <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z"></path>
-              </svg>
-              Manage Account
-            </a>
-            <a href="dashboard/toko.html" class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
-              <i class="fa-solid fa-shop mx-2"></i>
-              Buka toko
-            </a>
-            <a href="#" id="logout-btn"
-            class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200 hidden">
-            <i class="fas fa-sign-out-alt mx-2"></i>
-            Logout
-          </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container mx-auto py-12 mt-24">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Produk Unggulan</h2>
-  
-    <!-- Filter Section -->
-    <div class="flex justify-center mb-8" data-aos="fade-right" data-aos-duration="1000">
-      <label for="product-filter" class="text-lg font-semibold text-gray-700 mr-4">
-        Filter by Category:
-      </label>
-      <select id="product-filter" onchange="filterProducts()" class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        <option value="all">All Products</option>
-        <option value="category1">Category 1</option>
-        <option value="category2">Category 2</option>
-        <option value="category3">Category 3</option>
-      </select>
-    </div>
+     <!-- gsap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./src/js/search.js"></script>
+    <style>
+         #searchResult {
+        display: none; /* Pastikan diatur agar tidak terlihat secara default */
+    }
     
-    <div class="flex justify-center">
-          <!-- Produk Section -->
-    <div class="grid grid-cols-5 gap-6 px-4">
-      <!-- Card Produk -->
-      <div class="relative m-4 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md" style="width: 250px;">
-        <a class="relative mx-3 mt-3 flex h-40 overflow-hidden rounded-xl" href="#">
-          <img class="object-cover w-full h-full" src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="product image" />
-          <span class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span>
-        </a>
-        <div class="mt-4 px-4 pb-5">
-          <a href="#">
-            <h5 class="text-sm tracking-tight text-slate-900">Nike Air MX Super</h5>
+    .search-result-item {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .search-result-item img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+        object-fit: cover;
+    }
+    
+    .search-result-item h5 {
+        font-size: 14px;
+        color: #333;
+        margin: 0;
+    }
+    
+    .search-result-item span {
+        font-size: 12px;
+        color: #e60000;
+    }
+    
+    </style>
+</head>
+<body>
+    <!-- HTML Structure -->
+    <div id="loading-screen">
+        <div id="loading-circle"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20" data-aos="fade-down" data-aos-duration="2000">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+          <!-- Logo dan Nama PoultryLink -->
+          <a href="index.html" class="flex items-center space-x-2 ml-7">
+            <img src="./src/img/logo.svg" alt="PoultryLink Logo" class="h-16 w-16">
+            <span class="text-3xl font-bold text-primary">PoultryLink</span>
           </a>
-          <div class="mt-2 mb-4 flex items-center justify-between">
-            <p><span class="text-sm font-bold text-slate-900">Rp. 50.000</span></p>
-          </div>
-          <a href="#" class="flex items-center justify-center rounded-md bg-primary px-4 py-1 text-center text-xs font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="height: 22px;">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            Add to cart
-          </a>
-        </div>
-      </div>
       
-      <!-- Ulangi card produk di sini hingga card ke-6 -->
-    </div>
+          <!-- Link Navigasi (Desktop) -->
+          <div class="hidden md:flex space-x-6">
+            <a href="./compony/about.html"
+              class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+            <a href="shop.html"
+              class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Produk</a>
+          </div>
+      
+          <!-- Fitur Search, Wishlist, Cart, dan Akun -->
+          <div class="md:flex items-center space-x-4 mr-12">
+            <!-- Search Bar (Hidden di layar mobile) -->
+            <div class="relative w-80 hidden md:block">
+              <input type="text" id="searchInput"
+                class="border border-primary rounded-full py-2 px-4 w-full text-primary focus:border-primary focus:outline-none"
+                placeholder="Search..." />
+              <span class="absolute right-3 top-2 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </span>
+                  <!-- Hasil pencarian -->
+                <div id="searchResult" class="absolute bg-white border border-gray-300 w-full rounded-lg mt-1 overflow-auto max-h-60 hidden">
+                </div>
+            </div>
+      
+            <!-- Cart Icon -->
+            <a href="cart.html" class="relative text-primary hidden md:block">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-8.28H5.73"></path>
+              </svg>
+            </a>
+            
+            <!-- Login & Register (Desktop) -->
+                <a href="sign/login.html" id="login"
+                  class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary px-4 py-2 rounded-lg">
+                  Login
+                </a>
+                <a href="sign/register.html" id="register"
+                  class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border border-primary">
+                  Register
+                </a>
+      
+            <!-- Account Icon with Dropdown -->
+            <div class="account-icon relative">
+              <a href="#" class="relative text-primary mt-2" id="account-icon" onclick="toggleDropdown(event)">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
+                  <path d="M4 21v-2a4 4 0 013-3.87"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </a>
+    
+              <!-- Dropdown -->
+              <div id="account-dropdown"
+                class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 invisible transition-opacity duration-300 transform scale-95">
+    
+                <!-- Manage Account -->
+                <a href="akun/profil.html" id="manage-account-btn"
+                  class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-person-vcard mx-2" viewBox="0 0 16 16">
+                    <path
+                      d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5">
+                    </path>
+                    <path
+                      d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z">
+                    </path>
+                  </svg>
+                  Manage Account
+                </a>
+                <a href="dashboard/toko.html" id="menu-buka-toko"
+                  class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
+                  <i class="fa-solid fa-shop mx-2"></i>
+                  Buka toko
+                </a>
+                <a href="#" id="logout-btn"
+                  class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+                  <i class="fas fa-sign-out-alt mx-2"></i>
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+      
+    
+        </div>
+      
+        <!-- Menu Dropdown (Mobile Only) -->
+        <div id="mobile-menu" class="hidden bg-white shadow-md md:hidden">
+          <div class="flex flex-col items-start p-4 space-y-4">
+            <a href="./compony/about.html" class="text-primary text-xl">Tentang</a>
+            <a href="shop.html" class="text-primary text-xl">Produk</a>
+            <a href="cart.html" class="text-primary text-xl">Keranjang</a>
+            <a href="sign/login.html"
+              class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary px-4 py-2 rounded-lg">
+              Login
+            </a>
+            <a href="sign/register.html"
+              class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border-2 border-primary">
+              Register
+            </a>
+          </div>
+        </div>
+    </nav>
 
-    </div>
-
-  </div>
-  
-
-
-  <footer class="bg-primary text-white py-10" data-aos="fade-up" data-aos-duration="1500" data-aos-easing="ease-in-out">
+    <section id="product" class="py-12">
+        <div class="container mx-auto">
+          <h2 class="text-3xl mt-24 font-bold text-center text-gray-800 mb-8" data-aos="fade-up" data-aos-duration="1000">
+            Produk Unggulan
+          </h2>
+          <!-- Dropdown Filter Kategori -->
+                <div class="container mx-auto mb-8" style="margin-left: 55px;">
+                    <select id="kategoriFilter" class="px-4 py-2 border border-gray-300 rounded-md">
+                        <option value="">Pilih Kategori</option>
+                        <option value="Ayam">Ayam</option>
+                        <option value="Bebek">Bebek</option>
+                        <option value="Telur Ayam">Telur Ayam</option>
+                        <option value="Telur Bebek">Telur Bebek</option>
+                        <option value="Pakan Ternak">Pakan</option>
+                        <option value="Ayam Potong">Daging Ayam</option>
+                        <option value="Bebek Potong">Daging Bebek</option>
+                    </select>
+                </div>
+          <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ml-7 mr-7 px-2 max-w-full" id="produk">
+            <!-- Card Produk -->
+            <!-- Card Produk lainnya diulang di sini -->
+        </div>
+        
+        </div>
+      </section>
+      
+      
+      
+    <footer class="bg-primary text-white py-10" data-aos="fade-up" data-aos-duration="1500" data-aos-easing="ease-in-out">
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Logo and Description -->
       <div class="mx-20">
         <h2 class="text-2xl font-bold mb-4">PoultryLink</h2>
-        <p class="text-white">Connecting poultry farmers with consumers for fresh poultry products like eggs, chicken,
-          and feed.</p>
+        <p class="text-white">Menghubungkan peternak unggas dengan konsumen untuk produk unggas segar seperti telur, ayam, dan pakan.</p>
       </div>
 
       <!-- Navigation Links -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <h3 class="text-lg font-semibold mb-4">Links</h3>
         <ul>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">About
-              </a></li>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Shop</a>
+          <li><a href="./compony/about.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Tentang
+            </a></li>
+          <li><a href="./shop.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Toko</a>
           </li>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Contact
-              Us</a></li>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Privacy
-              Policy</a></li>
+          <li><a href="./compony/contact.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Kontak Kami</a></li>
         </ul>
       </div>
 
 
       <!-- Download App Banners -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Download Our App</h3>
+        <h3 class="text-lg font-semibold mb-4">Download Aplikasi  Kami</h3>
         <div class="flex space-x-4">
-          <a href="#">
+          <a href="https://googleplay.com">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
               alt="Download on Play Store" class="h-12">
           </a>
-          <a href="#">
+          <a href="https://www.apple.com/id/app-store/">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg"
               alt="Download on App Store" class="h-12">
           </a>
         </div>
         <div class="flex space-x-6 mt-2 pt-5 ml-3">
-          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+          <a href="https://www.x.com" class="text-white hover:scale-125 inline-block transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
               <path
                 d="M22.162 5.656c-0.824 0.366-1.711 0.615-2.64 0.727 0.949-0.569 1.678-1.47 2.022-2.543-0.887 0.526-1.87 0.907-2.915 1.112-0.838-0.893-2.032-1.451-3.354-1.451-2.54 0-4.603 2.063-4.603 4.603 0 0.36 0.041 0.71 0.118 1.047-3.826-0.192-7.221-2.025-9.493-4.812-0.397 0.682-0.623 1.476-0.623 2.32 0 1.602 0.816 3.013 2.057 3.843-0.757-0.024-1.471-0.232-2.093-0.579v0.059c0 2.237 1.592 4.104 3.703 4.527-0.388 0.105-0.797 0.162-1.218 0.162-0.297 0-0.586-0.028-0.868-0.081 0.586 1.83 2.287 3.163 4.3 3.199-1.575 1.233-3.561 1.97-5.719 1.97-0.372 0-0.738-0.022-1.101-0.065 2.039 1.307 4.458 2.071 7.057 2.071 8.468 0 13.101-7.015 13.101-13.101 0-0.199-0.004-0.397-0.014-0.594 0.898-0.648 1.68-1.458 2.297-2.38z" />
             </svg>
           </a>
-          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+          <a href="https://www.instagram.com"
+            class="text-white hover:scale-125 inline-block transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram"
               viewBox="0 0 16 16">
               <path
                 d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
             </svg>
           </a>
-          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+          <a href="https://facebook.com"
+            class="text-white hover:scale-125 inline-block transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook"
               viewBox="0 0 16 16">
               <path
@@ -220,18 +275,227 @@
       </div>
     </div>
   </footer>
-
-    <!-- gsap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script src="./src/js/animasi.js"></script>
-
-  <script src="./src/js/script.js">
-
-  </script>
-
   
+    <!-- icon -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+
+
+    
+    <!--mengecek apakah suplier atau bukan-->
+  <script>
+    $(document).ready(function () {
+      const base_url = window.location.origin; // Mendapatkan base URL
+      const token = localStorage.getItem('auth_token'); // Mendapatkan token dari localStorage
+
+      // Fungsi untuk mengecek apakah user terdaftar sebagai supplier
+      function checkSupplierStatus() {
+        if (token) {
+          $.ajax({
+            url: 'http://127.0.0.1:8000/api/checkSupplier',// URL endpoint untuk mengecek status supplier
+            type: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}` // Kirim token untuk autentikasi
+            },
+            success: function (response) {
+              // Jika terdaftar sebagai supplier, simpan id_supplier ke localStorage
+              if (response.id_supplier) {
+                localStorage.setItem('id_supplier', response.id_supplier);
+                $('#menu-buka-toko').hide(); // Sembunyikan tombol "Buka Toko"
+              } else {
+                localStorage.removeItem('id_supplier');
+                $('#menu-buka-toko').show(); // Tampilkan tombol "Buka Toko"
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error('Error checking supplier status:', error);
+            }
+          });
+        } else {
+          // Jika token tidak ditemukan, berarti user belum login
+          console.log('User not logged in');
+        }
+      }
+
+      // Panggil fungsi untuk cek status supplier saat halaman dimuat
+      checkSupplierStatus();
+    });
+  </script>
+  
+  <!--card-->
+<script>
+    $(document).ready(function () {
+        var $produk = $("#produk");
+        var produkData = []; // Tempat menyimpan data produk
+
+        if ($produk.length > 0) {
+            console.log("Element #produk ditemukan. Mulai mengambil data produk dari API...");
+
+            // Ambil data produk dari API
+            $.ajax({
+                url: "http://127.0.0.1:8000/api/produkall",
+                type: "GET",
+                success: function (response) {
+                    console.log("Data produk yang diterima:", response);
+                    
+                    // Pastikan data produk ada di dalam `response.data`
+                    produkData = response.data;
+
+                    if (Array.isArray(produkData) && produkData.length > 0) {
+                        displayProducts(produkData); // Menampilkan semua produk saat halaman dimuat
+                    } else {
+                        console.log("Data produk kosong atau tidak valid.");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log("Gagal mengambil data produk:", textStatus, errorThrown);
+                }
+            });
+        } else {
+            console.log("Element #produk tidak ditemukan di halaman.");
+        }
+
+        // Fungsi untuk menampilkan produk berdasarkan kategori
+        function displayProducts(products) {
+            $produk.empty(); // Kosongkan produk yang ada sebelumnya
+
+            if (Array.isArray(products) && products.length > 0) {
+                $.each(products, function (i, produk) {
+                    console.log("Produk ke-" + i + ":", produk);
+
+                    const imageUrl = produk.image
+                        ? `https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/products/${produk.id}/1.jpg`
+                        : './path/to/default-image.jpg';
+
+                    $produk.append(
+                            `
+                            <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md" data-id="${produk.id}" data-aos="flip-left" data-aos-duration="2000">
+                                <a href="detail.html?id=${produk.id}" class="group">
+                                    <img class="h-40 w-full rounded-t-lg object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" 
+                                         src="${imageUrl}" alt="${produk.nama_produk}" />
+                                </a>
+                                <div class="mt-3 px-4 pb-4">
+                                    <a href="detail.html?id=${produk.id}">
+                                        <h5 class="text-base font-semibold tracking-tight text-slate-900">${produk.nama_produk.length > 15 ? produk.nama_produk.substring(0, 15) + " ..." : produk.nama_produk}</h5>
+                                    </a>
+                                    <div class="mt-2.5 mb-4 flex items-center">
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <p>
+                                            <span class="text-base font-bold text-slate-900">
+                                                Rp. ${new Intl.NumberFormat('id-ID').format(produk.harga)}
+                                            </span>
+                                        </p>
+                                        <a href="javascript:void(0)" 
+                                           class="add-to-cart-btn flex items-center rounded-md bg-primary px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-white hover:text-primary hover:border hover:border-primary focus:outline-none focus:ring-4 focus:ring-blue-300" 
+                                           data-id="${produk.id}">
+                                           <i class="fa-solid fa-cart-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                        );
+                });
+            } else {
+                $produk.append('<p class="text-center text-gray-500">Produk tidak ditemukan</p>');
+            }
+        }
+
+        // Event listener untuk filter kategori
+        $('#kategoriFilter').on('change', function () {
+            var selectedCategory = $(this).val();
+
+            if (selectedCategory === '') {
+                // Jika kategori kosong, tampilkan semua produk
+                displayProducts(produkData);
+            } else {
+                // Filter produk berdasarkan kategori yang dipilih
+                var filteredProducts = produkData.filter(function (produk) {
+                    return produk.kategori.toLowerCase() === selectedCategory.toLowerCase();
+                });
+
+                // Tampilkan produk yang sudah difilter
+                displayProducts(filteredProducts);
+            }
+        });
+    });
+</script>
+
+<script>
+  $(document).on("click", ".add-to-cart-btn", function (event) {
+      event.preventDefault(); // Mencegah aksi default
+  
+      var productId = $(this).data("id");
+      var token = localStorage.getItem("auth_token"); 
+  
+      // Kirim permintaan AJAX
+      $.ajax({
+          url: "http://127.0.0.1:8000/api/addtocart", 
+          type: "POST",
+          dataType: "json",
+          headers: {
+              Authorization: "Bearer " + token,
+          },
+          data: {
+              produk_id: productId,
+              total_barang: 1,
+          },
+          success: function (response) {
+              if (response.success) {
+                  // Jika berhasil, perbarui jumlah cart (opsional)
+                  Swal.fire({
+                    title: "Produk berhasil ditambahkan ke cart",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  updateCartCount(true); // Memperbarui jumlah cart tanpa perlu reload
+              } else {
+                  console.error("Gagal menambahkan produk ke cart:", response.message);
+                  Swal.fire({
+                    title: "Berhasil",
+                    text: response.message,
+                    icon: "success"
+                  });
+              }
+          },
+          error: function (xhr, status, error) {
+              console.error("Terjadi kesalahan saat menambahkan ke cart:", error);
+              Swal.fire({
+                title: "Error",
+                text: "Terjadi kesalahan saat menambahkan ke cart",
+                icon: "error"
+              });
+          },
+      });
+  });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const authToken = localStorage.getItem("auth_token");
+  const loginButton = document.getElementById("login");
+  const registerButton = document.getElementById("register");
+  const accountIcon = document.getElementById("account-icon");
+
+  if (authToken) {
+    // User is authenticated
+    accountIcon.style.display = "inline-block";
+    loginButton.style.display = "none";
+    registerButton.style.display = "none";
+  } else {
+    // User is not authenticated
+    accountIcon.style.display = "none";
+    loginButton.style.display = "inline-block";
+    registerButton.style.display = "inline-block";
+  }
+});
+
+</script>
+  
+    <script src="./src/js/gsap.js"></script>
+    <script src="./src/js/logout.js"></script>
 </body>
 </html>

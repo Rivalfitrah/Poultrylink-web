@@ -70,7 +70,7 @@
                 const password = $('#password').val();
     
                 $.ajax({
-                    url: 'http://poultrylink.ambatuwin.xyz/api/loginsupplier', 
+                    url: 'https://poultrylink.ambatuwin.xyz/api/loginsupplier', 
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + token,
@@ -94,7 +94,7 @@
                                 confirmButtonText: "Ok"
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = "/dashboard/dashboard.html"; // Ganti sesuai dengan halaman dashboard Anda
+                                    window.location.href = "/poultrylink/public/dashboard/dashboard.html"; // Ganti sesuai dengan halaman dashboard Anda
                                 }
                             });
                         } else {

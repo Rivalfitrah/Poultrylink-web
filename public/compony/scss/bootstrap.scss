@@ -1,6 +1,22 @@
 /******* Customized Bootstrap ********/
 
-$primary: #ff9101;
+@font-face {
+    font-family: 'BauhausBold';
+    src: 
+         url('fonts/BauhausBold.ttf') format('truetype');
+}
+
+
+.logo {
+    font-family: 'BauhausBold', sans-serif;
+}
+
+:root {
+    --bs-font-sans-serif: 'BauhausBold', sans-serif;
+}
+
+
+$primary: #f60;
 $secondary:#39261d;
 $light: #F8F8F8;
 $dark: #111111;
@@ -28,5 +44,8 @@ $border-radius-lg: $border-radius;
 $link-decoration: none;
 
 $enable-negative-margins: true;
+
+
+
 
 @import "bootstrap/scss/bootstrap";

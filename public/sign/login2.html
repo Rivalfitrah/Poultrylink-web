@@ -94,7 +94,7 @@
               const password = $('#password').val();
   
               $.ajax({
-                  url: 'http://poultrylink.ambatuwin.xyz/api/login/',
+                  url: 'http://127.0.0.1:8000/api/login',
                   method: 'POST',
                   headers: {
                       'X-CSRF-TOKEN': csrfToken,
@@ -118,7 +118,7 @@
                               confirmButtonText: "Ok"
                           }).then((result) => {
                               if (result.isConfirmed) {
-                                  window.location = base_url + '/akun/AddProfil.html';
+                                  window.location = base_url + '/poultrylink/public/akun/AddProfil.html';
                               }
                           });
                       } else {

@@ -56,21 +56,15 @@
         </div>
 
         <!-- Upload Dokumen -->
-        <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
-          <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Upload Dokumen</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block font-medium text-gray-700">KTP</label>
-              <input type="file" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
-              id="images[]" name="images[]">
-            </div>
-            <div>
-              <label class="block font-medium text-gray-700">NPWP</label>
-              <input type="file" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none"
-              id="images[]" name="images[]">
+          <div class="p-6 bg-gray-50 rounded-lg border border-gray-200">
+            <h2 class="text-xl font-semibold text-gray-800 text-center mb-4">Upload Dokumen</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block font-medium text-gray-700">KTP</label>
+                <input type="file" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary outline-none" id="ktp" name="images[]">
+              </div>
             </div>
           </div>
-        </div>
   
         <!-- Submit Button -->
         <div class="flex justify-center mt-8">
@@ -86,19 +80,21 @@
   <script>
     $(document).ready(function() {
         $('#register_supplier').on('submit', function(event) {
-          const base_url = window.location.origin;
-          var buyer_token = localStorage.getItem('auth_token');
-            
+            const base_url = window.location.origin;
+            var buyer_token = localStorage.getItem('auth_token');
             event.preventDefault();
             const formData = new FormData(this);
+            
+            formData.append('images[]', $('#ktp')[0].files[0]);
+
             $.ajax({
-                url: 'http://poultrylink.ambatuwin.xyz/api/postverif',
+                url: 'https://poultrylink.ambatuwin.xyz/api/postverif',
                 method: 'POST',
                 data: formData,
-                processData: false, // Jangan memproses data agar tetap dalam bentuk FormData
-                contentType: false, // Biarkan jQuery menangani pengaturan tipe konten
+                processData: false,
+                contentType: false,
                 headers: {
-                    'Authorization': 'Bearer ' + buyer_token, // Ganti dengan token autentikasi Anda jika perlu
+                    'Authorization': 'Bearer ' + buyer_token,
                 },
                 success: function(response) {
                     Swal.fire({
@@ -109,8 +105,7 @@
                         confirmButtonText: "Ok"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Redirect ke halaman lain jika diperlukan
-                            window.location = base_url + "/thankyou.html"; // Sesuaikan tujuan halaman setelah submit
+                            window.location = base_url + "/poultrylink/public/dashboard/thankyou.html";
                         }
                     });
                 },

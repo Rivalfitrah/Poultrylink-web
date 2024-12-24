@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/output.css">
+    <title>PoultryLink</title>
+    <link rel="icon" href="./src/img/logo.svg">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+</head>
+    <body class="flex items-center justify-center min-h-screen">
+
+    <!-- Invoice Container -->
+    <div class="bg-white p-8 rounded-xl shadow-xl w-full max-w-2xl relative">
+        <!-- Badge -->
+        <span class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+            Invoice
+        </span>
+
+        <!-- Header -->
+        <div class="text-center border-b pb-6 mb-8">
+            <h1 class="text-3xl font-bold text-gray-800" >Pembayaran Invoice</h1>
+            <p class="text-gray-500 mt-2 text-sm">Kode Pembayaran:</p>
+            <p class="text-lg font-semibold text-primary" id="invoice">INV-2024-12345</p>
+        </div>
+
+        <!-- Produk List -->
+        <div class="space-y-6" id="data-barang">
+
+        </div>
+
+        <!-- Total Harga -->
+        <div class="mt-8 border-t pt-6">
+            <div class="flex items-center justify-between">
+                <p class="text-lg font-bold text-gray-800">Total Keseluruhan:</p>
+                <p class="text-xl font-extrabold text-primary" id="harga"></p>
+            </div>
+        </div>
+
+        <!-- Button Actions -->
+        <div class="mt-6 flex justify-end space-x-4">
+            <a href="index.html" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg shadow-md hover:bg-red-300 focus:ring-2 focus:ring-blue-300"  style="margin-right:35%;">
+                Kembali
+            </a>
+            <button class="px-6 py-2 text-white rounded-lg shadow-md hover:bg-orange-600 focus:ring-2 focus:ring-blue-300" id="cancel" style="background-color: red;">
+                Cancel
+            </button>
+            <button class="px-6 py-2 bg-primary text-white rounded-lg shadow-md hover:bg-orange-600 focus:ring-2 focus:ring-blue-300" id="konfirmasi">
+                Bayar Sekarang
+            </button>
+        </div>
+    </div>
+    
+    <script>
+$(document).ready(function () {
+    // Ambil parameter order_id dari URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('id'); // 'order_id' harus sesuai dengan yang dikirim
+
+    if (!orderId) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Order ID tidak ditemukan.',
+        }).then(() => {
+            window.location.href = "/"; // Arahkan ke halaman utama
+        });
+        return;
+    }
+
+    const token = localStorage.getItem('auth_token');
+
+    // AJAX untuk GET order berdasarkan order_id
+    $.ajax({
+        url: `http://127.0.0.1:8000/api/orderid/${orderId}`,
+        type: 'GET',
+        headers: {
+            Authorization: "Bearer " + token // Token untuk autentikasi
+        },
+        success: function (response) {
+            // Pastikan response data tersedia
+            if (response && response.data) {
+                const status = response.data.confirmed; // Ambil status dari response
+                
+                // Cek status confirmed dan sembunyikan tombol jika statusnya 'yes', 'cancelled', atau 'retrieved'
+                if (status === 'yes' || status === 'cancelled' || status === 'retrieved') {
+                    // Sembunyikan tombol "Bayar Sekarang" dan "Cancel"
+                    $('#konfirmasi').hide();
+                    $('#cancel').hide();
+                } else if (status === 'no') {
+                    // Tampilkan tombol "Bayar Sekarang" dan "Cancel"
+                    $('#konfirmasi').show();
+                    $('#cancel').show();
+                }
+
+                // Tampilkan data invoice
+                $('#invoice').text(response.data.invoice);
+                $('#harga').text(`Rp. ${new Intl.NumberFormat('id-ID').format(response.data.harga)}`);
+
+                // Loop untuk menampilkan order_details
+                let dataProduk = response.data.order_details;
+                let productsHtml = '';
+
+                dataProduk.forEach(element => {
+                    productsHtml += `
+                        <!-- Produk Item -->
+                        <div class="flex items-center justify-between bg-gray-50 rounded-lg p-4 shadow-sm mb-2">
+                            <div>
+                                <p class="font-semibold text-gray-800">${element.produk}</p>
+                                <p class="text-sm text-gray-500">Qty: <span class="font-medium">${element.quantity}</span></p>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-800">Rp. ${new Intl.NumberFormat('id-ID').format(element.total_price)}</p>
+                                <p class="text-sm text-gray-500">Total: Rp Rp. ${new Intl.NumberFormat('id-ID').format(element.total_price)}
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                $('#data-barang').html(productsHtml);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Data order tidak ditemukan.',
+                });
+            }
+        },
+        error: function (xhr) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Gagal memuat data invoice, coba lagi nanti.',
+            });
+        }
+    });
+
+    // Event listener untuk tombol Cancel
+    $('#cancel').on('click', function () {
+        // Kirim permintaan POST ke /cancelorder/{id}
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/cancelorder/${orderId}`,
+            type: 'POST',
+            headers: {
+                Authorization: "Bearer " + token // Token untuk autentikasi
+            },
+            success: function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pesanan Dibatalkan',
+                    text: 'Pesanan Anda berhasil dibatalkan.',
+                }).then(() => {
+                    window.location.href = '/poultrylink/public/index.html'; // Arahkan kembali ke halaman invoice
+                });
+            },
+            error: function (xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Terjadi kesalahan saat membatalkan pesanan. Coba lagi nanti.',
+                });
+            }
+        });
+    });
+});
+
+
+    </script>
+    
+    <script>
+    $(document).ready(function () {
+        // Ambil parameter id dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id'); // Ambil parameter id dari URL
+
+        if (!id) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'ID tidak ditemukan.',
+            }).then(() => {
+                window.location.href = '/'; // Kembali ke halaman utama jika ID tidak ditemukan
+            });
+            return;
+        }
+
+        const token = localStorage.getItem('auth_token');
+
+        // Klik tombol Bayar Sekarang
+        $('#konfirmasi').on('click', function () {
+            // Kirim permintaan POST ke /confirmorder/{id}
+            $.ajax({
+                url: `http://127.0.0.1:8000/api/confirmorder/${id}`,
+                type: 'POST',
+                headers: {
+                    Authorization: "Bearer " + token // Token autentikasi
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pesanan Dikonfirmasi',
+                        text: 'Pesanan Anda berhasil dikonfirmasi!',
+                    }).then(() => {
+                        window.location.href = '/poultrylink/public/invoice.html?id=' + id; // Arahkan ke halaman invoice
+                    });
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: 'Terjadi kesalahan saat mengonfirmasi pesanan. Coba lagi nanti.',
+                     });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

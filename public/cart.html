@@ -10,6 +10,11 @@
   <script src="https://unpkg.com/@heroicons/react/outline"></script>
   <title>PoultryLink</title>
   <link rel="icon" href="./src/img/logo.svg">
+      <script src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      
 </head>
 
 <body>
@@ -31,21 +36,6 @@
   
       <!-- Fitur Search, Wishlist, Cart, dan Akun -->
       <div class="flex items-center space-x-4 mr-12">
-        <!-- Search Bar -->
-        <div class="relative w-80">
-          <input
-          type="text"
-          id="searchInput"
-          class="border border-primary rounded-full py-2 px-4 w-full text-primary focus:border-primary focus:outline-none"
-          placeholder="Search..."
-        />
-          <span class="absolute right-3 top-2 text-primary">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </span>
-        </div>
   
         <!-- Cart Icon -->
         <a href="cart.html" class="relative text-primary">
@@ -55,10 +45,19 @@
             <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-8.28H5.73"></path>
           </svg>
         </a>
+        
+        <a href="sign/login.html" id="login"
+            class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary px-4 py-2 rounded-lg">
+            Login
+        </a>
+        <a href="sign/register.html" id="register"
+            class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border border-primary">
+            Register
+        </a>
   
         <!-- Account Icon with Dropdown -->
         <div class="relative">
-          <a href="#" class="relative text-primary" id="account-icon" onclick="toggleDropdown(event)">
+          <a href="#" class="relative text-primary mt-2" id="account-icon" onclick="toggleDropdown(event)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
               <path d="M4 21v-2a4 4 0 013-3.87"></path>
@@ -68,11 +67,6 @@
   
           <!-- Dropdown -->
           <div id="account-dropdown" class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 invisible transition-opacity duration-300 transform scale-95">
-            <!-- Login and Register buttons -->
-            <div class="flex justify-between px-4 py-2">
-              <a href="sign/login.html" id="login-btn" class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary  px-4 py-2 rounded-lg">Login</a>
-              <a href="sign/register.html" id="register-btn" class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border-2 border-primary">Register</a>
-            </div>
   
             <!-- Manage Account -->
             <a href="akun/profil.html" id="manage-account-btn" class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
@@ -82,15 +76,15 @@
               </svg>
               Manage Account
             </a>
-            <a href="dashboard/toko.html" class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
+            <a href="dashboard/toko.html" id="menu-buka-toko" class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
               <i class="fa-solid fa-shop mx-2"></i>
               Buka toko
             </a>
             <a href="#" id="logout-btn"
-            class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200 hidden">
-            <i class="fas fa-sign-out-alt mx-2"></i>
-            Logout
-          </a>
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+              <i class="fas fa-sign-out-alt mx-2"></i>
+              Logout
+            </a>
           </div>
         </div>
       </div>
@@ -116,164 +110,119 @@
     </ol>
   </nav>
 
-  <h1 class="text-3xl font-bold mb-6 text-center">Shopping Cart</h1>
+  <h1 class="text-3xl font-bold mb-6 text-center">Keranjang belanja</h1>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Cart Items Section -->
     <div class="lg:col-span-2 bg-white rounded-lg shadow-lg p-6">
-      <h2 class="text-xl font-semibold mb-4">Items in Your Cart</h2>
-
-      <!-- Cart Item 1 -->
-      <div class="flex items-center border-b pb-4 mb-4">
-        <img src="https://via.placeholder.com/80" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
-        <div class="ml-4 flex-1">
-          <h2 class="font-semibold text-lg">Ayam Tiren</h2>
-          <p class="text-sm text-gray-600">Rp 25.000 / Ekor</p>
-        </div>
-        <div class="flex items-center space-x-2">
-          <button class="bg-gray-200 px-3 py-1 rounded-md">-</button>
-          <span class="w-5 text-center">2</span>
-          <button class="bg-gray-200 px-3 py-1 rounded-md">+</button>
-          <button class="text-red-500">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
-            viewBox="0 0 16 16">
-            <path
-              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-          </svg>
-          </button>
-        </div>
-        <p class="ml-6 font-semibold">Rp 50.000</p>
-      </div>
-
-      <div class="flex items-center border-b pb-4 mb-4">
-        <img src="https://via.placeholder.com/80" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
-        <div class="ml-4 flex-1">
-          <h2 class="font-semibold text-lg">Ayam Tiren</h2>
-          <p class="text-sm text-gray-600">Rp 25.000 / Ekor</p>
-        </div>
-        <div class="flex items-center space-x-2">
-          <button class="bg-gray-200 px-3 py-1 rounded-md">-</button>
-          <span class="w-5 text-center">2</span>
-          <button class="bg-gray-200 px-3 py-1 rounded-md">+</button>
-          <button class="text-red-500">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
-            viewBox="0 0 16 16">
-            <path
-              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-          </svg>
-          </button>
-        </div>
-        <p class="ml-6 font-semibold">Rp 50.000</p>
-      </div>
-
-      <div class="flex items-center border-b pb-4 mb-4">
-        <img src="https://via.placeholder.com/80" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
-        <div class="ml-4 flex-1">
-          <h2 class="font-semibold text-lg">Ayam Tiren</h2>
-          <p class="text-sm text-gray-600">Rp 25.000 / Ekor</p>
-        </div>
-        <div class="flex items-center space-x-2">
-          <button class="bg-gray-200 px-3 py-1 rounded-md">-</button>
-          <span class="w-5 text-center">2</span>
-          <button class="bg-gray-200 px-3 py-1 rounded-md">+</button>
-          <button class="text-red-500">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
-            viewBox="0 0 16 16">
-            <path
-              d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-          </svg>
-          </button>
-        </div>
-        <p class="ml-6 font-semibold">Rp 50.000</p>
-      </div>
-
-      <!-- (Add more items as needed) -->
+    <h2 class="text-xl font-semibold mb-4">Barang Dalam Keranjang</h2>
+    <div id="cart-items">
+        <!-- Produk dari cart akan dimasukkan di sini -->
     </div>
+    </div>
+
 
     <!-- Order Summary Section -->
-    <div class="bg-white rounded-lg shadow-lg p-6 h-[350px] max-h-[350px] overflow-y-auto">
-      <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+    <div class="bg-white rounded-lg shadow-lg p-6 mt-6 h-[450px] max-h-[450px] overflow-y-auto">
+        <div class="container mx-auto mb-8 px-4">
+            <div class="w-full max-w-md mx-auto">
+                <label for="metode_pembayaran" class="block text-lg font-semibold text-gray-700 mb-2">
+                    Pilih Metode Pembayaran
+                </label>
+                <div class="relative">
+                    <select
+                        id="metode_pembayaran"
+                        class="w-full appearance-none border border-gray-300 rounded-lg bg-white px-4 py-2 text-gray-700 shadow-sm focus:border-primary focus:ring-primary focus:outline-none"
+                    >
+                        <option value="" disabled selected>Pilih Metode Pembayaran</option>
+                        <option value="transfer">Transfer</option>
+                        <option value="cash">Cash</option>
+                        <option value="alfamart">Alfamart</option>
+                        <option value="indomaret">Indomaret</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
-      <div class="flex justify-between mb-2">
-        <span>Subtotal</span>
-        <span>Rp 750.000</span>
+    
+      <!-- Total Section -->
+      <div class="bg-white rounded-lg shadow-lg p-6 h-[350px] max-h-[350px] overflow-y-auto mt-6">
+        <h2 class="text-xl font-semibold mb-4">Ringkasan Pesanan</h2>
+        <div id="cart-items"></div>
+        <div class="flex justify-between mb-2">
+          <span>Subtotal</span>
+          <span id="subtotal">Rp 0</span>
+        </div>
+        <div class="flex justify-between font-semibold text-lg mt-4">
+          <span>Total</span>
+          <span id="total">Rp 0</span>
+        </div>
+    
+        <button id="order-btn" class="w-full bg-primary text-white hover:bg-white hover:text-primary hover:border hover:border-primary hover:shadow-md py-3 rounded-md mt-6 transition duration-300">
+          Proses Checkout
+        </button>
+    
       </div>
-
-      <div class="flex justify-between mb-2">
-        <span>Shipping</span>
-        <span>Rp 10.000</span>
-      </div>
-
-      <div class="flex justify-between font-semibold text-lg mt-4">
-        <span>Total</span>
-        <span>Rp 85.000</span>
-      </div>
-
-      <button class="w-full bg-primary text-white hover:bg-white hover:text-primary hover:border hover:border-primary hover:shadow-md py-3 rounded-md mt-6 transition duration-300">
-        Proceed to Checkout
-      </button>
-
-      <p class="text-sm text-gray-500 mt-4">
-        By placing your order, you agree to our <a href="#" class="text-blue-500 underline">Terms & Conditions</a>.
-      </p>
     </div>
+    
   </div>
 </div>
 
 
-  <footer class="bg-primary text-white py-10">
+<footer class="bg-primary text-white py-10" data-aos="fade-up" data-aos-duration="1500" data-aos-easing="ease-in-out">
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Logo and Description -->
       <div class="mx-20">
         <h2 class="text-2xl font-bold mb-4">PoultryLink</h2>
-        <p class="text-white">Connecting poultry farmers with consumers for fresh poultry products like eggs, chicken,
-          and feed.</p>
+        <p class="text-white">Menghubungkan peternak unggas dengan konsumen untuk produk unggas segar seperti telur, ayam, dan pakan.</p>
       </div>
 
       <!-- Navigation Links -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <h3 class="text-lg font-semibold mb-4">Links</h3>
         <ul>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">About
-              PoultryLink</a></li>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Shop</a>
+          <li><a href="./compony/about.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Tentang
+            </a></li>
+          <li><a href="./shop.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Toko</a>
           </li>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Contact
-              Us</a></li>
-          <li><a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">Privacy
-              Policy</a></li>
+          <li><a href="./compony/contact.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Kontak Kami</a></li>
         </ul>
       </div>
 
 
       <!-- Download App Banners -->
       <div>
-        <h3 class="text-lg font-semibold mb-4">Download Our App</h3>
+        <h3 class="text-lg font-semibold mb-4">Download Aplikasi  Kami</h3>
         <div class="flex space-x-4">
-          <a href="#">
+          <a href="https://googleplay.com">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
               alt="Download on Play Store" class="h-12">
           </a>
-          <a href="#">
+          <a href="https://www.apple.com/id/app-store/">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg"
               alt="Download on App Store" class="h-12">
           </a>
         </div>
         <div class="flex space-x-6 mt-2 pt-5 ml-3">
-          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+          <a href="https://www.x.com" class="text-white hover:scale-125 inline-block transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
               <path
                 d="M22.162 5.656c-0.824 0.366-1.711 0.615-2.64 0.727 0.949-0.569 1.678-1.47 2.022-2.543-0.887 0.526-1.87 0.907-2.915 1.112-0.838-0.893-2.032-1.451-3.354-1.451-2.54 0-4.603 2.063-4.603 4.603 0 0.36 0.041 0.71 0.118 1.047-3.826-0.192-7.221-2.025-9.493-4.812-0.397 0.682-0.623 1.476-0.623 2.32 0 1.602 0.816 3.013 2.057 3.843-0.757-0.024-1.471-0.232-2.093-0.579v0.059c0 2.237 1.592 4.104 3.703 4.527-0.388 0.105-0.797 0.162-1.218 0.162-0.297 0-0.586-0.028-0.868-0.081 0.586 1.83 2.287 3.163 4.3 3.199-1.575 1.233-3.561 1.97-5.719 1.97-0.372 0-0.738-0.022-1.101-0.065 2.039 1.307 4.458 2.071 7.057 2.071 8.468 0 13.101-7.015 13.101-13.101 0-0.199-0.004-0.397-0.014-0.594 0.898-0.648 1.68-1.458 2.297-2.38z" />
             </svg>
           </a>
-          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+          <a href="https://www.instagram.com"
+            class="text-white hover:scale-125 inline-block transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram"
               viewBox="0 0 16 16">
               <path
                 d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
             </svg>
           </a>
-          <a href="#" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+          <a href="https://facebook.com"
+            class="text-white hover:scale-125 inline-block transition-transform duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook"
               viewBox="0 0 16 16">
               <path
@@ -296,6 +245,332 @@
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <script src="./src/js/modal.js"></script>
   <script src="./src/js/script.js"></script>
+  
+  <script>
+    $(document).ready(function () {
+      var token = localStorage.getItem("auth_token");
+  
+      // Fungsi untuk menampilkan item cart dari API
+      function loadCartItems() {
+        $.ajax({
+          url: 'http://127.0.0.1:8000/api/getcart',
+          type: 'GET',
+          dataType: 'json',
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+          success: function (response) {
+            if (response && response.data && response.data.length > 0) {
+              let cartItemsHTML = '';
+              let total = 0;
+              let subtotal = 0;
+  
+              response.data.forEach(function (data) {
+                let produk = data.barang;
+                let supplier = data.barang.supplier;
+  
+                // Menghitung subtotal dan total
+                let productSubtotal = produk.harga * data.total_barang;
+                subtotal += productSubtotal;
+  
+                // Membuat HTML untuk setiap item cart
+                cartItemsHTML += `
+                  <div class="flex items-center border-b pb-4 mb-4" id="item-${data.id}">
+                    <input type="checkbox" class="select-item mx-2" name="cart_id[]" value="${data.id}" data-harga="${produk.harga}" data-quantity="${data.total_barang}" />
+                    <img src="https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/products/${produk.id}/1.jpg" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
+                    <div class="ml-4 flex-1">
+                      <h2 class="font-semibold text-lg">${produk.nama_produk.length > 15 ? produk.nama_produk.substring(0, 15) + " ..." : produk.nama_produk}</h2>
+                      <p class="text-sm text-gray-600">Rp. ${produk.harga} / Ekor</p>
+                      <p class="text-sm text-gray-500">Supplier: ${supplier.nama_toko}</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <button class="bg-gray-200 px-3 py-1 rounded-md decrement-btn" data-id="${data.id}">-</button>
+                      <span class="w-5 text-center quantity" id="quantity-${data.id}">${data.total_barang}</span>
+                      <button class="bg-gray-200 px-3 py-1 rounded-md increment-btn" data-id="${data.id}">+</button>
+                      <button class="text-green-500 confirm-btn" data-id="${data.id}" data-harga="${produk.harga}">
+                        <i class="fa-solid fa-check"></i>
+                      </button>
+                      <button class="text-red-500 delete-btn" data-id="${data.id}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3"
+                          viewBox="0 0 16 16">
+                          <path
+                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                        </svg>
+                      </button>
+                    </div>
+                    <p class="ml-6 font-semibold total-harga" id="total-harga-${data.id}">Rp. ${productSubtotal}</p>
+                  </div>
+                `;
+              });
+  
+              $('#cart-items').html(cartItemsHTML);
+              $('#subtotal').text(`Rp ${subtotal.toFixed(2)}`);
+              $('#total').text(`Rp ${subtotal.toFixed(2)}`);
+            } else {
+              $('#cart-items').html('<p>Your cart is empty</p>');
+            }
+          },
+          error: function () {
+            console.error('Error fetching product data');
+            $('#cart-items').html('<p>Tidak ada barang dalam keranjang</p>');
+          }
+        });
+      }
+  
+      // Memanggil fungsi untuk menampilkan cart setiap kali halaman dimuat
+      loadCartItems();
+  
+      // Event handler untuk memilih item
+      $(document).on('change', '.select-item', function () {
+        let selectedItems = $('.select-item:checked');
+        let total = 0;
+  
+        selectedItems.each(function () {
+          let harga = $(this).data('harga');
+          let quantity = $(this).data('quantity');
+          total += harga * quantity;
+        });
+  
+        $('#total').text(`Rp ${total.toFixed(2)}`);
+      });
+  
+      // Event handler untuk tombol order
+
+  
+      // Event handler untuk tombol +
+      $(document).on('click', '.increment-btn', function () {
+        let id = $(this).data('id');
+        let quantityElement = $(`#quantity-${id}`);
+        let currentQuantity = parseInt(quantityElement.text());
+        quantityElement.text(currentQuantity + 1);
+  
+        // Update total harga
+        let harga = parseFloat($(this).siblings('.confirm-btn').data('harga'));
+        $(`#total-harga-${id}`).text(`Rp. ${((currentQuantity + 1) * harga).toFixed(2)}`);
+      });
+  
+      // Event handler untuk tombol -
+      $(document).on('click', '.decrement-btn', function () {
+        let id = $(this).data('id');
+        let quantityElement = $(`#quantity-${id}`);
+        let currentQuantity = parseInt(quantityElement.text());
+        if (currentQuantity > 1) {
+          quantityElement.text(currentQuantity - 1);
+  
+          // Update total harga
+          let harga = parseFloat($(this).siblings('.confirm-btn').data('harga'));
+          $(`#total-harga-${id}`).text(`Rp. ${((currentQuantity - 1) * harga).toFixed(2)}`);
+        }
+      });
+  
+      // Event handler untuk tombol konfirmasi
+      $(document).on('click', '.confirm-btn', function () {
+        let id = $(this).data('id');
+        let quantity = parseInt($(`#quantity-${id}`).text());
+  
+        $.ajax({
+          url: `http://127.0.0.1:8000/api/updatecart/${id}`,
+          type: 'POST',
+          data: {
+            total_barang: quantity
+          },
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+          success: function () {
+            Swal.fire({
+              title: "Good job!",
+              text: "produk berhasil diupdate",
+              icon: "success"
+            });
+          },
+          error: function () {
+            alert('Failed to update cart.');
+          }
+        });
+      });
+  
+      // Event handler untuk tombol delete
+      $(document).on('click', '.delete-btn', function () {
+        let id = $(this).data('id');
+  
+        Swal.fire({
+          title: "Are you sure?",
+          text: "apakah kamu yakin ingin menghapus item ini?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "ya, hapus!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: `http://127.0.0.1:8000/api/cart/${id}`,
+              type: 'DELETE',
+              dataType: 'json',
+              headers: {
+                Authorization: 'Bearer ' + token,
+              },
+              success: function () {
+                $(`#item-${id}`).remove();
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "produk berhasil dihapus",
+                  icon: "success"
+                });
+              },
+              error: function () {
+                alert('Failed to remove item');
+              }
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+    <script>
+        $('#order-btn').on('click', function () {
+        // Ambil semua checkbox yang dicentang
+        let selectedCheckboxes = $('.select-item:checked');
+    
+        // Kumpulkan data dari checkbox yang dicentang
+        let cartIds = [];
+        selectedCheckboxes.each(function () {
+            cartIds.push($(this).val()); // Mengambil value dari checkbox
+        });
+    
+        // Ambil metode pembayaran yang dipilih
+        let metodePembayaran = $('#metode_pembayaran').val();
+        const token = localStorage.getItem('auth_token')
+        const base_url = window.location.origin;
+    
+        // Validasi jika tidak ada checkbox yang dicentang
+        if (cartIds.length === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pilih produk',
+                text: 'Anda harus memilih setidaknya satu produk untuk melanjutkan.',
+            });
+            return;
+        }
+    
+        // Kirim data ke server menggunakan AJAX
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/order',
+            type: 'POST',
+            headers: {
+                Authorization: "Bearer " + token // Token dari localStorage
+            },
+            dataType: 'json',
+            data: {
+                cart_id: cartIds, // Array dari cart_id
+                metode_pembayaran: metodePembayaran // Metode pembayaran
+            },
+            success: function (response) {
+                if (response.message && response.order) {
+                    // Jika order berhasil dibuat
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order berhasil'
+                    }).then(() => {
+                        // Reload halaman atau arahkan pengguna ke halaman lain
+                        window.location.href = base_url + `/poultrylink/public/invoice.html?id=${response.order.id}`;
+                    });
+                } else {
+                    // Jika terjadi error pada response
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal membuat order',
+                        text: response.message || 'Terjadi kesalahan, coba lagi nanti.',
+                    });
+                }
+            },
+            error: function (xhr) {
+                // Jika AJAX gagal
+                let errorMessage = 'Terjadi kesalahan, coba lagi nanti.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMessage = xhr.responseJSON.error;
+                }
+    
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal membuat order',
+                    text: errorMessage,
+                });
+            }
+        });
+    });
+    </script>
+    
+    <!--mengecek apakah suplier atau bukan-->
+  <script>
+    $(document).ready(function () {
+      const base_url = window.location.origin; // Mendapatkan base URL
+      const token = localStorage.getItem('auth_token'); // Mendapatkan token dari localStorage
+
+      // Fungsi untuk mengecek apakah user terdaftar sebagai supplier
+      function checkSupplierStatus() {
+        if (token) {
+          $.ajax({
+            url: 'http://127.0.0.1:8000/api/checkSupplier',// URL endpoint untuk mengecek status supplier
+            type: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}` // Kirim token untuk autentikasi
+            },
+            success: function (response) {
+              // Jika terdaftar sebagai supplier, simpan id_supplier ke localStorage
+              if (response.id_supplier) {
+                localStorage.setItem('id_supplier', response.id_supplier);
+                $('#menu-buka-toko').hide(); // Sembunyikan tombol "Buka Toko"
+              } else {
+                localStorage.removeItem('id_supplier');
+                $('#menu-buka-toko').show(); // Tampilkan tombol "Buka Toko"
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error('Error checking supplier status:', error);
+            }
+          });
+        } else {
+          // Jika token tidak ditemukan, berarti user belum login
+          console.log('User not logged in');
+        }
+      }
+
+      // Panggil fungsi untuk cek status supplier saat halaman dimuat
+      checkSupplierStatus();
+    });
+  </script>
+  
+      <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const authToken = localStorage.getItem("auth_token");
+        const loginButton = document.getElementById("login");
+        const registerButton = document.getElementById("register");
+        const accountIcon = document.getElementById("account-icon");
+        
+        if (authToken) {
+        // User is authenticated
+        accountIcon.style.display = "inline-block";
+        loginButton.style.display = "none";
+        registerButton.style.display = "none";
+    } else {
+        // User is not authenticated
+        accountIcon.style.display = "none";
+        loginButton.style.display = "inline-block";
+        registerButton.style.display = "inline-block";
+    }
+});
+
+</script>
+  
+
+
+  
+  
+  
+    <script src="./src/js/logout.js"></script>
 </body>
 
 </html>

@@ -5,13 +5,13 @@ $(document).ready(function() {
   
         // Konfirmasi sebelum logout (opsional)
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You will be logged out!",
+            title: 'Apakah Kamu Yakin?',
+            text: "Kamu Akan Keluar!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, logout!'
+            confirmButtonText: 'Ya, Keluar!'
         }).then((result) => {
             if (result.isConfirmed) {
                 // Ambil token autentikasi yang ada di localStorage
@@ -19,24 +19,25 @@ $(document).ready(function() {
   
                 // Kirim permintaan API untuk logout
                 $.ajax({
-                    url: 'http://127.0.0.1:8000/api/logout',  // Ganti dengan URL API logout yang sesuai
+                    url: 'https://poultrylink.ambatuwin.xyz/api/logout',  // Ganti dengan URL API logout yang sesuai
                     type: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`  // Kirim token untuk autentikasi
                     },
                     success: function(response) {
                         // Hapus data di localStorage setelah logout berhasil
-                        localStorage.removeItem('auth_token');
-                        localStorage.removeItem('isLoggedIn');  // Pastikan status login juga dihapus
+                        // localStorage.removeItem('auth_token');
+                        // localStorage.removeItem('isLoggedIn'); 
+                        localStorage.clear();
   
                         // Berikan notifikasi logout berhasil
                         Swal.fire(
                             'Logged Out!',
-                            'You have been successfully logged out.',
+                            'Kamu Berhasil Keluar',
                             'success'
                         ).then(() => {
                             // Redirect ke halaman login setelah logout
-                            window.location.href = base_url + '/poultrylink/frontend1/public/index.html';
+                            window.location.href = base_url + '/poultrylink/public/index.html';
                         });
                     },
                     error: function(xhr, status, error) {

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./src/output.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="./src/css/animasi.css">
+  <link rel="stylesheet" href="./src/css/style.css">
+  <!-- icon -->
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <!-- gsap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="./src/js/script.js"></script>
+  <script src="./src/js/gsap.js"></script>
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="./src/js/aos.js"></script>
+  <!-- icon -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <title>PoultryLink</title>
+  <link rel="icon" href="./src/img/logo.svg">
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <style>
+         #searchResult {
+        display: none; /* Pastikan diatur agar tidak terlihat secara default */
+    }
+    
+    .search-result-item {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .search-result-item img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+        object-fit: cover;
+    }
+    
+    .search-result-item h5 {
+        font-size: 14px;
+        color: #333;
+        margin: 0;
+    }
+    
+    .search-result-item span {
+        font-size: 12px;
+        color: #e60000;
+    }
+    
+    </style>
+</head>
+
+<body>
+    
+    <div id="loading-screen">
+        <div id="loading-circle"></div>
+    </div>
+
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20" data-aos="fade-down" data-aos-duration="2000">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo dan Nama PoultryLink -->
+      <a href="index.html" class="flex items-center space-x-2 ml-7">
+        <img src="./src/img/logo.svg" alt="PoultryLink Logo" class="h-16 w-16">
+        <span class="text-3xl font-bold text-primary">PoultryLink</span>
+      </a>
+
+      <!-- Link Navigasi (Desktop) -->
+      <div class="hidden md:flex space-x-6">
+        <a href="./compony/about.html"
+          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Tentang</a>
+        <a href="shop.html"
+          class="text-primary text-xl relative after:absolute after:bg-primary after:h-[2px] after:w-0 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full">Produk</a>
+      </div>
+
+      <!-- Fitur Search, Wishlist, Cart, dan Akun -->
+      <div class="md:flex items-center space-x-4 mr-12">
+        <!-- Search Bar (Hidden di layar mobile) -->
+        <div class="relative w-80 hidden md:block">
+          <input type="text" id="searchInput"
+            class="border border-primary rounded-full py-2 px-4 w-full text-primary focus:border-primary focus:outline-none"
+            placeholder="Search..." />
+          <span class="absolute right-3 top-2 text-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <!-- Hasil pencarian -->
+          <div id="searchResult"
+            class="absolute bg-white border border-gray-300 w-full rounded-lg mt-1 overflow-auto max-h-60 hidden">
+          </div>
+        </div>
+
+
+
+        <!-- Cart Icon -->
+        <a href="cart.html" class="relative text-primary hidden md:block">
+          <!-- Icon Cart -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.99-1.72l1.38-8.28H5.73"></path>
+          </svg>
+        </a>
+        
+        <a href="sign/login.html" id="login"
+            class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary px-4 py-2 rounded-lg">
+            Login
+        </a>
+        <a href="sign/register.html" id="register"
+            class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border border-primary">
+            Register
+        </a>
+
+        <!-- Account Icon with Dropdown -->
+        <div class="account-icon relative">
+          <a href="#" class="relative text-primary mt-2" id="account-icon" onclick="toggleDropdown(event)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
+              <path d="M4 21v-2a4 4 0 013-3.87"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+
+          <!-- Dropdown -->
+          <div id="account-dropdown"
+            class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 invisible transition-opacity duration-300 transform scale-95">
+
+            <!-- Manage Account -->
+            <a href="akun/profil.html" id="manage-account-btn"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-person-vcard mx-2" viewBox="0 0 16 16">
+                <path
+                  d="M5 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m4-2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5M9 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 9 8m1 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5">
+                </path>
+                <path
+                  d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8.96q.04-.245.04-.5C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 1 1 12z">
+                </path>
+              </svg>
+              Manage Account
+            </a>
+            <a href="dashboard/toko.html" id="menu-buka-toko"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg">
+              <i class="fa-solid fa-shop mx-2"></i>
+              Buka toko
+            </a>
+            <a href="#" id="logout-btn"
+              class="flex items-center space-x-2 px-4 py-2 mt-2 text-gray-700 hover:bg-primary hover:text-white rounded-lg transition-colors duration-200">
+              <i class="fas fa-sign-out-alt mx-2"></i>
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- Menu Dropdown (Mobile Only) -->
+    <div id="mobile-menu" class="hidden bg-white shadow-md md:hidden">
+      <div class="flex flex-col items-start p-4 space-y-4">
+        <a href="./compony/about.html" class="text-primary text-xl">Tentang</a>
+        <a href="shop.html" class="text-primary text-xl">Produk</a>
+        <a href="cart.html" class="text-primary text-xl">Keranjang</a>
+        <a href="sign/login.html"
+          class="bg-primary text-white hover:text-primary hover:bg-white hover:border border-primary px-4 py-2 rounded-lg">
+          Login
+        </a>
+        <a href="sign/register.html"
+          class="bg-white text-primary hover:text-white hover:bg-primary px-4 py-2 rounded-lg border-2 border-primary">
+          Register
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-6 " style="margin-top: 5rem;">
+    <!-- Header Toko -->
+    <div
+      class="mb-10 border border-gray-300 shadow-lg rounded-xl p-6 flex items-center gap-6 bg-gradient-to-r from-white via-gray-100 to-white">
+      <!-- Gambar Toko -->
+      <div class="relative">
+        <img id="profile_image" class="h-32 w-32 rounded-full object-cover border-4 border-white"
+          src="https://via.placeholder.com/128" alt="User profile picture" />
+        <span class="absolute bottom-0 right-0 h-6 w-6 border-2 border-white rounded-full bg-green-500"></span>
+      </div>
+
+      <!-- Detail Toko -->
+      <div class="flex-1">
+        <h1 id="nama_toko" class="text-3xl font-extrabold text-gray-800">Toko Ayam Suhardi</h1>
+        <div class="mt-4 text-gray-600 space-y-2">
+          <p id="alamat" class="flex items-center">
+            <svg class="w-5 h-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 11v8m8-8v8m-4-4h.01m4.978-.605A4.978 4.978 0 0118 12h-1.635A3.371 3.371 0 0016 9H8a3.371 3.371 0 00-.365 3H6a5 5 0 00-1 3.48m11.365-3.85H21m-4 0H5m4 4H4.5" />
+            </svg>
+            <strong>Alamat: </strong> Jl. Raya Peternakan No. 123
+          </p>
+          <p id="kota" class="flex items-center">
+            <svg class="w-5 h-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 10h11M9 21v-8m-3.978.605A4.978 4.978 0 013 12h1.635a3.371 3.371 0 01.365-3h8a3.371 3.371 0 01.365 3H21" />
+            </svg>
+            <strong>Kota:</strong> Bandung
+          </p>
+          <p id="provinsi" class="flex items-center">
+            <svg class="w-5 h-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15l3-3m0 0l3-3m-3 3h18" />
+            </svg>
+            <strong>Provinsi:</strong> Jawa Barat
+          </p>
+          <p id="deskripsi" class="flex items-center">
+            <svg class="w-5 h-5 text-gray-500 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 17v-8M5 15H21m-6-6H5M15 21v-8m0-6H9" />
+            </svg>
+            <strong>Deskripsi:</strong> Toko menjual ayam segar.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Produk -->
+    <section id="product" class="py-12">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8" data-aos="fade-up" data-aos-duration="1000">
+          Produk Unggulan
+        </h2>
+
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 ml-7 mr-7 px-2 max-w-full"
+          id="product-container">
+          <!-- Card Produk -->
+
+        </div>
+    </section>
+
+
+    <!-- Tambahkan lebih banyak produk dengan struktur yang sama -->
+    </div>
+  
+ <footer class="bg-primary text-white py-10" data-aos="fade-up" data-aos-duration="1500" data-aos-easing="ease-in-out">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Logo and Description -->
+      <div class="mx-20">
+        <h2 class="text-2xl font-bold mb-4">PoultryLink</h2>
+        <p class="text-white">Menghubungkan peternak unggas dengan konsumen untuk produk unggas segar seperti telur, ayam, dan pakan.</p>
+      </div>
+
+      <!-- Navigation Links -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Links</h3>
+        <ul>
+          <li><a href="./compony/about.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Tentang
+            </a></li>
+          <li><a href="./shop.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Toko</a>
+          </li>
+          <li><a href="./compony/contact.html"
+              class="text-white hover:scale-125 inline-block transition-transform duration-300">Kontak Kami</a></li>
+        </ul>
+      </div>
+
+
+      <!-- Download App Banners -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Download Aplikasi  Kami</h3>
+        <div class="flex space-x-4">
+          <a href="https://googleplay.com">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+              alt="Download on Play Store" class="h-12">
+          </a>
+          <a href="https://www.apple.com/id/app-store/">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/App_Store_%28iOS%29.svg"
+              alt="Download on App Store" class="h-12">
+          </a>
+        </div>
+        <div class="flex space-x-6 mt-2 pt-5 ml-3">
+          <a href="https://www.x.com" class="text-white hover:scale-125 inline-block transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M22.162 5.656c-0.824 0.366-1.711 0.615-2.64 0.727 0.949-0.569 1.678-1.47 2.022-2.543-0.887 0.526-1.87 0.907-2.915 1.112-0.838-0.893-2.032-1.451-3.354-1.451-2.54 0-4.603 2.063-4.603 4.603 0 0.36 0.041 0.71 0.118 1.047-3.826-0.192-7.221-2.025-9.493-4.812-0.397 0.682-0.623 1.476-0.623 2.32 0 1.602 0.816 3.013 2.057 3.843-0.757-0.024-1.471-0.232-2.093-0.579v0.059c0 2.237 1.592 4.104 3.703 4.527-0.388 0.105-0.797 0.162-1.218 0.162-0.297 0-0.586-0.028-0.868-0.081 0.586 1.83 2.287 3.163 4.3 3.199-1.575 1.233-3.561 1.97-5.719 1.97-0.372 0-0.738-0.022-1.101-0.065 2.039 1.307 4.458 2.071 7.057 2.071 8.468 0 13.101-7.015 13.101-13.101 0-0.199-0.004-0.397-0.014-0.594 0.898-0.648 1.68-1.458 2.297-2.38z" />
+            </svg>
+          </a>
+          <a href="https://www.instagram.com"
+            class="text-white hover:scale-125 inline-block transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-instagram"
+              viewBox="0 0 16 16">
+              <path
+                d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+            </svg>
+          </a>
+          <a href="https://facebook.com"
+            class="text-white hover:scale-125 inline-block transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook"
+              viewBox="0 0 16 16">
+              <path
+                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Media Icons -->
+    <div class="container mx-auto mt-10 border-t border-gray-700 pt-6">
+      <div class="flex flex-col items-center">
+        <p class="text-white text-center">&copy; 2024 PoultryLink. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- logout -->
+  <script src="./src/js/logout.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Ambil parameter 'supplierId' dari URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const supplierId = urlParams.get('supplierId'); // Mendapatkan supplierId dari URL
+
+      // Cek apakah ada ID supplier dalam URL
+      if (supplierId) {
+        // Panggil API untuk mendapatkan data supplier berdasarkan ID
+        $.ajax({
+          url: `http://127.0.0.1:8000/api/getSupplierid/${supplierId}`,
+          method: "GET",
+          dataType: "json",
+          success: function (response) {
+            if (response && response.data) {
+              // Update data ke elemen HTML
+              $("#gambar_toko").attr("src", response.data.image || "https://via.placeholder.com/150");
+              $("#nama_toko").text(response.data.nama_toko || "Nama Toko");
+              $("#alamat").html(`<strong>Alamat: \u00A0 </strong> ${response.data.alamat || "Alamat tidak tersedia"}`);
+              $("#kota").html(`<strong>Kota: \u00A0 </strong> ${response.data.kota || "Kota tidak tersedia"}`);
+              $("#provinsi").html(`<strong>Provinsi: \u00A0 </strong> ${response.data.provinsi || "Provinsi tidak tersedia"}`);
+              $("#deskripsi").html('<strong>Deskripsi: \u00A0 </strong> ' + (response.data.deskripsi || "Deskripsi tidak tersedia"));
+
+              const profileImageUrl = response.data.buyer.avatar_path;
+              if (profileImageUrl) {
+                // Periksa apakah URL lengkap atau perlu di-append dengan base URL
+                const fullImageUrl = profileImageUrl.startsWith('http')
+                  ? profileImageUrl
+                  : `https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/avatar/${profileImageUrl}/1.jpg`;
+
+                // Periksa jika URL gambar valid, jika tidak gunakan placeholder
+                const img = new Image();
+                img.onload = function () {
+                  // Jika gambar berhasil dimuat, tampilkan gambar
+                  $('#profile_image').attr('src', fullImageUrl);
+                };
+                img.onerror = function () {
+                  // Jika gambar gagal dimuat, gunakan placeholder
+                  $('#profile_image').attr('src', 'https://via.placeholder.com/64');
+                };
+                img.src = fullImageUrl;
+              } else {
+                // Jika tidak ada avatar, gunakan placeholder
+                $('#profile_image').attr('src', 'https://via.placeholder.com/64');
+              }
+            } else {
+              console.error("Data supplier tidak ditemukan.");
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching supplier data:", error);
+            $("#toko").html("<p>Gagal memuat data toko. Silakan coba lagi nanti.</p>");
+          },
+        });
+      } else {
+        alert("ID supplier tidak ditemukan di URL.");
+      }
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      // Ambil parameter 'supplierId' dari URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const supplierId = urlParams.get('supplierId');
+
+      // Cek apakah supplierId tersedia
+      if (supplierId) {
+        // Panggil endpoint untuk mendapatkan produk
+        $.ajax({
+          url: `http://127.0.0.1:8000/api/supplier/${supplierId}/produk`,
+          method: "GET",
+          dataType: "json",
+          success: function (response) {
+            if (response && response.products) {
+              const productContainer = $("#product-container"); // Pastikan div dengan id ini ada di HTML
+
+              // Hapus konten lama (jika ada)
+              productContainer.empty();
+
+              // Loop data produk dan tambahkan ke halaman
+              response.products.forEach((produk) => {
+                const imageUrl = `https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/products/${produk.id}/1.jpg`; // URL gambar produk
+                const productCard = `
+                            <div class="relative m-3 w-full max-w-[14rem] overflow-hidden rounded-lg bg-white shadow-md" data-id="${produk.id}" data-aos="flip-left" data-aos-duration="2000">
+                                <a href="detail.html?id=${produk.id}" class="group">
+                                    <img 
+                                        class="h-40 w-full rounded-t-lg object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" 
+                                        src="${imageUrl}" 
+                                        alt="${produk.nama_produk}" 
+                                    />
+                                </a>
+                                <div class="mt-3 px-4 pb-4">
+                                    <a href="detail.html?id=${produk.id}">
+                                    <h5 class="text-base font-semibold tracking-tight text-slate-900">
+                                        ${produk.nama_produk.length > 15 ? produk.nama_produk.substring(0, 15) + " ..." : produk.nama_produk}
+                                    </h5>
+                                    </a>
+                                    <div class="mt-2.5 mb-4 flex items-center">
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <p>
+                                            <span class="text-base font-bold text-slate-900">
+                                                Rp. ${new Intl.NumberFormat('id-ID').format(produk.harga)}
+                                            </span>
+                                        </p>
+                                        <a href="javascript:void(0)" 
+                                           class="add-to-cart-btn flex items-center rounded-md bg-primary px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-white hover:text-primary hover:border hover:border-primary focus:outline-none focus:ring-4 focus:ring-blue-300" 
+                                           data-id="${produk.id}">
+                                           <i class="fa-solid fa-cart-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                productContainer.append(productCard); // Tambahkan kartu produk ke container
+              });
+            } else {
+              $("#product-container").html("<p>Tidak ada produk untuk supplier ini.</p>");
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error("Error fetching products:", error);
+            $("#product-container").html("<p>Gagal memuat data produk. Silakan coba lagi nanti.</p>");
+          },
+        });
+      } else {
+        alert("ID supplier tidak ditemukan di URL.");
+      }
+    });
+
+  </script>
+
+  <!--add to cart-->
+  <script>
+    $(document).on("click", ".add-to-cart-btn", function (event) {
+      event.preventDefault(); // Mencegah aksi default
+
+      var productId = $(this).data("id");
+      var token = localStorage.getItem("auth_token");
+
+      // Kirim permintaan AJAX
+      $.ajax({
+        url: "http://127.0.0.1:8000/api/addtocart",
+        type: "POST",
+        dataType: "json",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        data: {
+          produk_id: productId,
+          total_barang: 1,
+        },
+        success: function (response) {
+          if (response.success) {
+            // Jika berhasil, perbarui jumlah cart (opsional)
+            Swal.fire({
+              title: "Produk berhasil ditambahkan ke cart",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            updateCartCount(true); // Memperbarui jumlah cart tanpa perlu reload
+          } else {
+            console.error("Gagal menambahkan produk ke cart:", response.message);
+            Swal.fire({
+              title: "sukses",
+              text: response.message,
+              icon: "success"
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Terjadi kesalahan saat menambahkan ke cart:", error);
+          Swal.fire({
+            title: "Error",
+            text: "Terjadi kesalahan saat menambahkan ke cart",
+            icon: "error"
+          });
+        },
+      });
+    });
+  </script>
+  
+  <script>
+      $(document).ready(function () {
+    const $searchInput = $('#searchInput');
+    const $searchResult = $('#searchResult');
+    let debounceTimeout;
+
+    // Fungsi untuk menyembunyikan hasil pencarian
+    function clearSearchResults() {
+        $searchResult.empty(); // Kosongkan hasil pencarian
+        $searchResult.hide(); // Sembunyikan hasil pencarian
+    }
+
+    // Event listener untuk input pencarian dengan debouncing
+    $searchInput.on('input', function () {
+        const query = $searchInput.val().trim();
+
+        // Hapus timeout sebelumnya jika ada
+        clearTimeout(debounceTimeout);
+
+        // Set timeout untuk menghindari permintaan yang berlebihan
+        debounceTimeout = setTimeout(function () {
+            // Jika input kosong, sembunyikan hasil pencarian
+            if (query === '') {
+                clearSearchResults(); // Kosongkan dan sembunyikan hasil pencarian
+                return;
+            }
+
+            // Jika input tidak kosong, lakukan AJAX
+            const urlParams = new URLSearchParams(window.location.search);
+            const supplierId = urlParams.get('supplierId');
+
+            if (!supplierId) {
+                console.error("Supplier ID tidak ditemukan.");
+                return;
+            }
+
+            $.ajax({
+                url: `http://127.0.0.1:8000/api/supplier/${supplierId}/produk`,
+                method: "GET",
+                dataType: "json",
+                success: function (response) {
+                    const produks = response.products;
+
+                    // Kosongkan hasil sebelumnya
+                    $searchResult.empty();
+
+                    // Filter produk berdasarkan query pencarian
+                    const filteredProduks = produks.filter(produk => 
+                        produk.nama_produk.toLowerCase().includes(query.toLowerCase())
+                    );
+
+                    // Menampilkan hasil pencarian
+                    if (filteredProduks.length > 0) {
+                        filteredProduks.forEach(produk => {
+                            const imageUrl = produk.id
+                                ? `https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/products/${produk.id}/1.jpg`
+                                : './path/to/default-image.jpg';
+
+                            $searchResult.append(`
+                                <div class="search-result-item">
+                                    <img src="${imageUrl}" alt="${produk.nama_produk}">
+                                    <div>
+                                        <h5><a href="detail.html?id=${produk.id}">${produk.nama_produk}</a></h5>
+                                        <span>Rp.${produk.harga}</span>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                        $searchResult.show(); // Tampilkan hasil pencarian
+                    } else {
+                        $searchResult.append('<p class="p-2 text-sm text-gray-500">Produk tidak ditemukan.</p>').show();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Gagal mengambil data produk:", error);
+                }
+            });
+        }, 300); // Delay 300ms setelah pengguna berhenti mengetik
+    });
+
+    // Event listener untuk menyembunyikan hasil pencarian ketika klik di luar
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('#searchInput, #searchResult').length) {
+            clearSearchResults();
+        }
+    });
+});
+  </script>
+  
+  
+      <!--menyembunyikan login register-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const authToken = localStorage.getItem("auth_token");
+        const loginButton = document.getElementById("login");
+        const registerButton = document.getElementById("register");
+        const accountIcon = document.getElementById("account-icon");
+        
+        if (authToken) {
+        // User is authenticated
+        accountIcon.style.display = "inline-block";
+        loginButton.style.display = "none";
+        registerButton.style.display = "none";
+    } else {
+        // User is not authenticated
+        accountIcon.style.display = "none";
+        loginButton.style.display = "inline-block";
+        registerButton.style.display = "inline-block";
+        }
+    });
+</script>
+
+<!--mengecek apakah suplier atau bukan-->
+  <script>
+    $(document).ready(function () {
+      const base_url = window.location.origin; // Mendapatkan base URL
+      const token = localStorage.getItem('auth_token'); // Mendapatkan token dari localStorage
+
+      // Fungsi untuk mengecek apakah user terdaftar sebagai supplier
+      function checkSupplierStatus() {
+        if (token) {
+          $.ajax({
+            url: 'http://127.0.0.1:8000/api/checkSupplier',// URL endpoint untuk mengecek status supplier
+            type: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}` // Kirim token untuk autentikasi
+            },
+            success: function (response) {
+              // Jika terdaftar sebagai supplier, simpan id_supplier ke localStorage
+              if (response.id_supplier) {
+                localStorage.setItem('id_supplier', response.id_supplier);
+                $('#menu-buka-toko').hide(); // Sembunyikan tombol "Buka Toko"
+              } else {
+                localStorage.removeItem('id_supplier');
+                $('#menu-buka-toko').show(); // Tampilkan tombol "Buka Toko"
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error('Error checking supplier status:', error);
+            }
+          });
+        } else {
+          // Jika token tidak ditemukan, berarti user belum login
+          console.log('User not logged in');
+        }
+      }
+
+      // Panggil fungsi untuk cek status supplier saat halaman dimuat
+      checkSupplierStatus();
+    });
+  </script>
+  
+
+
+
+</body>
+
+</html>

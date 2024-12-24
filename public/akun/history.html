@@ -9,12 +9,15 @@
     <script src="https://unpkg.com/@heroicons/react/outline"></script>
     <title>PoultryLink</title>
     <link rel="icon" href="../src/img/logo.svg">
+        <script src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 <body>
   <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-20" data-aos="fade-down" data-aos-duration="2000">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <!-- Logo dan Nama PoultryLink -->
-      <a href="../home.html" class="flex items-center space-x-2 ml-7">
+      <a href="../index.html" class="flex items-center space-x-2 ml-7">
         <img src="../src/img/logo.svg" alt="PoultryLink Logo" class="h-16 w-16">
         <span class="text-3xl font-bold text-primary">PoultryLink</span>
       </a>
@@ -44,7 +47,7 @@
         </div>
   
         <!-- Cart Icon -->
-        <a href="cart.html" class="relative text-primary hidden md:block">
+        <a href="../cart.html" class="relative text-primary hidden md:block">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="21" r="1"></circle>
@@ -55,7 +58,7 @@
   
         <!-- Account Icon with Dropdown -->
         <div class="account-icon relative">
-          <a href="#" class="relative text-primary" id="account-icon" onclick="toggleDropdown(event)">
+          <a href="#" class="relative text-primary mt-2" id="account-icon" onclick="toggleDropdown(event)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 00-3-3.87"></path>
@@ -63,7 +66,6 @@
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </a>
-
           <!-- Dropdown -->
           <div id="account-dropdown"
             class="absolute right-0 mt-2 w-56 bg-white text-primary rounded-lg shadow-lg py-4 opacity-0 invisible transition-opacity duration-300 transform scale-95">
@@ -126,12 +128,12 @@
         <!-- Profil Pengguna -->
         <div class="flex items-center space-x-4 mb-8">
           <div class="relative">
-            <img class="h-20 w-20 rounded-full object-cover shadow-md border-4 border-white" src="https://via.placeholder.com/64" alt="User profile picture">
+            <img id="profile_image" class="h-20 w-20 rounded-full object-cover shadow-md border-4 border-white" src="https://via.placeholder.com/64" alt="User profile picture">
             <span class="absolute bottom-0 right-0 h-4 w-4 bg-green-400 border-2 border-white rounded-full"></span> <!-- Status online -->
           </div>
           <div>
-            <p class="text-xl font-bold text-gray-900">Russell Ahmed</p>
-            <p class="text-gray-500">Hello, Russell!</p>
+            <p id="profile_username" class="text-xl font-bold text-gray-900"></p>
+            <p id="profile_greeting" class="text-gray-500"></p>
           </div>
         </div>
         
@@ -148,33 +150,26 @@
             <i class="fas fa-history mr-3 text-white group-hover:text-primary transition-all duration-700"></i> 
             <span class="font-medium">Riwayat pembelian</span>
           </a>
-          <a href="#" class="flex items-center px-4 py-3 rounded-lg bg-gray-100 text-gray-800 hover:bg-blue-100 hover:shadow-md transition-all duration-200">
-            <i class="fas fa-sign-out-alt mr-3 text-primary"></i> <span class="font-medium">Keluar</span>
-          </a>
         </nav>
       </aside>
 
       <!-- History Transaksi -->
-      <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+      <div class="md:col-span-2 bg-white p-2 rounded-xl shadow-lg">
         <h2 class="text-2xl font-bold mb-4">Riwayat Transaksi</h2>
         <div class="overflow-x-auto bg-gray-50 rounded-lg shadow-md">
-          <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+          <table class="min-w-full bg-white border border-gray-300 rounded-lg" id="data-order">
             <thead>
               <tr class="bg-primary text-white">
-                <th class="py-3 px-4 border-b">No Transaksi</th>
-                <th class="py-3 px-4 border-b">Tanggal</th>
-                <th class="py-3 px-4 border-b">Total</th>
-                <th class="py-3 px-4 border-b">Status</th>
+                <th class="py-3 px-4">Tanggal</th>
+                <th class="py-3 px-4">Jumlah</th>
+                <th class="py-3 px-4">Total Harga</th>
+                <th class="py-3 px-4">Invoice</th>
+                <th class="py-3 px-4">Status</th>
+                <th class="py-3 px-4">konfirmasi</th>
               </tr>
             </thead>
             <tbody>
-              <!-- Transaction Item -->
-              <tr class="hover:bg-gray-100 transition-colors">
-                <td class="py-3 px-4 border-b">Transaksi #001</td>
-                <td class="py-3 px-4 border-b">20 Oktober 2024</td>
-                <td class="py-3 px-4 border-b">Rp 200.000</td>
-                <td class="py-3 px-4 border-b">Sukses</td>
-              </tr>
+
               <!-- Tambahkan lebih banyak transaksi sesuai kebutuhan -->
             </tbody>
           </table>
@@ -182,6 +177,205 @@
       </div>
     </div>
   </div>
+  
+   <script>
+      $(document).ready(function () {
+        const token = localStorage.getItem('auth_token');
+
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/getprofile', // Pastikan ini URL API yang benar
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (response) {
+                console.log(response); // Debugging respons
+    
+                if (response.data) {
+                    $('#profile_username').text(response.data.user.username);
+                    $('#profile_greeting').text('Hello, ' + response.data.user.username);
+                    
+                    // Ambil avatar_path dari respons dan tampilkan di gambar profil
+                    const profileImageUrl = response.data.avatar_path;
+                    if (profileImageUrl) {
+                        // Periksa apakah URL lengkap atau perlu di-append dengan base URL
+                        const fullImageUrl = profileImageUrl.startsWith('http') 
+                            ? profileImageUrl 
+                            : `https://hbssyluucrwsbfzspyfp.supabase.co/storage/v1/object/avatar/${profileImageUrl}/1.jpg`;
+    
+                        // Periksa jika URL gambar valid, jika tidak gunakan placeholder
+                        const img = new Image();
+                        img.onload = function () {
+                            // Jika gambar berhasil dimuat, tampilkan gambar
+                            $('#profile_image').attr('src', fullImageUrl);
+                        };
+                        img.onerror = function () {
+                            // Jika gambar gagal dimuat, gunakan placeholder
+                            $('#profile_image').attr('src', 'https://via.placeholder.com/64');
+                        };
+                        img.src = fullImageUrl;
+                    } else {
+                        // Jika tidak ada avatar, gunakan placeholder
+                        $('#profile_image').attr('src', 'https://via.placeholder.com/64');
+                    }
+                }
+            },
+            error: function (xhr) {
+                console.log("Error:", xhr.responseText);
+            }
+        });
+      });
+    </script>
+    
+    <script>
+    $(document).ready(function () {
+        const token = localStorage.getItem('auth_token');
+        // Ambil data order dengan AJAX
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/buyerorder', // Endpoint untuk mengambil data order
+            type: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (response) {
+                const tbody = $('#data-order tbody');
+                tbody.empty(); // Kosongkan tbody sebelum mengisi
+    
+                response.data.forEach((order) => {
+                    // Format data sesuai kebutuhan
+                    const tanggal = new Date(order.created_at).toLocaleDateString(); // Format Tanggal
+                    const jumlah = order.total; // Jumlah
+                    const totalHarga = `Rp ${parseInt(order.harga).toLocaleString('id-ID')}`; // Total Harga
+                    const invoiceLink = order.invoice
+                        ? `<a href="../invoice.html?id=${order.id}" class="text-primary underline">Lihat Invoice</a>`
+                        : 'Tidak Ada'; // Link Invoice
+                    
+                    // Periksa status order
+                    let status;
+                    let konfirmasiButton;
+                    if (order.confirmed === 'yes') {
+                        status = 'Terkonfirmasi';
+                        konfirmasiButton = `
+                            <a href="#" class="text-xl text-primary ml-7 fa-solid fa-square-check"
+                                style="margin-left: 3rem;" 
+                                onclick="confirmOrder(${order.id}); return false;">
+                            </a>`;
+                    } else if (order.confirmed === 'cancelled') {
+                        status = 'Dibatalkan';
+                        konfirmasiButton = `<span class="text-gray-400 ml-7 fa-solid fa-ban" style="margin-left: 3rem;" title="Tidak dapat dikonfirmasi"></span>`;
+                    } else if (order.confirmed === 'retrieved') {
+                        status = 'Diterima';
+                        konfirmasiButton = `<span class="text-gray-400 ml-7 fa-solid fa-square-check" style="margin-left: 3rem;" title="Sudah Diterima"></span>`;
+                    } else {
+                        status = 'Belum Dikonfirmasi';
+                        konfirmasiButton = `<span class="text-gray-400 ml-7 fa-solid fa-ban" style="margin-left: 3rem;" title="Tidak dapat dikonfirmasi"></span>`;
+                    }
+    
+                    // Tambahkan baris ke tabel
+                    const row = `
+                        <tr class="hover:bg-gray-100 transition-colors">
+                            <td class="py-3 px-4 border-b">${tanggal}</td>
+                            <td class="py-3 px-4 border-b ml-4">${jumlah}</td>
+                            <td class="py-3 px-4 border-b">${totalHarga}</td>
+                            <td class="py-3 px-4 border-b">${invoiceLink}</td>
+                            <td class="py-3 px-4 border-b">${status}</td>
+                            <td class="py-3 px-4 border-b">${konfirmasiButton}</td>
+                        </tr>
+                    `;
+    
+                    tbody.append(row); // Masukkan baris ke dalam tbody
+                });
+            },
+            error: function (xhr) {
+                alert('Gagal memuat data order: ' + xhr.responseText);
+            },
+        });
+    });
+    
+    // Fungsi untuk konfirmasi order
+    function confirmOrder(orderId) {
+        const token = localStorage.getItem('auth_token');
+        Swal.fire({
+            title: 'Konfirmasi Order',
+            text: 'Apakah Anda yakin ingin mengonfirmasi order ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Konfirmasi!',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna mengonfirmasi
+                $.ajax({
+                    url: `http://127.0.0.1:8000/api/terimaorder/${orderId}`, // Endpoint untuk konfirmasi order
+                    type: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    },
+                    success: function (response) {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Order berhasil dikonfirmasi.',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                        }).then(() => {
+                            location.reload(); // Refresh halaman setelah sukses
+                        });
+                    },
+                    error: function (xhr) {
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: 'Terjadi kesalahan saat mengonfirmasi order.',
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                        });
+                    },
+                });
+            }
+        });
+    }
+    </script>
+    
+    <!--mengecek apakah suplier atau bukan-->
+  <script>
+    $(document).ready(function () {
+      const base_url = window.location.origin; // Mendapatkan base URL
+      const token = localStorage.getItem('auth_token'); // Mendapatkan token dari localStorage
+
+      // Fungsi untuk mengecek apakah user terdaftar sebagai supplier
+      function checkSupplierStatus() {
+        if (token) {
+          $.ajax({
+            url: 'http://127.0.0.1:8000/api/checkSupplier',// URL endpoint untuk mengecek status supplier
+            type: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}` // Kirim token untuk autentikasi
+            },
+            success: function (response) {
+              // Jika terdaftar sebagai supplier, simpan id_supplier ke localStorage
+              if (response.id_supplier) {
+                localStorage.setItem('id_supplier', response.id_supplier);
+                $('#menu-buka-toko').hide(); // Sembunyikan tombol "Buka Toko"
+              } else {
+                localStorage.removeItem('id_supplier');
+                $('#menu-buka-toko').show(); // Tampilkan tombol "Buka Toko"
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error('Error checking supplier status:', error);
+            }
+          });
+        } else {
+          // Jika token tidak ditemukan, berarti user belum login
+          console.log('User not logged in');
+        }
+      }
+
+      // Panggil fungsi untuk cek status supplier saat halaman dimuat
+      checkSupplierStatus();
+    });
+  </script>
+
+
 
   <script src="../src/js/script.js"></script>
 </body>

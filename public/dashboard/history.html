@@ -53,14 +53,7 @@
             <span class="mx-4">Orders</span>
           </a>
           <a
-            href="#"
-            class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
-          >
-            <span class="material-icons">insights</span>
-            <span class="mx-4">Sales Reports</span>
-          </a>
-          <a
-            href="#"
+            href="setting.html"
             class="flex items-center p-2 my-3 text-primary transition-colors duration-200"
           >
             <span class="material-icons">settings</span>
@@ -77,20 +70,12 @@
         >
           <div class="text-xl font-bold text-gray-800">Supplier Dashboard</div>
           <div class="flex items-center space-x-4">
-            <button class="text-primary">
-              <span class="material-icons">notifications</span>
-            </button>
             <div class="relative">
               <button
                 class="flex items-center text-primary focus:outline-none"
                 id="profileButton"
               >
-                <img
-                  class="w-8 h-8 rounded-full border-2 border-orange-500"
-                  src="https://via.placeholder.com/32"
-                  alt="Profile Image"
-                />
-                <span class="ml-2 font-semibold">John Doe</span>
+                <span class="ml-2 font-semibold">Hallo Supplier</span>
                 <span class="material-icons ml-1">expand_more</span>
               </button>
               <!-- Dropdown -->
@@ -104,13 +89,13 @@
         <!-- History Transaksi Section -->
         <main class="p-6 bg-gray-100">
           <h2 class="text-2xl font-semibold text-gray-800 mb-6">
-            History Transaksi
+            Order Transaksi
           </h2>
           <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <table class="min-w-full bg-white" id="orders-table">
               <thead>
                 <tr
-                  class="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal"
+                  class="w-full bg-primary text-white-600 uppercase text-sm leading-normal"
                 >
                   <th class="py-3 px-6 text-left">Tanggal</th>
                   <th class="py-3 px-6 text-left">Produk</th>
@@ -118,13 +103,24 @@
                   <th class="py-3 px-6 text-center">Harga</th>
                   <th class="py-3 px-6 text-center">Total Harga</th>
                   <th class="py-3 px-6 text-center">Status</th>
+                  <th class="py-3 px-6 text-center">Detail</th>
                 </tr>
               </thead>
-              <tbody class="text-gray-700 text-sm font-light-"></tbody>
+              <tbody class="text-gray-700 text-sm font-light-">
+
+              </tbody>
             </table>
           </div>
         </main>
-      </div>
+      <!-- Modal -->
+       <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
+          <h3 class="text-xl font-semibold mb-4 text-gray-800">Detail Informasi</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700" id="buyer-detail">
+        
+          </div>
+        </div>
+      </div>     
     </div>
 
     <!-- Script to toggle dropdown -->
@@ -137,62 +133,133 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+    $(document).ready(function () {
+      const token = localStorage.getItem("auth_token");
+      let data = [];
+      // Fetch all orders
+      $.ajax({
+        url: "https://poultrylink.ambatuwin.xyz/api/supplier/orders",
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        success: function (response) {
+          if (response.orders && response.orders.length > 0) {
+            let orders = response.orders;
+            let html = "";
+            data = response.orders;
+            // Generate table rows
+            orders.forEach(function (order, index) {
+              html += `
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-left">${order.created_at}</td>
+                  <td class="py-3 px-6 text-left">${order.produk}</td>
+                  <td class="py-3 px-6 text-center">${order.quantity}</td>
+                  <td class="py-3 px-6 text-center">${order.price}</td>
+                  <td class="py-3 px-6 text-center">${order.total_price}</td>
+                  <td class="py-3 px-6 text-center">${order.confirmed}</td>
+                  <td class="py-3 px-6 text-center">
+                    <button onclick="toggleModal()"
+                      class="btn-modal px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary-dark transition-all duration-200 view-details-btn"
+                      data-id="${order.order_id}">
+                      Lihat
+                    </button>
+                  </td>
+                </tr>
+              `;
+            });
+    
+            // Insert rows into table
+            $("#orders-table tbody").html(html);
+    
+            // Attach click event to "Lihat" buttons
+            // $(".view-details-btn").on("click", function () {
+            //   const orderId = $(this).data("id");
+            //   fetchOrderDetails(orderId, token);
+            // });
+          } else {
+            alert("Tidak ada pesanan untuk supplier ini.");
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error("Terjadi kesalahan:", error);
+        },
+      });
+
+      $(document).on("click",".btn-modal",function() {
+        let idData = $(this).attr("data-id");
+        let dataCustomer = [];
+        
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          if(element['order_id'] == idData){
+            dataCustomer = element['buyer'];
+            break;
+          }
+        }
+
+          const elementBuy = dataCustomer;
+          var htmlData = `
+            <div >
+              <label class="block text-sm font-medium mb-1" id="firstname-buyer">Firstname : <span>${elementBuy['firstname']}</span></label>
+            </div>
+            <div >
+              <label class="block text-sm font-medium mb-1" id="lastname-buyer">lastname : <span>${elementBuy['lastname']}</span></label>
+            </div>
+            <div >
+              <label class="block text-sm font-medium mb-1" id="alamat-buyer">alamat : <span>${elementBuy['alamat']}</span></label>
+            </div>
+            <div >
+              <label class="block text-sm font-medium mb-1" id="kota-buyer">kota : <span>${elementBuy['kota']}</span></label>
+            </div>
+             <div >
+              <label class="block text-sm font-medium mb-1" id="kodepos-buyer">kodepos : <span>${elementBuy['kodepos']}</span></label>
+            </div>
+            <div >
+              <label class="block text-sm font-medium mb-1" id="negara-buyer">negara : <span>${elementBuy['negara']}</span></label>
+            </div>
+            <div >
+              <label class="block text-sm font-medium mb-1" id="provinsi-buyer">provinsi : <span>${elementBuy['provinsi']}</span></label>
+            </div>
+            <div >
+              <label class="block text-sm font-medium mb-1" id="telepon-buyer">telepon : <span>${elementBuy['telepon']}</span></label>
+            </div>
+            <div class="flex justify-end">
+              <button type="button" onclick="toggleModal()"
+                class="px-4 py-2 text-gray-600 hover:text-gray-800">Close</button>
+            </div>
+            `;
+
+            $("#buyer-detail").html(htmlData);
+    
+      
+    });
+    });
+    // Toggle modal visibility
+    function toggleModal() {
+      $("#modal").toggleClass("hidden");
+    }
+    
+    
+    
+    </script>
+
+    <script>
       $(document).ready(function () {
-        const token = localStorage.getItem("auth_token");
-        $.ajax({
-          url: "http://poultrylink.ambatuwin.xyz/api/supplier/orders", // Endpoint yang sesuai dengan controller getorder
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-          success: function (response) {
-            if (response.orders && response.orders.length > 0) {
-              let orders = response.orders;
-              let html = "";
-
-              // Loop untuk menampilkan setiap pesanan
-              orders.forEach(function (order) {
-                html += `
-                        <tr class="border-b border-gray-200 hover:bg-gray-100">
-                            <td class="py-3 px-6 text-left">${order.created_at}</td>
-                            <td class="py-3 px-6 text-left">${order.produk_id}</td>
-                            <td class="py-3 px-6 text-center">${order.quantity}</td>
-                            <td class="py-3 px-6 text-center">${order.price}</td>
-                            <td class="py-3 px-6 text-center">${order.total_price}</td>
-                            <td class="py-3 px-6 text-center">${order.confirmed}</td>
-                        </tr>
-                    `;
-              });
-
-              // Insert HTML ke dalam tabel
-              $("#orders-table tbody").html(html);
-            } else {
-              alert("Tidak ada pesanan untuk supplier ini.");
-            }
-          },
-          error: function (xhr, status, error) {
-            console.error("Terjadi kesalahan:", error);
-          },
-        });
+        const base_url = window.location.origin;
+        // Memeriksa apakah token ada di localStorage
+        const token = localStorage.getItem('supplier_token');
+    
+        // Jika tidak ada token, arahkan pengguna ke halaman login
+        if (!token) {
+          window.location.href = base_url + '/poultrylink/public/dashboard/404.html';  // Arahkan ke halaman login jika tidak ada token
+        } else {
+          // Jika ada token, lanjutkan ke halaman home
+          console.log('Token ditemukan, pengguna dapat melanjutkan');
+        }
       });
     </script>
 
-<script>
-  $(document).ready(function () {
-    const base_url = window.location.origin;
-    // Memeriksa apakah token ada di localStorage
-    const token = localStorage.getItem('supplier_token');
-
-    // Jika tidak ada token, arahkan pengguna ke halaman login
-    if (!token) {
-      window.location.href = base_url + '/dashboard/loginsupplier.html';  // Arahkan ke halaman login jika tidak ada token
-    } else {
-      // Jika ada token, lanjutkan ke halaman home
-      console.log('Token ditemukan, pengguna dapat melanjutkan');
-    }
-  });
-</script>
-
-<script src="../src/js/logout.js"></script>
+    <script src="../src/js/logout.js"></script>
   </body>
 </html>

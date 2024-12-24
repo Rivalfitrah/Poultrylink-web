@@ -45,15 +45,6 @@
                     />
                 </div>
 
-                <!-- Remember Me and Forgot Password -->
-                <div class="flex justify-between items-center mb-4">
-                    <label class="inline-flex items-center">
-                        <input type="checkbox" class="form-checkbox text-orange-600">
-                        <span class="ml-2 text-gray-700">Remember me</span>
-                    </label>
-                    <a href="#" class="text-orange-600 hover:underline text-sm">Forgot password?</a>
-                </div>
-
                 <!-- Login Button -->
                 <button
                     type="submit"
@@ -92,9 +83,9 @@
             event.preventDefault();
             const email = $('#email').val();
             const password = $('#password').val();
-    
+        
             $.ajax({
-                url: 'http://poultrylink.ambatuwin.xyz/api/login/',
+                url: 'http://127.0.0.1:8000/api/login',
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
@@ -112,7 +103,7 @@
     
                         // Panggil API untuk mendapatkan data profil user
                         $.ajax({
-                            url: 'http://poultrylink.ambatuwin.xyz/api/getprofile',
+                            url: 'http://127.0.0.1:8000/api/getprofile',
                             type: 'GET',
                             headers: {
                                 'Authorization': 'Bearer ' + response.data.token
@@ -132,7 +123,7 @@
                                     confirmButtonText: "Ok"
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location = base_url + '/home.html';
+                                        window.location = base_url + '/poultrylink/public/index.html';
                                     }
                                 });
                             },
